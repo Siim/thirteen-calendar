@@ -1,0 +1,134 @@
+# Publishes the web app (apps/web) to GitHub Pages on every push to main, and on demand from the
+# Actions tab (Pages, "Run workflow").
+#
+# The site is https://thirteen.haugas.dev/, a GitHub Pages custom domain served from the site root
+# (design/DECISIONS.md "Web origin and feeds"; docs/EVENTS.md §3.6, §8.3 item 10), so the build
+# always uses Vite's base "/" (no sub-path from actions/configure-pages). Local events, secret feed
+# links and the notification permission belong to the page's origin, so the app is never published
+# on any other address: the deploy job runs only when the repository's Pages settings say "GitHub
+# Actions" with the custom domain thirteen.haugas.dev. GitHub Pages sends the old project address
+# (siim.github.io/thirteen-calendar/) there by itself. The app routes with the URL hash (#/today), so
+# no 404.html fallback is needed. privacy.html, support.html and the notifications-only alerts-sw.js
+# in apps/web/public are published next to index.html.
+#
+# No CNAME file: with a custom GitHub Actions workflow, GitHub Pages ignores a CNAME file in the
+# artifact and keeps the custom domain in the repository's Pages settings.
+#
+# One-time setup (owner): repository Settings, Pages, Build and deployment, Source: "GitHub Actions";
+# Custom domain: thirteen.haugas.dev, and the Route 53 CNAME thirteen.haugas.dev -> siim.github.io at
+# the same time, so the name is never left dangling. Then "Enforce HTTPS" as soon as GitHub offers it
+# (it can take up to 24 hours after the DNS record). Until Pages is enabled, a push builds the site,
+# skips the deploy and leaves a warning on the run; afterwards, "Run workflow" deploys main.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; never cancel one that is already running.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build the site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      # Reading the Pages settings (GET /repos/{owner}/{repo}/pages).
+      pages: read
+    outputs:
+      deploy: ${{ steps.site.outputs.deploy }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build web app (base /)
+        run: |
+          pnpm --filter @thirteen/web typecheck
+          pnpm --filter @thirteen/web exec vite build --base /
+          test -f apps/web/dist/index.html
+          test -f apps/web/dist/privacy.html
+          test -f apps/web/dist/support.html
+          test -f apps/web/dist/alerts-sw.js
+          grep -q '<link rel="canonical" href="https://thirteen.haugas.dev/"' apps/web/dist/index.html
+          grep -q 'src="/assets/' apps/web/dist/index.html
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: apps/web/dist
+
+      # Deploy only to https://thirteen.haugas.dev/. Pages not enabled yet: warning, no deploy (a push
+      # before the one-time setup stays green). Enabled with another source or domain: error. HTTPS not
+      # enforced yet: warning, deploy (GitHub offers "Enforce HTTPS" only once the certificate exists).
+      - name: Check the Pages settings
+        id: site
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DOMAIN: thirteen.haugas.dev
+        run: |
+          status="$(curl -sS -o "$RUNNER_TEMP/pages.json" -w '%{http_code}' \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/pages")"
+          if [ "$status" = 404 ]; then
+            echo "::warning title=Pages not deployed::GitHub Pages is not enabled for $GITHUB_REPOSITORY. In Settings, Pages, choose Source: GitHub Actions and the custom domain $DOMAIN, then run this workflow again (Actions, Pages, Run workflow)."
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$status" != 200 ]; then
+            echo "::error title=Pages settings unreadable::GET /repos/$GITHUB_REPOSITORY/pages answered HTTP $status."
+            cat "$RUNNER_TEMP/pages.json"
+            exit 1
+          fi
+          build_type="$(jq -r '.build_type // ""' "$RUNNER_TEMP/pages.json")"
+          cname="$(jq -r '.cname // ""' "$RUNNER_TEMP/pages.json")"
+          https_enforced="$(jq -r '.https_enforced // false' "$RUNNER_TEMP/pages.json")"
+          echo "Pages: build_type=$build_type cname=$cname https_enforced=$https_enforced"
+          if [ "$build_type" != workflow ]; then
+            echo "::error title=Pages source::Pages publishes with build type \"$build_type\". In Settings, Pages, set Source to GitHub Actions."
+            exit 1
+          fi
+          if [ "$cname" != "$DOMAIN" ]; then
+            echo "::error title=Pages custom domain::Pages has the custom domain \"$cname\", not $DOMAIN. The app must only be served from https://$DOMAIN/. Set the custom domain in Settings, Pages, then run this workflow again."
+            exit 1
+          fi
+          if [ "$https_enforced" != true ]; then
+            echo "::warning title=Enforce HTTPS::Deploying to $DOMAIN, but Enforce HTTPS is off. Turn it on in Settings, Pages as soon as GitHub offers it, so the app only runs on https://$DOMAIN/."
+          fi
+          echo "deploy=true" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: needs.build.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

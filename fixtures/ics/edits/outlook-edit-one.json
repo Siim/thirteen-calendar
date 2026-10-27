@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "description": "cases/outlook-publish.ics with one event's title changed in Thirteen (SEQUENCE incremented, LAST-MODIFIED set): only that UID group is re-serialized (the properties of untouched fields as read); every other group, the Windows zone ids and Outlook's VTIMEZONE stay byte for byte.",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "Rename the budget review",
+      "calendarId": "outlook-publish",
+      "start": {"file":"cases/outlook-publish.ics"},
+      "steps": [
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"set","uid":"040000008200E00074C5B7101A82E00800000000F5FEF2D3411C6F9EE58779471EC2C3AD38A95A4F6C94689D82BAB67E","recurrenceId":null,"fields":{"summary":"Budget review with Marta","sequence":1,"lastModified":{"kind":"utc","value":"2026-10-19T06:41"}}}
+          ],
+          "expected": "edits/outlook-edit-one.ics"
+        }
+      ]
+    }
+  ]
+}

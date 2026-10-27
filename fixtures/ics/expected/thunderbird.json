@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "case": "cases/thunderbird.ics",
+  "calendarId": "thunderbird",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": null,
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"PRODID","params":[],"value":"-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN"},
+      {"name":"VERSION","params":[],"value":"2.0"}
+    ],
+    "timeZones": [
+      {"tzid":"America/New_York","observances":2,"generated":null,"line":4}
+    ],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"51b59c7d-719e-4066-acd2-0a2fca026188","master":{"uid":"51b59c7d-719e-4066-acd2-0a2fca026188","uidDerived":false,"recurrenceId":null,"sequence":2,"summary":"Book club","location":"Main Street Library","description":"","url":"","start":{"kind":"zoned","value":"2026-01-30T18:00","tzid":"America/New_York"},"end":{"kind":"zoned","value":"2026-01-30T19:30","tzid":"America/New_York"},"duration":null,"rrules":["FREQ=MONTHLY;BYDAY=-1FR"],"exrules":[],"rdates":[],"exdates":[{"kind":"utc","value":"2026-11-27T23:00"}],"status":null,"transp":null,"thirteenRule":null,"alarms":[{"action":"DISPLAY","trigger":{"kind":"relative","minutes":-15,"related":"start"},"extra":[{"name":"DESCRIPTION","params":[],"value":"Default Mozilla Description"}]}],"created":{"kind":"utc","value":"2026-01-10T15:00"},"lastModified":{"kind":"utc","value":"2026-10-02T15:05"},"dtstamp":{"kind":"utc","value":"2026-10-02T15:05"},"importedLastModified":null,"extra":[{"name":"CATEGORIES","params":[],"value":"Personal"},{"name":"X-MOZ-GENERATION","params":[],"value":"3"},{"name":"X-MOZ-LASTACK","params":[],"value":"20261001T120000Z"}],"line":22},"overrides":[]},
+    {"uid":"6817f404-03e8-4b49-8617-c34794232549","master":{"uid":"6817f404-03e8-4b49-8617-c34794232549","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Fourth of July cookout","location":"","description":"","url":"","start":{"kind":"date","date":"2026-07-04"},"end":{"kind":"date","date":"2026-07-05"},"duration":null,"rrules":["FREQ=YEARLY"],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":"TRANSPARENT","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-01-10T15:10"},"lastModified":{"kind":"utc","value":"2026-01-10T15:10"},"dtstamp":{"kind":"utc","value":"2026-01-10T15:10"},"importedLastModified":null,"extra":[{"name":"X-MOZ-GENERATION","params":[],"value":"1"}],"line":43},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-01-30T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-01-31T01:00","end":"2026-01-31T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-02-27T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-02-28T01:00","end":"2026-02-28T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-03-27T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-03-28T00:00","end":"2026-03-28T01:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-04-24T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-04-25T01:00","end":"2026-04-25T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-05-29T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-05-30T01:00","end":"2026-05-30T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-06-26T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-06-27T01:00","end":"2026-06-27T02:30"},
+        {"key":"thunderbird/6817f404-03e8-4b49-8617-c34794232549|2026-07-04","calendarId":"thunderbird","title":"Fourth of July cookout","allDay":true,"start":"2026-07-04T00:00","end":"2026-07-04T24:00"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-07-31T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-08-01T01:00","end":"2026-08-01T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-08-28T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-08-29T01:00","end":"2026-08-29T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-09-25T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-09-26T01:00","end":"2026-09-26T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-10-30T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-10-31T00:00","end":"2026-10-31T01:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-12-25T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-12-26T01:00","end":"2026-12-26T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-01-29T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-01-30T01:00","end":"2027-01-30T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-02-26T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-02-27T01:00","end":"2027-02-27T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-03-26T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-03-27T00:00","end":"2027-03-27T01:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-04-30T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-05-01T01:00","end":"2027-05-01T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-05-28T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-05-29T01:00","end":"2027-05-29T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-06-25T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-06-26T01:00","end":"2027-06-26T02:30"},
+        {"key":"thunderbird/6817f404-03e8-4b49-8617-c34794232549|2027-07-04","calendarId":"thunderbird","title":"Fourth of July cookout","allDay":true,"start":"2027-07-04T00:00","end":"2027-07-04T24:00"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-07-30T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-07-31T01:00","end":"2027-07-31T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-08-27T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-08-28T01:00","end":"2027-08-28T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-09-24T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-09-25T01:00","end":"2027-09-25T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-10-29T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-10-30T01:00","end":"2027-10-30T02:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-11-26T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-11-27T01:00","end":"2027-11-27T02:30"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-01-30T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-01-30T18:00","end":"2026-01-30T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-02-27T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-02-27T18:00","end":"2026-02-27T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-03-27T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-03-27T18:00","end":"2026-03-27T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-04-24T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-04-24T18:00","end":"2026-04-24T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-05-29T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-05-29T18:00","end":"2026-05-29T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-06-26T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-06-26T18:00","end":"2026-06-26T19:30"},
+        {"key":"thunderbird/6817f404-03e8-4b49-8617-c34794232549|2026-07-04","calendarId":"thunderbird","title":"Fourth of July cookout","allDay":true,"start":"2026-07-04T00:00","end":"2026-07-04T24:00"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-07-31T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-07-31T18:00","end":"2026-07-31T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-08-28T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-08-28T18:00","end":"2026-08-28T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-09-25T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-09-25T18:00","end":"2026-09-25T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-10-30T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-10-30T18:00","end":"2026-10-30T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2026-12-25T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2026-12-25T18:00","end":"2026-12-25T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-01-29T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-01-29T18:00","end":"2027-01-29T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-02-26T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-02-26T18:00","end":"2027-02-26T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-03-26T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-03-26T18:00","end":"2027-03-26T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-04-30T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-04-30T18:00","end":"2027-04-30T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-05-28T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-05-28T18:00","end":"2027-05-28T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-06-25T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-06-25T18:00","end":"2027-06-25T19:30"},
+        {"key":"thunderbird/6817f404-03e8-4b49-8617-c34794232549|2027-07-04","calendarId":"thunderbird","title":"Fourth of July cookout","allDay":true,"start":"2027-07-04T00:00","end":"2027-07-04T24:00"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-07-30T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-07-30T18:00","end":"2027-07-30T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-08-27T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-08-27T18:00","end":"2027-08-27T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-09-24T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-09-24T18:00","end":"2027-09-24T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-10-29T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-10-29T18:00","end":"2027-10-29T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-11-26T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-11-26T18:00","end":"2027-11-26T19:30"},
+        {"key":"thunderbird/51b59c7d-719e-4066-acd2-0a2fca026188|2027-12-31T18:00","calendarId":"thunderbird","title":"Book club","allDay":false,"start":"2027-12-31T18:00","end":"2027-12-31T19:30"}
+      ]
+    }
+  ]
+}

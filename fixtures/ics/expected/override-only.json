@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "case": "cases/override-only.ics",
+  "calendarId": "override-only",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Mart Tamm",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"PRODID","params":[],"value":"-//Google Inc//Google Calendar 70.9054//EN"},
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"CALSCALE","params":[],"value":"GREGORIAN"},
+      {"name":"METHOD","params":[],"value":"PUBLISH"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Mart Tamm"},
+      {"name":"X-WR-TIMEZONE","params":[],"value":"Europe/Tallinn"}
+    ],
+    "timeZones": [
+      {"tzid":"Europe/Tallinn","observances":2,"generated":null,"line":8}
+    ],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"r08aoq6ufb53f6lh41ijuflp5u@google.com","master":null,"overrides":[{"uid":"r08aoq6ufb53f6lh41ijuflp5u@google.com","uidDerived":false,"recurrenceId":{"kind":"zoned","value":"2026-11-09T19:00","tzid":"Europe/Tallinn"},"sequence":3,"summary":"Choir rehearsal: concert run-through","location":"Kaarli kirik, Toompuiestee 4, Tallinn","description":"","url":"","start":{"kind":"zoned","value":"2026-11-09T18:30","tzid":"Europe/Tallinn"},"end":{"kind":"zoned","value":"2026-11-09T20:30","tzid":"Europe/Tallinn"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-01T08:00"},"lastModified":{"kind":"utc","value":"2026-10-14T10:00"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:45"},"importedLastModified":null,"extra":[{"name":"ORGANIZER","params":[["CN","Liis Kask"]],"value":"mailto:liis.kask@example.com"},{"name":"ATTENDEE","params":[["CUTYPE","INDIVIDUAL"],["ROLE","REQ-PARTICIPANT"],["PARTSTAT","ACCEPTED"],["CN","Mart Tamm"],["X-NUM-GUESTS","0"]],"value":"mailto:mart.tamm@example.com"}],"line":26}]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"override-only/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-09T19:00","calendarId":"override-only","title":"Choir rehearsal: concert run-through","allDay":false,"start":"2026-11-09T18:30","end":"2026-11-09T20:30"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"override-only/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-09T19:00","calendarId":"override-only","title":"Choir rehearsal: concert run-through","allDay":false,"start":"2026-11-09T11:30","end":"2026-11-09T13:30"}
+      ]
+    }
+  ]
+}

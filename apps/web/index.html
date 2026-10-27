@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Thirteen: the 13-month calendar</title>
+    <meta
+      name="description"
+      content="Thirteen is a 13-month calendar: thirteen months of exactly four weeks. See today in the International Fixed Calendar or Comte's Positivist calendar, convert any date, and compare it day by day with the Gregorian calendar."
+    />
+    <link rel="canonical" href="https://thirteen.haugas.dev/" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- thirteen:theme-color -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Thirteen" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Thirteen" />
+    <meta property="og:title" content="Thirteen: the 13-month calendar" />
+    <meta
+      property="og:description"
+      content="Thirteen months of exactly four weeks, plus a day that belongs to no week. Today's date in the International Fixed Calendar, compared with the Gregorian one."
+    />
+    <meta property="og:url" content="https://thirteen.haugas.dev/" />
+    <meta property="og:image" content="https://thirteen.haugas.dev/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Thirteen app icon, a calendar page marked 13, next to the words: Thirteen. A 13-month calendar, side by side with the Gregorian one." />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Thirteen: the 13-month calendar" />
+    <meta
+      name="twitter:description"
+      content="Thirteen months of exactly four weeks, plus a day that belongs to no week. Today's date in the International Fixed Calendar, compared with the Gregorian one."
+    />
+    <meta name="twitter:image" content="https://thirteen.haugas.dev/og-image.png" />
+    <meta name="twitter:image:alt" content="The Thirteen app icon, a calendar page marked 13, next to the words: Thirteen. A 13-month calendar, side by side with the Gregorian one." />
+
+    <!-- thirteen:theme-boot -->
+    <script>
+      // The entrance animation is skipped entirely for reduced motion.
+      try {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.setAttribute('data-revealed', '');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>Thirteen needs JavaScript to compute its calendars.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

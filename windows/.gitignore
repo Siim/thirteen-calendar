@@ -1,0 +1,19 @@
+# Build output
+bin/
+obj/
+publish/
+dist/
+TestResults/
+*.binlog
+
+# Secrets: signing credentials live outside the repo (THIRTEEN_AZURE_SIGNING_ENV)
+*.env
+.env*
+
+# IDE and OS
+.vs/
+.idea/
+*.user
+*.suo
+.DS_Store
+Thumbs.db

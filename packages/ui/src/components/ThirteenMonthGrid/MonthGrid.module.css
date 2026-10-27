@@ -1,0 +1,123 @@
+/* Shared table chrome for 13-month and Gregorian month grids. */
+
+.grid {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+}
+
+.caption {
+  caption-side: top;
+  padding: 0 0 0.45rem;
+  text-align: left;
+}
+
+.captionOutside {
+  display: block;
+}
+
+.captionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.55rem;
+  min-width: 0;
+}
+
+.captionIndex {
+  flex: none;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: 500;
+  letter-spacing: var(--t-tracking-caps);
+  color: var(--t-accent-text);
+}
+
+.captionName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--t-font-display);
+  font-size: var(--caption-size, 1.25rem);
+  font-weight: var(--t-weight-title);
+  line-height: 1.1;
+  letter-spacing: var(--t-tracking-title);
+  /* overflow: hidden would clip descenders (July, January, February): reserve room for them. */
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+.captionRange {
+  margin-left: auto;
+  flex: none;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-mono);
+  color: var(--t-ink-2);
+  white-space: nowrap;
+}
+
+.captionMeaning {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: var(--t-text-xs);
+  color: var(--t-ink-2);
+}
+
+.head {
+  padding: 0.3rem 0 0.25rem;
+  border-bottom: var(--t-hairline) solid var(--t-rule-strong);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.headRest {
+  color: var(--t-accent-text);
+  font-weight: var(--t-mark-weight, 500);
+}
+
+.sizeLg {
+  --caption-size: var(--t-text-xl);
+}
+
+.sizeSm {
+  --caption-size: 1.125rem;
+}
+
+/* Gregorian foil: the old calendar is set in the text face, in foil ink. */
+.foil {
+  --cell-font: var(--t-font-text);
+  --cell-weight: 400;
+  background: var(--t-paper);
+}
+
+.foil .captionName {
+  font-family: var(--t-font-text);
+  font-weight: var(--t-weight-medium);
+  color: var(--t-foil);
+}
+
+.foil .captionIndex {
+  color: var(--t-foil);
+}
+
+/* Year mode: the month name opens Month mode (docs/EVENTS.md §2.3). */
+.captionLink {
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--t-radius-1);
+}
+
+.captionLink:hover {
+  color: var(--t-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}

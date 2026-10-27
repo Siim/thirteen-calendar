@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "case": "cases/jerusalem.ics",
+  "calendarId": "jerusalem",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Jerusalem",
+    "color": "#0d9488",
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Haugas Development OU//Thirteen 1.0//EN"},
+      {"name":"CALSCALE","params":[],"value":"GREGORIAN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Jerusalem"},
+      {"name":"NAME","params":[],"value":"Jerusalem"},
+      {"name":"X-APPLE-CALENDAR-COLOR","params":[],"value":"#0D9488"},
+      {"name":"COLOR","params":[],"value":"darkcyan"},
+      {"name":"X-THIRTEEN-CALENDAR-ID","params":[],"value":"b3894559-6b8e-4312-b7de-ee9685580c1f"}
+    ],
+    "timeZones": [
+      {"tzid":"Asia/Jerusalem","observances":4,"generated":{"first":2026,"last":2029},"line":10}
+    ],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"d07672eb-0f11-40ec-83a7-a48e2a99d139","master":{"uid":"d07672eb-0f11-40ec-83a7-a48e2a99d139","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Hebrew lesson","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-13T12:00","tzid":"Asia/Jerusalem"},"end":{"kind":"zoned","value":"2026-03-13T13:00","tzid":"Asia/Jerusalem"},"duration":null,"rrules":["FREQ=WEEKLY;COUNT=6"],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":38},"overrides":[]},
+    {"uid":"7b73f8ac-8312-4b7c-8c0d-d8ebdcd20d88","master":{"uid":"7b73f8ac-8312-4b7c-8c0d-d8ebdcd20d88","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Breakfast","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-27T08:00","tzid":"Asia/Jerusalem"},"end":{"kind":"zoned","value":"2026-03-27T09:00","tzid":"Asia/Jerusalem"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":51},"overrides":[]},
+    {"uid":"c1ce51bf-e3ca-477f-b71d-f80966a2425d","master":{"uid":"c1ce51bf-e3ca-477f-b71d-f80966a2425d","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Market","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-10-25T10:00","tzid":"Asia/Jerusalem"},"end":{"kind":"zoned","value":"2026-10-25T11:00","tzid":"Asia/Jerusalem"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":63},"overrides":[]},
+    {"uid":"535e606e-cc8f-4bd1-951b-f3f1c809405f","master":{"uid":"535e606e-cc8f-4bd1-951b-f3f1c809405f","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Breakfast","location":"","description":"","url":"","start":{"kind":"zoned","value":"2029-03-23T08:00","tzid":"Asia/Jerusalem"},"end":{"kind":"zoned","value":"2029-03-23T09:00","tzid":"Asia/Jerusalem"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":75},"overrides":[]},
+    {"uid":"c7699f26-de82-4319-b5c2-e7399a960dbf","master":{"uid":"c7699f26-de82-4319-b5c2-e7399a960dbf","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Market","location":"","description":"","url":"","start":{"kind":"zoned","value":"2029-10-28T10:00","tzid":"Asia/Jerusalem"},"end":{"kind":"zoned","value":"2029-10-28T11:00","tzid":"Asia/Jerusalem"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":87},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-03-13T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-03-13T12:00","end":"2026-03-13T13:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-03-20T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-03-20T12:00","end":"2026-03-20T13:00"},
+        {"key":"jerusalem/7b73f8ac-8312-4b7c-8c0d-d8ebdcd20d88|2026-03-27T08:00","calendarId":"jerusalem","title":"Breakfast","allDay":false,"start":"2026-03-27T07:00","end":"2026-03-27T08:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-03-27T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-03-27T11:00","end":"2026-03-27T12:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-04-03T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-04-03T12:00","end":"2026-04-03T13:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-04-10T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-04-10T12:00","end":"2026-04-10T13:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-04-17T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-04-17T12:00","end":"2026-04-17T13:00"},
+        {"key":"jerusalem/c1ce51bf-e3ca-477f-b71d-f80966a2425d|2026-10-25T10:00","calendarId":"jerusalem","title":"Market","allDay":false,"start":"2026-10-25T10:00","end":"2026-10-25T11:00"}
+      ]
+    },
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2029-01-01T00:00","to":"2029-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"jerusalem/535e606e-cc8f-4bd1-951b-f3f1c809405f|2029-03-23T08:00","calendarId":"jerusalem","title":"Breakfast","allDay":false,"start":"2029-03-23T07:00","end":"2029-03-23T08:00"},
+        {"key":"jerusalem/c7699f26-de82-4319-b5c2-e7399a960dbf|2029-10-28T10:00","calendarId":"jerusalem","title":"Market","allDay":false,"start":"2029-10-28T10:00","end":"2029-10-28T11:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-03-13T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-03-13T06:00","end":"2026-03-13T07:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-03-20T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-03-20T06:00","end":"2026-03-20T07:00"},
+        {"key":"jerusalem/7b73f8ac-8312-4b7c-8c0d-d8ebdcd20d88|2026-03-27T08:00","calendarId":"jerusalem","title":"Breakfast","allDay":false,"start":"2026-03-27T01:00","end":"2026-03-27T02:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-03-27T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-03-27T05:00","end":"2026-03-27T06:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-04-03T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-04-03T05:00","end":"2026-04-03T06:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-04-10T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-04-10T05:00","end":"2026-04-10T06:00"},
+        {"key":"jerusalem/d07672eb-0f11-40ec-83a7-a48e2a99d139|2026-04-17T12:00","calendarId":"jerusalem","title":"Hebrew lesson","allDay":false,"start":"2026-04-17T05:00","end":"2026-04-17T06:00"},
+        {"key":"jerusalem/c1ce51bf-e3ca-477f-b71d-f80966a2425d|2026-10-25T10:00","calendarId":"jerusalem","title":"Market","allDay":false,"start":"2026-10-25T04:00","end":"2026-10-25T05:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2029-01-01T00:00","to":"2029-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"jerusalem/535e606e-cc8f-4bd1-951b-f3f1c809405f|2029-03-23T08:00","calendarId":"jerusalem","title":"Breakfast","allDay":false,"start":"2029-03-23T01:00","end":"2029-03-23T02:00"},
+        {"key":"jerusalem/c7699f26-de82-4319-b5c2-e7399a960dbf|2029-10-28T10:00","calendarId":"jerusalem","title":"Market","allDay":false,"start":"2029-10-28T04:00","end":"2029-10-28T05:00"}
+      ]
+    }
+  ]
+}

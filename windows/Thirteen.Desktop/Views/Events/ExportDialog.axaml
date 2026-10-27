@@ -1,0 +1,51 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Thirteen.Desktop.ViewModels"
+        x:Class="Thirteen.Desktop.Views.Events.ExportDialog"
+        x:DataType="vm:ExportDialogViewModel"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding Title}"
+        Width="420">
+  <!-- "Export" (§2.17): "Calendars to export" as checkboxes; the secret-links note when a subscription is chosen. One
+       calendar is saved as one file, several as one file each in the folder chosen next ("Choose a folder"). -->
+  <StackPanel Margin="24,20,24,20" Spacing="14">
+    <TextBlock Classes="dialogTitle" Text="{Binding Title}" />
+    <StackPanel Spacing="8">
+      <TextBlock Classes="fieldLabel" Text="{Binding CalendarsLabel}" />
+      <ScrollViewer MaxHeight="360" HorizontalScrollBarVisibility="Disabled">
+        <ItemsControl Name="CalendarList" ItemsSource="{Binding Calendars}" IsEnabled="{Binding !IsBusy}"
+                      AutomationProperties.Name="{Binding CalendarsLabel}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Spacing="2" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:ExportCalendarOption">
+              <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" AutomationProperties.Name="{Binding Name}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Ellipse Width="10" Height="10" Fill="{Binding Brush}" VerticalAlignment="Center" />
+                  <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding Name}" />
+                </StackPanel>
+              </CheckBox>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </StackPanel>
+    <Grid Name="SecretLinks" ColumnDefinitions="Auto,*" IsVisible="{Binding ShowsSecretLinks}">
+      <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xE7BA;" />
+      <TextBlock Grid.Column="1" FontSize="13" TextWrapping="Wrap" Text="{Binding SecretLinksText}" />
+    </Grid>
+    <Grid Name="ErrorLine" ColumnDefinitions="Auto,*" IsVisible="{Binding HasError}">
+      <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" />
+      <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding Error}" AutomationProperties.LiveSetting="Assertive" />
+    </Grid>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,6,0,0">
+      <Button Name="CancelButton" MinWidth="96" HorizontalContentAlignment="Center" Content="{Binding CancelText}"
+              Command="{Binding CancelCommand}" IsCancel="True" AutomationProperties.Name="{Binding CancelText}" />
+      <Button Name="ExportButton" Classes="accent" MinWidth="96" HorizontalContentAlignment="Center" Content="{Binding ExportText}"
+              Command="{Binding ExportCommand}" IsDefault="True" AutomationProperties.Name="{Binding ExportText}" />
+    </StackPanel>
+  </StackPanel>
+</Window>

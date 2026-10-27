@@ -1,0 +1,99 @@
+.plate {
+  --plate-day: var(--t-text-hero);
+  --plate-month: clamp(1.9rem, 1.15rem + 3.1vw, 3.75rem);
+  --plate-gap: clamp(0.85rem, 0.4rem + 1.8vw, 2rem);
+  display: grid;
+  gap: var(--t-space-3);
+  min-width: 0;
+}
+
+.lg {
+  --plate-day: clamp(4.25rem, 2.6rem + 6.6vw, 8rem);
+  --plate-month: clamp(1.5rem, 1.05rem + 1.8vw, 2.5rem);
+}
+
+.md {
+  --plate-day: clamp(3rem, 2.2rem + 3.4vw, 4.5rem);
+  --plate-month: clamp(1.2rem, 0.98rem + 0.9vw, 1.6rem);
+  --plate-gap: 0.85rem;
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  gap: var(--plate-gap);
+  min-width: 0;
+}
+
+/* The day numeral: Geist at 700, tabular, tracked in tight. */
+.day {
+  flex: none;
+  font-family: var(--t-font-display);
+  font-size: var(--plate-day);
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.76;
+  letter-spacing: var(--t-tracking-numeral);
+  color: var(--t-ink);
+  /* Optical alignment: tabular figures carry wide side bearings (most of all the 1). */
+  margin-left: -0.045em;
+  margin-right: -0.02em;
+}
+
+.stack {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.weekday {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-accent-text);
+}
+
+.month {
+  font-family: var(--t-font-display);
+  font-size: var(--plate-month);
+  font-weight: var(--t-weight-title);
+  line-height: 0.98;
+  letter-spacing: var(--t-tracking-display);
+  overflow-wrap: anywhere;
+}
+
+.year {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-sm);
+  letter-spacing: var(--t-tracking-mono);
+  color: var(--t-ink-2);
+}
+
+.name {
+  font-family: var(--t-font-display);
+  font-size: calc(var(--plate-month) * 1.3);
+  font-weight: var(--t-weight-numeral);
+  line-height: 0.98;
+  letter-spacing: var(--t-tracking-display);
+  overflow-wrap: anywhere;
+}
+
+/* The Gregorian reading: same structure, lighter weight and foil ink. */
+.foil .day {
+  font-family: var(--t-font-text);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  color: var(--t-foil);
+}
+
+.foil .month {
+  font-family: var(--t-font-text);
+  font-weight: var(--t-weight-text);
+  color: var(--t-foil);
+}
+
+.foil .weekday {
+  color: var(--t-foil);
+}

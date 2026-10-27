@@ -1,0 +1,356 @@
+/* Month mode (docs/EVENTS.md §2.4): a 4 x 7 grid, a two-line weekday header and the intercalary band. */
+
+.grid {
+  --lane-h: 1.25rem;
+  --chip-fs: 0.6875rem;
+  display: block;
+  border-top: var(--t-hairline) solid var(--t-rule-strong);
+  border-left: var(--t-hairline) solid var(--t-rule);
+  background: var(--t-paper-raised);
+  font-variant-numeric: tabular-nums;
+}
+
+.head,
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.headCell {
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  padding: 0.4rem 0.1rem 0.35rem;
+  border-right: var(--t-hairline) solid var(--t-rule);
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+  line-height: 1.1;
+}
+
+.headLine1 {
+  font-size: 0.6875rem;
+  font-weight: var(--t-weight-title);
+  color: var(--t-ink);
+}
+
+.headLine2 {
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  color: var(--t-ink-3);
+}
+
+/* ---- Day cells -------------------------------------------------------------- */
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-right: var(--t-hairline) solid var(--t-rule);
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+  cursor: pointer;
+  outline-offset: -3px;
+  transition: background-color var(--t-dur-1) var(--t-ease-out);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--t-focus);
+  z-index: 2;
+}
+
+@media (hover: hover) {
+  .full .cell:hover {
+    background: var(--t-accent-soft);
+  }
+}
+
+.selected {
+  background: var(--t-accent-wash);
+}
+
+@media (hover: hover) {
+  .full .selected:hover {
+    background: var(--t-accent-wash);
+  }
+}
+
+.cellHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.35rem 0.45rem 0.15rem;
+  line-height: 1;
+}
+
+.num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  margin: -0.2rem 0 0 -0.25rem;
+  padding: 0 0.2rem;
+  border-radius: var(--t-radius-pill);
+  font-size: 0.95rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}
+
+/* Today keeps the accent fill on the day number (§2.2). */
+.today .num {
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.greg {
+  display: grid;
+  justify-items: end;
+  gap: 0.12rem;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  color: var(--t-ink-3);
+}
+
+/* Where a Gregorian month starts, its abbreviation sits above that Gregorian day (§2.2). */
+.gmonth {
+  font-size: 0.5625rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.lanes {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.item {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.more {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--lane-h);
+  margin: 0 0.2rem;
+  padding: 0 0.35rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--t-ink-2);
+  font: inherit;
+  font-size: var(--chip-fs);
+  font-weight: var(--t-weight-medium);
+  line-height: var(--lane-h);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.more:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 0;
+}
+
+@media (hover: hover) {
+  .more:not(.moreStatic):hover {
+    background: var(--t-accent-soft);
+    color: var(--t-ink);
+  }
+}
+
+.moreStatic {
+  cursor: inherit;
+}
+
+/* ---- Regular width: as many lanes as fit ----------------------------------- */
+
+.full .week {
+  height: var(--month-week-h, clamp(7rem, calc((100dvh - 19rem) / 4), 12rem));
+}
+
+/* ---- Compact width: titles or dots, one density per screen ------------------- */
+
+.titles,
+.dots {
+  --lane-h: 1.05rem;
+  --chip-fs: 0.6875rem;
+}
+
+.titles .cellHead,
+.dots .cellHead {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.35rem 0.1rem 0.2rem;
+}
+
+.titles .num,
+.dots .num {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.titles .greg,
+.dots .greg {
+  justify-items: center;
+}
+
+.titles .week {
+  min-height: 5.6rem;
+}
+
+.titles .lanes {
+  flex: none;
+  height: calc(var(--lanes, 0) * var(--lane-h));
+  min-height: calc(2 * var(--lane-h));
+}
+
+.titles .more {
+  padding: 0 0.15rem;
+  text-align: center;
+}
+
+.dots .week {
+  min-height: 3.75rem;
+}
+
+.dots .cell {
+  padding-bottom: 0.35rem;
+}
+
+.dotRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  min-height: 0.5rem;
+}
+
+.dotMark {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cal);
+  box-shadow: 0 0 0 1px var(--t-rule);
+}
+
+.count {
+  margin-left: 2px;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: var(--t-weight-title);
+  line-height: 1;
+  color: var(--t-ink-2);
+}
+
+/* ---- The intercalary band under week 4 (§2.2) ------------------------------ */
+
+.bandRow {
+  display: block;
+}
+
+.band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  min-height: 2.6rem;
+  padding: 0.4rem 0.6rem;
+  border-right: var(--t-hairline) solid var(--t-rule);
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+  background-image: repeating-linear-gradient(-45deg, var(--t-accent-soft) 0 3px, transparent 3px 7px);
+  cursor: pointer;
+  outline-offset: -3px;
+}
+
+.band:focus-visible {
+  outline: 2px solid var(--t-focus);
+}
+
+.band.selected {
+  background-color: var(--t-accent-wash);
+}
+
+.bandHead {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1;
+}
+
+.bandCode {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.6rem;
+  height: 1.3rem;
+  padding: 0 0.25rem;
+  border-radius: 3px;
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: 0.04em;
+}
+
+.band.today .bandCode {
+  box-shadow: 0 0 0 2px var(--t-paper-raised), 0 0 0 3px var(--t-accent);
+}
+
+.bandName {
+  font-size: 0.875rem;
+  font-weight: var(--t-weight-title);
+}
+
+.bandGreg {
+  font-family: var(--t-font-mono);
+  font-size: 0.6875rem;
+  color: var(--t-ink-3);
+}
+
+.bandItems {
+  --lane-h: 1.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.inlineItem {
+  position: static;
+  max-width: 16rem;
+}
+
+.bandItems .dotRow {
+  justify-content: flex-start;
+}
+
+@media (forced-colors: active) {
+  .today .num {
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+
+  .selected {
+    outline: 3px double Highlight;
+    outline-offset: -4px;
+  }
+
+  .dotMark {
+    background: CanvasText;
+    box-shadow: 0 0 0 1px CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .band {
+    background-image: none;
+    border-style: dashed;
+  }
+}

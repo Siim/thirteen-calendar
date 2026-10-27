@@ -1,0 +1,257 @@
+/* Thirteen base layer: reset, page paper, typography defaults, focus, motion. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background-color: var(--t-paper);
+  color: var(--t-ink);
+  font-family: var(--t-font-text);
+  font-size: 100%;
+  font-weight: var(--t-weight-text);
+  font-kerning: normal;
+  font-feature-settings: 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
+  transition: background-color var(--t-dur-2) var(--t-ease-out);
+}
+
+body {
+  position: relative;
+  margin: 0;
+  min-height: 100dvh;
+  font-size: var(--t-text-md);
+  line-height: var(--t-leading-body);
+  letter-spacing: var(--t-tracking-text);
+  overflow-x: clip;
+}
+
+/* Paper grain: a fixed, non-interactive tile above the paper colour. */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--t-grain);
+  background-size: 240px 240px;
+  opacity: var(--t-grain-opacity);
+  mix-blend-mode: var(--t-grain-blend);
+}
+
+#root,
+[data-thirteen-root] {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--t-font-display);
+  font-weight: var(--t-weight-title);
+  line-height: var(--t-leading-tight);
+  letter-spacing: var(--t-tracking-title);
+  text-wrap: balance;
+}
+
+p,
+figure,
+blockquote,
+dl,
+dd,
+ol,
+ul {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.18em;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* No double-tap zoom wait on controls; a faint accent flash instead of the grey default. */
+a,
+button,
+input,
+select,
+label,
+[role='gridcell'] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: var(--t-accent-soft);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+/* Screen-reader-only text (also available as <VisuallyHidden>). */
+.t-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Typeset helpers shared by components. */
+
+/* The caption voice: small Geist Mono capitals, slightly open. */
+.t-caps {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+}
+
+.t-mono {
+  font-family: var(--t-font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--t-tracking-mono);
+}
+
+.t-numerals {
+  font-variant-numeric: tabular-nums;
+}
+
+code,
+kbd,
+samp {
+  font-family: var(--t-font-mono);
+  font-size: 0.92em;
+  letter-spacing: 0;
+}
+
+/*
+ * The one orchestrated load animation. Elements opt in with
+ * `data-reveal` and a delay in `--reveal-delay`; the app adds `data-revealed`
+ * to <html> once the entrance has played, so later navigations stay still.
+ */
+@keyframes t-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes t-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes t-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+:root:not([data-revealed]) [data-reveal='cell'] {
+  animation: t-reveal var(--t-dur-3) var(--t-ease-out) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+:root:not([data-revealed]) [data-reveal='rise'] {
+  animation: t-rise 700ms var(--t-ease-out) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+:root:not([data-revealed]) [data-reveal='rule'] {
+  transform-origin: left center;
+  animation: t-draw 900ms var(--t-ease-in-out) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}

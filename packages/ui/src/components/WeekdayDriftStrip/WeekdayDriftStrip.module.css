@@ -1,0 +1,102 @@
+.figure {
+  display: grid;
+  gap: var(--t-space-3);
+  min-width: 0;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+/*
+ * A fixed width: in a fixed-layout table a percentage inside clamp() counts as
+ * auto, which shrank this column to an eighth of the table and cut "2024 ·L".
+ */
+.corner {
+  width: 4.5rem;
+}
+
+.head {
+  padding: 0 0 0.35rem;
+  border-bottom: var(--t-hairline) solid var(--t-rule-strong);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--t-ink-2);
+}
+
+.rowHead {
+  padding: 0.18rem 0.5rem 0.18rem 0;
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--t-ink-2);
+}
+
+.row:nth-child(even) .cell {
+  background: var(--t-rule-soft);
+}
+
+.cell {
+  position: relative;
+  height: 1.55rem;
+  padding: 0;
+  border-left: var(--t-hairline) solid var(--t-rule-soft);
+  text-align: center;
+}
+
+.dot {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  vertical-align: middle;
+  background: var(--strip-tone);
+}
+
+.foil {
+  --strip-tone: var(--t-foil);
+}
+
+.accent {
+  --strip-tone: var(--t-accent);
+}
+
+.highlight .rowHead {
+  color: var(--t-accent-text);
+  font-weight: var(--t-mark-weight, var(--t-weight-medium));
+}
+
+.highlight .dot {
+  box-shadow:
+    0 0 0 2px var(--t-paper),
+    0 0 0 3.5px var(--strip-tone);
+}
+
+.none {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  color: var(--t-ink-3);
+}
+
+.caption {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+  max-width: var(--t-measure);
+}
+
+.title {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}

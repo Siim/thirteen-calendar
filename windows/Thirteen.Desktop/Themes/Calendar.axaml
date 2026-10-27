@@ -1,0 +1,401 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="using:Thirteen.Desktop.Controls">
+  <!-- The Calendar section (docs/EVENTS.md §2.1 to §2.7; boards A2, B2, F2, J2, J3, K1): the toolbar, the Month grid with
+       its chips, bars and intercalary band, and the rows of List and the day lists. Colours are the theme's Th* roles;
+       event colours come from the calendars and are never themed. -->
+
+  <!-- ===== Toolbar ===== -->
+  <!-- "‹", "›" and "Today": small bordered buttons on the page (board A2). -->
+  <Style Selector="Button.tool">
+    <Setter Property="Background" Value="{DynamicResource ThPaperRaised}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="11,5" />
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="MinWidth" Value="32" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.tool:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThCellHover}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRuleStrong}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.tool:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThPressed}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.tool:disabled /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThPaperRaised}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+  </Style>
+  <Style Selector="Button.tool.warning">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+
+  <!-- "New event": the accent-filled button (board A2's primary toolbar button). -->
+  <Style Selector="Button.accentFill">
+    <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="12,6" />
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="Button.accentFill:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <Style Selector="Button.accentFill:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <Style Selector="Button.accentFill TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+
+  <Style Selector="TextBlock.calendarTitle">
+    <Setter Property="FontSize" Value="22" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LetterSpacing" Value="-0.6" />
+    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+  </Style>
+  <Style Selector="TextBlock.calendarSubtitle">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="11.5" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+  </Style>
+
+  <!-- ===== Month grid ===== -->
+  <Style Selector="Border.monthGrid">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRuleStrong}" />
+    <Setter Property="BorderThickness" Value="0,1,0,0" />
+    <Setter Property="Background" Value="{DynamicResource ThPaper}" />
+  </Style>
+  <Style Selector="Border.monthHead">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="0,0,1,1" />
+    <Setter Property="Padding" Value="2,6,2,5" />
+  </Style>
+  <Style Selector="TextBlock.monthHead1">
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.monthHead2">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+  </Style>
+
+  <!-- A day cell: the whole cell is the button; the chips sit over it. -->
+  <Style Selector="Button.monthCell">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="0,0,1,1" />
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Background" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <Panel>
+            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Padding="{TemplateBinding Padding}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+            <!-- The selected ring of a contrast theme (§2.20). -->
+            <Border Name="PART_Ring" BorderThickness="2" Margin="1" IsHitTestVisible="False" />
+          </Panel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border Margin="1" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}" />
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="Button.monthCell:pointerover">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+  </Style>
+  <Style Selector="Button.monthCell.selected">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+  </Style>
+  <!-- A 2 px Highlight ring inside the selected day in a contrast theme (ThSelectedRing is transparent otherwise; §2.20). -->
+  <Style Selector="Button.monthCell.selected /template/ Border#PART_Ring, Button.monthBand.selected /template/ Border#PART_Ring">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThSelectedRing}" />
+  </Style>
+  <Style Selector="TextBlock.monthDay">
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LetterSpacing" Value="-0.3" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <!-- Month draws every day number in ink, Sundays too (board A2; Mac, web and Android Month); only Year's mini grids
+       (board B2) draw Sundays in the accent text color. -->
+  <!-- Today keeps the accent fill on the day number (§2.2). -->
+  <Style Selector="Border.dayNumber">
+    <Setter Property="MinWidth" Value="24" />
+    <Setter Property="Height" Value="24" />
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Padding" Value="4,0" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="VerticalAlignment" Value="Top" />
+  </Style>
+  <Style Selector="Border.dayNumber.today">
+    <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+  </Style>
+  <Style Selector="Border.dayNumber.today TextBlock.monthDay">
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <Style Selector="TextBlock.monthGreg">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+  </Style>
+  <Style Selector="TextBlock.monthGregMonth">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="9" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LetterSpacing" Value="0.4" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="HorizontalAlignment" Value="Right" />
+  </Style>
+
+  <!-- Chips and bars: the visual is drawn (Controls/EventChip.cs); the button gives focus, clicks and the name. -->
+  <Style Selector="Button.eventChip">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Background" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+          <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border AdornerLayer.IsClipEnabled="False" Margin="-2" CornerRadius="6" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}" />
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="Button.eventChip.dot:pointerover">
+    <Setter Property="Background" Value="{DynamicResource ThAccentSoft}" />
+  </Style>
+  <!-- In a Windows contrast theme ThHighContrast is true and the Th* colours are the system's (Themes/HighContrast.cs,
+       §2.20): the drawn chips, bars, dots and the band switch to the forced-colors look. -->
+  <Style Selector="c|EventChipVisual">
+    <Setter Property="SurfaceColor" Value="{DynamicResource ThPaperRaisedColor}" />
+    <Setter Property="InkColor" Value="{DynamicResource ThInkColor}" />
+    <Setter Property="Ink2Color" Value="{DynamicResource ThInk2Color}" />
+    <Setter Property="RuleColor" Value="{DynamicResource ThRuleColor}" />
+    <Setter Property="HighlightColor" Value="{DynamicResource ThAccentColor}" />
+    <Setter Property="HighContrast" Value="{DynamicResource ThHighContrast}" />
+  </Style>
+  <Style Selector="c|HatchFill">
+    <Setter Property="LineColor" Value="{DynamicResource ThAccentSoftColor}" />
+    <Setter Property="BorderColor" Value="{DynamicResource ThInkColor}" />
+    <Setter Property="HighContrast" Value="{DynamicResource ThHighContrast}" />
+  </Style>
+  <!-- Year's event dots: a CanvasText ring in a contrast theme, none otherwise. -->
+  <Style Selector="c|EventDots">
+    <Setter Property="RingColor" Value="{DynamicResource ThDotRingColor}" />
+  </Style>
+
+  <!-- "+N more". -->
+  <Style Selector="Button.monthMore">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="6,0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.monthMore:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentSoft}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+
+  <!-- The intercalary band under week 4 (§2.2): hatched, with the code plate. -->
+  <Style Selector="Button.monthBand">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="0,0,1,1" />
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Background" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <Panel>
+            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+            <!-- The selected ring of a contrast theme (§2.20). -->
+            <Border Name="PART_Ring" BorderThickness="2" Margin="1" IsHitTestVisible="False" />
+          </Panel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border Margin="1" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}" />
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="Button.monthBand:pointerover">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+  </Style>
+  <Style Selector="Button.monthBand.selected">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+  </Style>
+  <Style Selector="Border.codePlate">
+    <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="Padding" Value="5,2" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Border.codePlate TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+
+  <!-- ===== Lists (List mode, "+N more", the list of days) ===== -->
+  <Style Selector="Button.eventRow">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="10,7" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="Button.eventRow:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+  </Style>
+  <Style Selector="Button.eventRow.selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+  </Style>
+  <Style Selector="TextBlock.rowTime">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="12.5" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+  </Style>
+  <Style Selector="TextBlock.rowTitle">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.rowTitle.canceled">
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextDecorations" Value="Strikethrough" />
+  </Style>
+  <Style Selector="TextBlock.rowSub">
+    <Setter Property="FontSize" Value="12.5" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="Ellipse.calendarDot">
+    <Setter Property="Width" Value="8" />
+    <Setter Property="Height" Value="8" />
+    <Setter Property="Stroke" Value="{DynamicResource ThRule}" />
+    <Setter Property="StrokeThickness" Value="1" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Border.eventTag">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRuleStrong}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="Padding" Value="5,0" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Border.eventTag TextBlock">
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+  </Style>
+  <Style Selector="Border.listMonthHeader">
+    <Setter Property="Background" Value="{DynamicResource ThPaperSunk}" />
+    <Setter Property="Padding" Value="16,7" />
+  </Style>
+  <Style Selector="TextBlock.listMonthHeader">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+  <Style Selector="TextBlock.dayHeading">
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LetterSpacing" Value="-0.3" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.dayHeading.today">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+  <Style Selector="TextBlock.dayCaption">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="Button.dayListDay">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="Padding" Value="16,10" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="Button.dayListDay.selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+  </Style>
+
+  <!-- The toast-like line of "Couldn't load events." (§2.4 "States"). -->
+  <Style Selector="Border.calendarToast">
+    <Setter Property="Background" Value="{DynamicResource ThInk}" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="Padding" Value="14,8" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="Margin" Value="16" />
+  </Style>
+  <Style Selector="Border.calendarToast TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource ThPaper}" />
+  </Style>
+  <Style Selector="Border.calendarToast Button.link">
+    <Setter Property="Foreground" Value="{DynamicResource ThPaper}" />
+  </Style>
+</Styles>

@@ -1,0 +1,200 @@
+/*
+ * Modal dialog (design/events/mockups.html, frames I1 and I2): a raised card on
+ * the theme's scrim. `plain` is one padded card; `bar` has a header and a footer
+ * band around a scrolling body, like the 560 px event editor.
+ */
+
+.dialog {
+  --dialog-width: 460px;
+  --dialog-radius: 16px;
+  width: min(var(--dialog-width), calc(100vw - 2 * var(--t-space-4)));
+  max-width: none;
+  max-height: calc(100dvh - 2 * var(--t-space-5));
+  padding: 0;
+  overflow: hidden;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--dialog-radius);
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  box-shadow: var(--t-shadow-2), var(--t-shadow-1);
+}
+
+.dialog[data-size='sm'] {
+  --dialog-width: 400px;
+}
+
+.dialog[data-size='lg'] {
+  --dialog-width: 560px;
+  --dialog-radius: 14px;
+}
+
+.dialog::backdrop {
+  background: var(--t-scrim);
+}
+
+/* The page under a modal dialog does not scroll. */
+:global(html:has(dialog[open]:modal)) {
+  overflow: hidden;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+  padding: 20px 22px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--t-space-3);
+  margin-bottom: 12px;
+}
+
+.headerHidden {
+  margin-bottom: 0;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.1875rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: -0.02em;
+  line-height: var(--t-leading-snug);
+}
+
+.description {
+  margin: -4px 0 14px;
+  color: var(--t-ink-2);
+  font-size: var(--t-text-sm);
+}
+
+.body {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+/* A read-only body that scrolls is a tab stop (Dialog.tsx): its ring is drawn inside the panel. */
+.body:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: -2px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--t-space-2);
+  margin-top: var(--t-space-4);
+}
+
+/* A 32 x 32 px target at least (§2.20, pointer platforms). */
+.close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin: -6px -8px -6px 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--t-radius-2);
+  background: transparent;
+  color: var(--t-ink-2);
+}
+
+.close:hover {
+  background: var(--t-accent-soft);
+  color: var(--t-ink);
+}
+
+/* ---- bar layout (the editor) ---------------------------------------- */
+
+.dialog[data-layout='bar'] .panel {
+  padding: 0;
+}
+
+.dialog[data-layout='bar'] .header {
+  margin: 0;
+  padding: 14px 18px;
+  border-bottom: var(--t-hairline) solid var(--t-rule-soft);
+}
+
+.dialog[data-layout='bar'] .title {
+  font-size: 1.0625rem;
+  letter-spacing: -0.015em;
+}
+
+.dialog[data-layout='bar'] .description {
+  margin: 0;
+  padding: 12px 18px 0;
+}
+
+.dialog[data-layout='bar'] .body {
+  padding: 16px 18px;
+}
+
+.dialog[data-layout='bar'] .footer {
+  margin: 0;
+  padding: 12px 18px;
+  border-top: var(--t-hairline) solid var(--t-rule-soft);
+  background: var(--t-paper);
+}
+
+/* ---- compact: the full-screen sheet of the web editor (§2.11) -------- */
+
+@media (max-width: 40rem) {
+  .dialog[data-compact='sheet'] {
+    width: 100vw;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .dialog[data-compact='sheet'] .panel {
+    height: 100%;
+  }
+
+  .dialog[data-compact='sheet'] .body {
+    flex: 1;
+  }
+
+  /* The footer stays pinned at the bottom, above the home indicator. */
+  .dialog[data-compact='sheet'] .footer {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dialog[open] {
+    animation: dialog-in var(--t-dur-2) var(--t-ease-out);
+  }
+
+  .dialog[open]::backdrop {
+    animation: backdrop-in var(--t-dur-2) var(--t-ease-out);
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .dialog {
+    border: 1px solid CanvasText;
+  }
+}

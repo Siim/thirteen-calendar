@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+        x:Class="Thirteen.Desktop.Views.Events.RepeatPickerDialog"
+        x:DataType="ev:RepeatPickerViewModel"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding Title}"
+        Width="440">
+  <!-- The repeat picker (docs/EVENTS.md §2.13, board C3): Never; the Gregorian calendar rows and their footer; the rows of
+       the selected 13-month system and theirs; Custom. The checked row shows "Next:" with the Gregorian days it lands on
+       and its notes. Choosing a row closes the picker. -->
+  <DockPanel>
+    <!-- The title, shown once (the title bar has no text; its close button and Escape close the picker). -->
+    <Border DockPanel.Dock="Top" Classes="editorHeader">
+      <TextBlock Name="Heading" Classes="dialogTitle" FontSize="18" VerticalAlignment="Center" Text="{Binding Title}" />
+    </Border>
+    <ScrollViewer MaxHeight="620" HorizontalScrollBarVisibility="Disabled">
+      <ItemsControl Name="SectionList" Margin="16,8,16,16" ItemsSource="{Binding Sections}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="ev:RepeatSection">
+            <StackPanel Margin="0,0,0,6">
+              <TextBlock Classes="sectionHeader" IsVisible="{Binding HasHeader}" Text="{Binding Header}" />
+              <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="ev:RepeatRowViewModel">
+                    <Button Classes="repeatRow" IsEnabled="{Binding IsEnabled}" AutomationProperties.Name="{Binding AccessibleName}"
+                            Command="{Binding $parent[Window].((ev:RepeatPickerViewModel)DataContext).ChooseCommand}" CommandParameter="{Binding}">
+                      <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Spacing="2">
+                          <TextBlock FontSize="13.5" TextWrapping="Wrap" Text="{Binding Label}" />
+                          <TextBlock Classes="next" IsVisible="{Binding HasNext}" Text="{Binding Next}" />
+                          <ItemsControl ItemsSource="{Binding Notes}">
+                            <ItemsControl.ItemTemplate>
+                              <DataTemplate x:DataType="x:String">
+                                <TextBlock Classes="sectionFooter" Margin="0" Text="{Binding}" />
+                              </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                          </ItemsControl>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Classes="icon" Margin="8,2,0,0" VerticalAlignment="Top" Foreground="{DynamicResource ThAccentText}"
+                                   IsVisible="{Binding IsSelected}" Text="&#xE73E;" />
+                      </Grid>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <TextBlock Classes="sectionFooter" IsVisible="{Binding HasFooter}" Text="{Binding Footer}" />
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </DockPanel>
+</Window>

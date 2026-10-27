@@ -1,0 +1,162 @@
+/* Week and Day modes (docs/EVENTS.md §2.5, §2.6), the drag span question (§2.11) and drag feedback. */
+
+.mode {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Day at regular width: the timeline, then the day's comparison on the right (§2.6). */
+.dayRegular {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 20rem);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 64rem) {
+  .dayRegular {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dayMain {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.panel {
+  position: sticky;
+  top: 0.75rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+}
+
+.notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-sunk);
+}
+
+.notice p {
+  margin: 0;
+  color: var(--t-ink-2);
+}
+
+/* ---- The span question ---------------------------------------------------------------------- */
+
+.spanButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.spanButtons > * {
+  justify-content: center;
+}
+
+.destructive {
+  color: var(--t-accent-text);
+  font-weight: var(--t-weight-numeral);
+}
+
+.spanLines {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--t-ink-2);
+}
+
+.spanLines p {
+  margin: 0;
+}
+
+/* ---- Drag feedback -------------------------------------------------------------------------- */
+
+/* The drag image over Month and the lists: a chip that follows the pointer. */
+.dragImage {
+  position: fixed;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: 14rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--cal) 24%, var(--t-paper-raised));
+  box-shadow:
+    inset 2px 0 0 var(--cal),
+    var(--t-shadow-2);
+  color: var(--t-ink);
+  font-size: 0.75rem;
+  font-weight: var(--t-weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.dragImage[data-copy]::before {
+  content: '+';
+  font-family: var(--t-font-mono);
+  font-weight: var(--t-weight-title);
+}
+
+.dragDot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cal);
+  box-shadow: 0 0 0 1px var(--t-rule);
+}
+
+:global(html[data-calendar-dragging]),
+:global(html[data-calendar-dragging] *) {
+  cursor: grabbing !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+:global([data-drag-source]) {
+  opacity: 0.45;
+}
+
+/* A long press picks an event up (touch): no callout or text selection on the press. */
+:global(button[data-key]) {
+  -webkit-touch-callout: none;
+}
+
+/* The day a Month drag would drop on. */
+:global([role='gridcell'][data-drop-target]) {
+  outline: 2px solid var(--t-accent);
+  outline-offset: -2px;
+  background-color: var(--t-accent-wash);
+}
+
+:global([role='gridcell'][data-drop-target='copy']) {
+  outline-style: dashed;
+}
+
+@media (forced-colors: active) {
+  .dragImage {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+
+  :global([role='gridcell'][data-drop-target]) {
+    outline-color: Highlight;
+  }
+}

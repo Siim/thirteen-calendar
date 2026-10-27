@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "description": "New all-day events at the end of the range (§3.1.1): one on 9999-12-31 (one day: no DTEND) and one from 9999-12-29 to 9999-12-31 (DURATION:P3D), both read back as ending 9999-12-31T24:00.",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "Two events that end on the last day",
+      "calendarId": "ab538184-3ae0-4aa7-aaa6-8e60d5d79916",
+      "start": {"new":{"calendarId":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916","name":"The end","color":"#57534e"}},
+      "steps": [
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"add","event":{"uid":"1df7d4c2-4816-4520-910c-5c9c1c31a1f1","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"The last day","location":"","description":"","url":"","start":{"kind":"date","date":"9999-12-31"},"end":null,"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"TRANSPARENT","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":null}},
+            {"op":"add","event":{"uid":"cf89134a-f913-4d28-983c-8d884a3ecf19","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"The last three days","location":"","description":"","url":"","start":{"kind":"date","date":"9999-12-29"},"end":null,"duration":"P3D","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"TRANSPARENT","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":null}}
+          ],
+          "expected": "edits/year-9999.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"9999-01-01T00:00","to":"9999-12-31T24:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916/cf89134a-f913-4d28-983c-8d884a3ecf19|9999-12-29","calendarId":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916","title":"The last three days","allDay":true,"start":"9999-12-29T00:00","end":"9999-12-31T24:00"},
+                {"key":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916/1df7d4c2-4816-4520-910c-5c9c1c31a1f1|9999-12-31","calendarId":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916","title":"The last day","allDay":true,"start":"9999-12-31T00:00","end":"9999-12-31T24:00"}
+              ]
+            },
+            {
+              "deviceZone": "America/New_York",
+              "window": {"from":"9999-01-01T00:00","to":"9999-12-31T24:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916/cf89134a-f913-4d28-983c-8d884a3ecf19|9999-12-29","calendarId":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916","title":"The last three days","allDay":true,"start":"9999-12-29T00:00","end":"9999-12-31T24:00"},
+                {"key":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916/1df7d4c2-4816-4520-910c-5c9c1c31a1f1|9999-12-31","calendarId":"ab538184-3ae0-4aa7-aaa6-8e60d5d79916","title":"The last day","allDay":true,"start":"9999-12-31T00:00","end":"9999-12-31T24:00"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

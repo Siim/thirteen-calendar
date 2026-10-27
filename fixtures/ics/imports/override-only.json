@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "description": "An invited single instance (cases/override-only.ics: an override without its master). Imported on top of cases/google-secret.ics it merges into the stored master (the group counts as updated; the master stays byte for byte; the override carries its own baseline). After that override is edited in Thirteen, an older copy of the file is unchanged (the edit stays) and a newer one replaces it (the stored master byte for byte). Into an empty calendar it is stored as read, counted as added and shown as a single event (the orphan path).",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "Merged into its master, edited, then an older and a newer copy",
+      "calendarId": "2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6",
+      "start": {"new":{"calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","name":"Liis (Google)","color":"#2563eb"}},
+      "steps": [
+        {
+          "kind": "import",
+          "file": "cases/google-secret.ics",
+          "result": {"added":3,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/override-only-1-series.ics"
+        },
+        {
+          "kind": "import",
+          "file": "cases/override-only.ics",
+          "result": {"added":0,"updated":1,"unchanged":0,"skipped":0},
+          "expected": "imports/override-only-2-merged.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-10-01T00:00","to":"2027-01-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-10-19T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-10-19T19:00","end":"2026-10-19T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/me18kikpdv9t2i30362879jh86@google.com|2026-10-21T07:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Dentist","allDay":false,"start":"2026-10-21T10:00","end":"2026-10-21T11:00"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-10-26T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-10-26T19:00","end":"2026-10-26T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/30mtpk6n0lo8mll85c9ret22vd@google.com|2026-10-30","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Weekend in Tartu","allDay":true,"start":"2026-10-30T00:00","end":"2026-11-01T24:00"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-02T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal (moved to Tuesday)","allDay":false,"start":"2026-11-03T20:00","end":"2026-11-03T21:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-09T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal: concert run-through","allDay":false,"start":"2026-11-09T18:30","end":"2026-11-09T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-23T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-11-23T19:00","end":"2026-11-23T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-30T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-11-30T19:00","end":"2026-11-30T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-12-07T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-12-07T19:00","end":"2026-12-07T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-12-14T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-12-14T19:00","end":"2026-12-14T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-12-21T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-12-21T19:00","end":"2026-12-21T20:30"}
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"set","uid":"r08aoq6ufb53f6lh41ijuflp5u@google.com","recurrenceId":{"kind":"zoned","value":"2026-11-09T19:00","tzid":"Europe/Tallinn"},"fields":{"location":"Kaarli kirik, choir room","sequence":4,"lastModified":{"kind":"utc","value":"2026-10-19T06:41"}}}
+          ],
+          "expected": "imports/override-only-3-edited.ics"
+        },
+        {
+          "kind": "import",
+          "file": "imports/override-only-older.ics",
+          "result": {"added":0,"updated":0,"unchanged":1,"skipped":0},
+          "expected": "imports/override-only-4-older.ics"
+        },
+        {
+          "kind": "import",
+          "file": "imports/override-only-newer.ics",
+          "result": {"added":0,"updated":1,"unchanged":0,"skipped":0},
+          "expected": "imports/override-only-5-newer.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-10-01T00:00","to":"2027-01-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-10-19T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-10-19T19:00","end":"2026-10-19T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/me18kikpdv9t2i30362879jh86@google.com|2026-10-21T07:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Dentist","allDay":false,"start":"2026-10-21T10:00","end":"2026-10-21T11:00"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-10-26T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-10-26T19:00","end":"2026-10-26T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/30mtpk6n0lo8mll85c9ret22vd@google.com|2026-10-30","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Weekend in Tartu","allDay":true,"start":"2026-10-30T00:00","end":"2026-11-01T24:00"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-02T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal (moved to Tuesday)","allDay":false,"start":"2026-11-03T20:00","end":"2026-11-03T21:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-09T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal: dress rehearsal","allDay":false,"start":"2026-11-09T18:00","end":"2026-11-09T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-23T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-11-23T19:00","end":"2026-11-23T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-30T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-11-30T19:00","end":"2026-11-30T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-12-07T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-12-07T19:00","end":"2026-12-07T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-12-14T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-12-14T19:00","end":"2026-12-14T20:30"},
+                {"key":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-12-21T19:00","calendarId":"2f7e9fe5-d751-4efc-ae3b-822db4e6bfb6","title":"Choir rehearsal","allDay":false,"start":"2026-12-21T19:00","end":"2026-12-21T20:30"}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Into an empty calendar",
+      "calendarId": "fe764025-028d-4b79-9087-775e348e72e6",
+      "start": {"new":{"calendarId":"fe764025-028d-4b79-9087-775e348e72e6","name":"Invitations","color":"#9333ea"}},
+      "steps": [
+        {
+          "kind": "import",
+          "file": "cases/override-only.ics",
+          "result": {"added":1,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/override-only-empty.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"fe764025-028d-4b79-9087-775e348e72e6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-09T19:00","calendarId":"fe764025-028d-4b79-9087-775e348e72e6","title":"Choir rehearsal: concert run-through","allDay":false,"start":"2026-11-09T18:30","end":"2026-11-09T20:30"}
+              ]
+            },
+            {
+              "deviceZone": "America/New_York",
+              "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"fe764025-028d-4b79-9087-775e348e72e6/r08aoq6ufb53f6lh41ijuflp5u@google.com|2026-11-09T19:00","calendarId":"fe764025-028d-4b79-9087-775e348e72e6","title":"Choir rehearsal: concert run-through","allDay":false,"start":"2026-11-09T11:30","end":"2026-11-09T13:30"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

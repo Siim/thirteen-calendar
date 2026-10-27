@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+             x:Class="Thirteen.Desktop.Views.Events.ThirteenDateField"
+             x:DataType="ev:DateFieldViewModel">
+  <!-- The 13-month date field (docs/EVENTS.md §2.12, board I1): "IFC Thu, Oct 12, 2026" with the calendar button that
+       opens the picker (also Alt+Down and F4); typing 2026-M10-12, 2026-YD or 2026-10-19 into it works too, and a date
+       before 1583 is refused with its error under the field. -->
+  <TextBox Name="Box" MinWidth="200" Text="{Binding Text, Mode=TwoWay}"
+           AutomationProperties.Name="{Binding Label}">
+    <TextBox.InnerRightContent>
+      <Button Name="PickerButton" Classes="subtle" Padding="8,2" Margin="0,0,2,0" VerticalAlignment="Stretch"
+              Command="{Binding OpenPickerCommand}" IsTabStop="False"
+              ToolTip.Tip="{Binding AccessibleName}" AutomationProperties.Name="{Binding AccessibleName}">
+        <TextBlock Classes="icon" FontSize="13" Text="&#xE787;" />
+      </Button>
+    </TextBox.InnerRightContent>
+  </TextBox>
+</UserControl>

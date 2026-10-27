@@ -1,0 +1,152 @@
+.figure {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--t-space-4);
+  min-width: 0;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-6);
+}
+
+@container (min-width: 44rem) {
+  .panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.panel {
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.panelTitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--t-space-3);
+  padding-bottom: 0.4rem;
+  border-bottom: var(--t-hairline) solid var(--t-rule-strong);
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}
+
+.panelSum {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-text);
+  letter-spacing: var(--t-tracking-mono);
+  color: var(--t-ink-2);
+  text-align: right;
+}
+
+.rows {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(2.6rem, max-content) minmax(0, 1fr) 2.4rem;
+  column-gap: 0.6rem;
+  row-gap: 4px;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  min-height: 1.15rem;
+}
+
+.name {
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: 0;
+  color: var(--t-ink-2);
+  white-space: nowrap;
+}
+
+.track {
+  position: relative;
+  height: 0.95rem;
+}
+
+/* The 28-day guide, drawn through every row. */
+.track::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: var(--guide);
+  border-left: var(--t-hairline) dashed var(--t-ink-3);
+}
+
+.base,
+.excess {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transform-origin: left center;
+}
+
+.base {
+  left: 0;
+  width: var(--base);
+}
+
+.excess {
+  left: var(--base);
+  width: var(--excess);
+  background: repeating-linear-gradient(-45deg, var(--t-accent) 0 2px, transparent 2px 4.5px);
+  box-shadow: inset 0 0 0 var(--t-hairline) var(--t-accent);
+}
+
+/* Gregorian bars: flat foil, or hatched where the theme cannot tell them apart by colour (Mono). */
+.foil .base {
+  background-color: var(--t-foil-band, var(--t-foil));
+  background-image: var(--t-foil-hatch, none);
+  box-shadow: inset 0 0 0 var(--t-hairline) var(--t-foil);
+}
+
+.thirteen .base {
+  background: var(--t-accent);
+}
+
+.value {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--t-ink);
+}
+
+.extra {
+  color: var(--t-accent-text);
+}
+
+.intercalaryRow .name {
+  color: var(--t-accent-text);
+}
+
+.intercalaryRow .base {
+  width: max(4px, var(--base));
+  background: repeating-linear-gradient(-45deg, var(--t-accent) 0 2px, transparent 2px 4px);
+  box-shadow: inset 0 0 0 var(--t-hairline) var(--t-accent);
+}
+
+.caption {
+  max-width: var(--t-measure);
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+:root:not([data-revealed]) .figure[data-reveal] .base,
+:root:not([data-revealed]) .figure[data-reveal] .excess {
+  animation: t-draw 800ms var(--t-ease-out) both;
+  animation-delay: calc(var(--reveal-delay, 0ms) + var(--row, 0) * 35ms);
+}

@@ -1,0 +1,133 @@
+/* Menu button and menu: items are 32 px tall at least (§2.20, pointer platforms). */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.6rem;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: 8px;
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  line-height: 1;
+}
+
+.button:hover:not(:disabled),
+.button[aria-expanded='true'] {
+  border-color: var(--t-accent);
+  background: var(--t-accent-soft);
+}
+
+.button:disabled {
+  opacity: 0.45;
+}
+
+.iconOnly {
+  padding: 0.25rem;
+}
+
+.menu {
+  --popover-radius: 12px;
+  min-width: 12rem;
+  max-width: min(20rem, calc(100vw - 16px));
+}
+
+.list {
+  display: grid;
+  padding: 4px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  color: var(--t-ink);
+  font-size: 0.84375rem;
+  line-height: var(--t-leading-snug);
+  cursor: default;
+  user-select: none;
+}
+
+.item:focus {
+  outline: none;
+  background: var(--t-accent-soft);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: -2px;
+}
+
+.item[aria-disabled='true'] {
+  color: var(--t-ink-3);
+}
+
+.item[aria-disabled='true']:focus {
+  background: var(--t-paper-sunk);
+}
+
+/* No danger colour in the tokens: the theme's accent text and a heavier weight carry it, and the label says what it does. */
+.destructive {
+  color: var(--t-accent-text);
+  font-weight: var(--t-weight-title);
+}
+
+.icon {
+  flex: none;
+  color: var(--t-ink-2);
+}
+
+.destructive .icon {
+  color: inherit;
+}
+
+.check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 14px;
+  color: var(--t-accent-text);
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
+}
+
+.shortcut {
+  margin-left: auto;
+  padding-left: var(--t-space-4);
+  color: var(--t-ink-3);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-mono);
+}
+
+.separator {
+  height: var(--t-hairline);
+  margin: 4px 6px;
+  background: var(--t-rule-soft);
+}
+
+@media (forced-colors: active) {
+  .item:focus {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .item[aria-disabled='true'] {
+    color: GrayText;
+  }
+
+  .separator {
+    background: CanvasText;
+  }
+}

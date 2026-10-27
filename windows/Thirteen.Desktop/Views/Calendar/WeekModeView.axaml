@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:cal="using:Thirteen.Desktop.Views.CalendarSection"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.WeekModeView"
+             x:DataType="vm:WeekModeViewModel">
+  <!-- Calendar's Week mode (docs/EVENTS.md §2.5, board F1): the 7 days of a 13-month week as timeline columns, plus a
+       60 % wide hatched column for each intercalary day after week 4, with headers in both calendars, the all-day row
+       and the timeline (Views/Calendar/TimelineView). Paging, the title and the toolbar are done by CalendarViewModel. -->
+  <DockPanel>
+    <!-- Every calendar hidden (§2.4 "States"): the timeline without items, and the line with "Show calendars". -->
+    <Border DockPanel.Dock="Top" Classes="banner" Margin="32,0,32,10" IsVisible="{Binding ShowsAllHidden}">
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding AllHiddenText}" />
+        <Button Classes="link" VerticalAlignment="Center" Content="{Binding ShowCalendarsText}"
+                Command="{Binding Calendar.ShowHiddenCalendarsCommand}" />
+      </StackPanel>
+    </Border>
+    <cal:TimelineView Name="Timeline" Margin="24,0,32,16" ShowsHeaders="True" />
+  </DockPanel>
+</UserControl>

@@ -1,0 +1,366 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             x:Class="Thirteen.Desktop.Views.CompareView"
+             x:DataType="vm:CompareViewModel">
+  <!-- Compare (SPEC 5.4): 12 vs 13 for one year. -->
+  <UserControl.Styles>
+    <Style Selector="Border.swatch">
+      <Setter Property="Width" Value="14" />
+      <Setter Property="Height" Value="10" />
+      <Setter Property="CornerRadius" Value="2" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Border.underline">
+      <Setter Property="Width" Value="24" />
+      <Setter Property="Height" Value="3" />
+      <Setter Property="CornerRadius" Value="1.5" />
+      <Setter Property="HorizontalAlignment" Value="Left" />
+      <Setter Property="Background" Value="{DynamicResource ThFoil}" />
+    </Style>
+    <Style Selector="Border.underline.accent">
+      <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+    </Style>
+    <!-- Gregorian bands use ThFoilBand*: the foil tones, hatched in Mono (Themes/ThemeResources.cs). -->
+    <Style Selector="Border.quarter">
+      <Setter Property="Background" Value="{DynamicResource ThFoilBand1}" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="MinHeight" Value="38" />
+      <Setter Property="Margin" Value="1,0" />
+    </Style>
+    <Style Selector="Border.quarter.strong">
+      <Setter Property="Background" Value="{DynamicResource ThFoilBand2}" />
+    </Style>
+    <Style Selector="ItemsControl.accent Border.quarter">
+      <Setter Property="Background" Value="{DynamicResource ThAccentTone1}" />
+    </Style>
+    <Style Selector="ItemsControl.accent Border.quarter.strong">
+      <Setter Property="Background" Value="{DynamicResource ThAccentTone2}" />
+    </Style>
+    <Style Selector="Border.driftChip">
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="MinHeight" Value="28" />
+      <Setter Property="Margin" Value="2,0" />
+    </Style>
+    <Style Selector="Border.driftChip TextBlock">
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer Name="Scroller" HorizontalScrollBarVisibility="Disabled">
+    <c:PageColumn MaxContentWidth="{Binding ContentMaxWidth}">
+      <StackPanel Margin="32,4,32,32" Spacing="16">
+        <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Center" MinWidth="320">
+          <Button Classes="round" Command="{Binding PreviousYearCommand}" ToolTip.Tip="Previous year (Ctrl+Left)"
+                  AutomationProperties.Name="Previous year">
+            <TextBlock Classes="icon" Text="&#xE76B;" />
+          </Button>
+          <StackPanel Grid.Column="1" Margin="24,0" Spacing="2" AutomationProperties.Name="{Binding Content.Header.AutomationName}">
+            <TextBlock Classes="numeral" FontSize="44" LetterSpacing="-1.8" HorizontalAlignment="Center" Text="{Binding Content.Header.YearText}" />
+            <TextBlock Classes="caption" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding Content.Header.Caption}" />
+          </StackPanel>
+          <Button Grid.Column="2" Classes="round" Command="{Binding NextYearCommand}" ToolTip.Tip="Next year (Ctrl+Right)"
+                  AutomationProperties.Name="Next year">
+            <TextBlock Classes="icon" Text="&#xE76C;" />
+          </Button>
+        </Grid>
+
+        <!-- Month boundaries. -->
+        <Border Classes="card">
+          <StackPanel Spacing="14">
+            <StackPanel Spacing="2">
+              <TextBlock Classes="title" Text="Month boundaries" />
+              <TextBlock Classes="subtitle" Text="Both calendars start on 1 January and share every day; only the month lines differ." />
+            </StackPanel>
+            <c:MonthRibbon Alignment="{Binding Content.Alignment}" MarkedDayOfYear="{Binding Content.MarkedDayOfYear}"
+                           FoilColor="{DynamicResource ThFoilColor}" AccentColor="{DynamicResource ThAccentColor}"
+                           AccentTextColor="{DynamicResource ThAccentTextColor}" InkColor="{DynamicResource ThInkColor}"
+                           GregorianBandBrush="{DynamicResource ThFoilBand1}" GregorianBandStrongBrush="{DynamicResource ThFoilBand2}"
+                           AutomationProperties.Name="{Binding Content.RibbonAutomationName}" />
+            <WrapPanel Orientation="Horizontal" AutomationProperties.AccessibilityView="Raw">
+              <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,0,20,4">
+                <Border Classes="swatch" Background="{DynamicResource ThFoilBand2}" />
+                <TextBlock Classes="caption" Text="Gregorian month" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,0,20,4">
+                <Border Classes="swatch" Background="{DynamicResource ThAccentTone2}" />
+                <TextBlock Classes="caption" Text="{Binding Content.RibbonLegendThirteen}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,0,20,4">
+                <Border Classes="swatch" Background="{DynamicResource ThAccent}" />
+                <TextBlock Classes="caption" Text="Intercalary day" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,0,20,4" IsVisible="{Binding Content.HasToday}">
+                <Border Classes="swatch" Background="{DynamicResource ThInk}" />
+                <TextBlock Classes="caption" Text="Today" />
+              </StackPanel>
+            </WrapPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- Month lengths. -->
+        <Border Classes="card">
+          <StackPanel Spacing="14">
+            <StackPanel Spacing="2">
+              <TextBlock Classes="title" Text="Month lengths" />
+              <TextBlock Classes="subtitle" Text="Both on one scale from zero: four weeks, plus any days beyond them." />
+            </StackPanel>
+            <WrapPanel Orientation="Horizontal" AutomationProperties.AccessibilityView="Raw">
+              <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,0,20,0">
+                <Border Classes="swatch" Background="{DynamicResource ThFoilTone2}" />
+                <TextBlock Classes="caption" Text="Four weeks (28 days)" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <Border Classes="swatch" Background="{DynamicResource ThFoil}" />
+                <TextBlock Classes="caption" Text="Days beyond four weeks" />
+              </StackPanel>
+            </WrapPanel>
+            <c:SplitColumns Threshold="900" Spacing="28">
+              <StackPanel c:SplitColumns.Column="0" Spacing="6">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock FontWeight="SemiBold" FontSize="13.5" Text="{Binding Content.GregorianChartTitle}" />
+                  <TextBlock Grid.Column="1" Classes="mono caption" Text="{Binding #GregorianChart.Readout}" />
+                </Grid>
+                <c:MonthLengthChart Name="GregorianChart" Lengths="{Binding Content.Stats.GregorianMonthLengths}"
+                                    Names="{Binding Content.GregorianMonthNames}" ShortNames="{Binding Content.GregorianMonthShortNames}" AnnotateFourWeekBars="True"
+                                    BarColor="{DynamicResource ThFoilColor}" RuleColor="{DynamicResource ThRuleColor}"
+                                    AxisColor="{DynamicResource ThInk3Color}" ValueColor="{DynamicResource ThInk2Color}"
+                                    AutomationProperties.Name="{Binding Content.GregorianChartAutomationName}" />
+              </StackPanel>
+              <StackPanel c:SplitColumns.Column="1" Spacing="6">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock FontWeight="SemiBold" FontSize="13.5" Text="{Binding Content.ThirteenChartTitle}" />
+                  <TextBlock Grid.Column="1" Classes="mono caption" Text="{Binding #ThirteenChart.Readout}" />
+                </Grid>
+                <c:MonthLengthChart Name="ThirteenChart" Lengths="{Binding Content.Stats.ThirteenMonthLengths}"
+                                    Names="{Binding Content.ThirteenMonthNames}" ShortNames="{Binding Content.ThirteenMonthShortNames}"
+                                    BarColor="{DynamicResource ThAccentColor}" RuleColor="{DynamicResource ThRuleColor}"
+                                    AxisColor="{DynamicResource ThInk3Color}" ValueColor="{DynamicResource ThInk2Color}"
+                                    AutomationProperties.Name="{Binding Content.ThirteenChartAutomationName}" />
+              </StackPanel>
+            </c:SplitColumns>
+          </StackPanel>
+        </Border>
+
+        <c:CardGrid MinItemWidth="340" MaxColumns="2" Spacing="16">
+          <!-- Friday the 13th. -->
+          <Border Classes="card">
+            <StackPanel Spacing="14">
+              <StackPanel Spacing="2">
+                <TextBlock Classes="title" Text="Friday the 13th" />
+                <TextBlock Classes="subtitle" Text="How often the 13th of a month is a Friday." />
+              </StackPanel>
+              <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                <StackPanel Spacing="8">
+                  <TextBlock Classes="numeral" FontSize="40" LetterSpacing="-1.6" Text="{Binding Content.FridayGregorian.Value}" />
+                  <Border Classes="underline" />
+                  <TextBlock Classes="explanation" FontSize="13" Text="{Binding Content.FridayGregorian.Caption}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="8">
+                  <TextBlock Classes="numeral" FontSize="40" LetterSpacing="-1.6" Text="{Binding Content.FridayThirteen.Value}" />
+                  <Border Classes="underline accent" />
+                  <TextBlock Classes="explanation" FontSize="13" Text="{Binding Content.FridayThirteen.Caption}" />
+                </StackPanel>
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <!-- Quarters. -->
+          <Border Classes="card">
+            <StackPanel Spacing="14">
+              <StackPanel Spacing="2">
+                <TextBlock Classes="title" Text="Quarters" />
+                <TextBlock Classes="subtitle" Text="Days per quarter; 13-month quarters are 3¼ months each." />
+              </StackPanel>
+              <ItemsControl ItemsSource="{Binding Content.Quarters}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Spacing="12" />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:QuarterRow">
+                    <StackPanel Spacing="6">
+                      <TextBlock Classes="eyebrow" Classes.foil="{Binding !IsAccent}" Classes.accent="{Binding IsAccent}" Text="{Binding Title}" />
+                      <ItemsControl ItemsSource="{Binding Quarters}" Classes.accent="{Binding IsAccent}">
+                        <ItemsControl.ItemsPanel>
+                          <ItemsPanelTemplate>
+                            <UniformGrid Rows="1" />
+                          </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate x:DataType="vm:QuarterCell">
+                            <Border Classes="quarter" Classes.strong="{Binding IsStrong}" AutomationProperties.Name="{Binding AutomationName}">
+                              <TextBlock Classes="numeral" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center"
+                                         VerticalAlignment="Center" Text="{Binding Days}" />
+                            </Border>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </StackPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <TextBlock Classes="footnote" Text="{Binding Content.QuartersNote}" IsVisible="{Binding Content.HasQuartersNote}" />
+            </StackPanel>
+          </Border>
+
+          <!-- Month shapes. -->
+          <Border Classes="card">
+            <StackPanel Spacing="14">
+              <StackPanel Spacing="2">
+                <TextBlock Classes="title" Text="Month shapes" />
+                <TextBlock Classes="subtitle" Text="A month's shape is its first weekday and length." />
+              </StackPanel>
+              <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                <StackPanel Spacing="8">
+                  <TextBlock Classes="numeral" FontSize="40" LetterSpacing="-1.6" Text="{Binding Content.ShapesGregorian.Value}" />
+                  <Border Classes="underline" />
+                  <TextBlock Classes="explanation" FontSize="13" Text="{Binding Content.ShapesGregorian.Caption}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="8">
+                  <TextBlock Classes="numeral" FontSize="40" LetterSpacing="-1.6" Text="{Binding Content.ShapesThirteen.Value}" />
+                  <Border Classes="underline accent" />
+                  <TextBlock Classes="explanation" FontSize="13" Text="{Binding Content.ShapesThirteen.Caption}" />
+                </StackPanel>
+              </Grid>
+              <ItemsControl ItemsSource="{Binding Content.Shapes}" AutomationProperties.AccessibilityView="Raw">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <UniformGrid Columns="6" />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:ShapeGlyph">
+                    <StackPanel Spacing="3" Margin="4,0,4,8">
+                      <c:MonthShapeGlyph LeadingBlanks="{Binding LeadingBlanks}" Days="{Binding Days}" FillColor="{DynamicResource ThFoilColor}" />
+                      <TextBlock Classes="mono ink3" FontSize="10" HorizontalAlignment="Center" Text="{Binding Label}" />
+                    </StackPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <Grid ColumnDefinitions="48,*" ColumnSpacing="10">
+                <c:MonthShapeGlyph LeadingBlanks="0" Days="28" FillColor="{DynamicResource ThAccentColor}" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Classes="explanation" FontSize="13" VerticalAlignment="Center" Text="{Binding Content.ShapesNote}" />
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <!-- Weekday drift. -->
+          <Border Classes="card">
+            <StackPanel Spacing="14" AutomationProperties.Name="{Binding Content.DriftAutomationName}">
+              <StackPanel Spacing="2">
+                <TextBlock Classes="title" Text="Weekday drift" />
+                <TextBlock Classes="subtitle" Text="The weekday of 1 January, year by year." />
+              </StackPanel>
+              <Grid ColumnDefinitions="56,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="8" AutomationProperties.AccessibilityView="Raw">
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding Content.DriftYears}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <UniformGrid Rows="1" />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:DriftYear">
+                      <TextBlock Classes="mono ink3" FontSize="10.5" HorizontalAlignment="Center" Text="{Binding Year}" />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Grid.Row="1" Classes="eyebrow foil" Text="GREG" VerticalAlignment="Center" />
+                <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Content.DriftYears}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <UniformGrid Rows="1" />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:DriftYear">
+                      <Border Classes="driftChip" Background="{DynamicResource ThFoilBand1}">
+                        <TextBlock Text="{Binding Gregorian}" />
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Grid.Row="2" Classes="eyebrow accent" Text="{Binding Content.DriftSystemLabel}" VerticalAlignment="Center" />
+                <ItemsControl Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Content.DriftYears}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <UniformGrid Rows="1" />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:DriftYear">
+                      <Border Classes="driftChip" Background="{DynamicResource ThAccentTone1}">
+                        <TextBlock Text="{Binding Thirteen}" />
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </Grid>
+              <TextBlock Classes="explanation" Text="{Binding Content.DriftSentence}" />
+            </StackPanel>
+          </Border>
+        </c:CardGrid>
+
+        <!-- The three calendars side by side. -->
+        <Border Classes="card">
+          <StackPanel Spacing="14">
+            <TextBlock Classes="title" Text="Side by side" />
+            <ItemsControl ItemsSource="{Binding Content.Columns}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <c:CardGrid MinItemWidth="250" MaxColumns="3" Spacing="12" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:CalendarColumn">
+                  <Border Classes="well" Classes.selected="{Binding IsSelected}" AutomationProperties.Name="{Binding AutomationName}">
+                    <StackPanel Spacing="8">
+                      <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Classes="pill foilFill" IsVisible="{Binding IsFoil}" VerticalAlignment="Center" />
+                        <Border Classes="pill accentFill" IsVisible="{Binding IsSelected}" VerticalAlignment="Center" />
+                        <Border Classes="pill inkFill" IsVisible="{Binding IsPlain}" VerticalAlignment="Center" />
+                        <TextBlock Classes="eyebrow accent" Text="SELECTED" IsVisible="{Binding IsSelected}" />
+                      </StackPanel>
+                      <TextBlock FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" Text="{Binding Name}" />
+                      <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding Origin}" />
+                      <ItemsControl ItemsSource="{Binding Facts}">
+                        <ItemsControl.ItemsPanel>
+                          <ItemsPanelTemplate>
+                            <StackPanel Spacing="8" />
+                          </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate x:DataType="vm:FactLine">
+                            <StackPanel Spacing="1">
+                              <TextBlock Classes="eyebrow" Text="{Binding Title}" />
+                              <TextBlock FontSize="13.5" TextWrapping="Wrap" Text="{Binding Value}" />
+                            </StackPanel>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+
+        <Button Classes="accentBordered" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                AutomationProperties.Name="History of the three calendars" Padding="12,10"
+                Command="{Binding OpenHistoryCommand}">
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <TextBlock Classes="icon" FontSize="14" Text="&#xE81C;" VerticalAlignment="Center" />
+            <TextBlock Text="History of the three calendars" VerticalAlignment="Center" />
+          </StackPanel>
+        </Button>
+      </StackPanel>
+    </c:PageColumn>
+  </ScrollViewer>
+</UserControl>

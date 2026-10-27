@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "description": "The Consultation series of cases/rrule-rdate.ics: weekly at 09:00 with an RDATE at 15:00 on Monday, November 2, a day the rule also produces (both are read). \"Delete this event only\" on the 15:00 occurrence adds EXDATE;TZID=Europe/Tallinn:20261102T150000 (the 09:00 occurrence stays); then a retime of the series to 10:00 (retimeExceptions, minuteDelta 60) rewrites that EXDATE and the RDATE to 16:00, the PERIOD RDATE to 15:00 and the EXDATE at the series time to 10:00.",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "Delete the 15:00 occurrence, then move the series to 10:00",
+      "calendarId": "rrule-rdate",
+      "start": {"file":"cases/rrule-rdate.ics"},
+      "steps": [
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"set","uid":"b9c4888c-28ce-4a1f-b750-8d764e943466","recurrenceId":null,"fields":{"exdates":[{"kind":"zoned","value":"2026-11-09T09:00","tzid":"Europe/Tallinn"},{"kind":"zoned","value":"2026-11-02T15:00","tzid":"Europe/Tallinn"}],"sequence":1,"lastModified":{"kind":"utc","value":"2026-10-19T06:41"}}}
+          ],
+          "expected": "edits/own-time-rdate.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-10-01T00:00","to":"2027-01-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-10-19T09:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-10-19T09:00","end":"2026-10-19T10:00"},
+                {"key":"rrule-rdate/b9e98a6c-7b85-45b3-b254-1c2b591bac40|2026-10-20T12:00","calendarId":"rrule-rdate","title":"Three weeks and one extra","allDay":false,"start":"2026-10-20T15:00","end":"2026-10-20T16:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-10-26T09:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-10-26T09:00","end":"2026-10-26T10:00"},
+                {"key":"rrule-rdate/b9e98a6c-7b85-45b3-b254-1c2b591bac40|2026-10-27T12:00","calendarId":"rrule-rdate","title":"Three weeks and one extra","allDay":false,"start":"2026-10-27T14:00","end":"2026-10-27T15:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-11-02T09:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-11-02T09:00","end":"2026-11-02T10:00"},
+                {"key":"rrule-rdate/b9e98a6c-7b85-45b3-b254-1c2b591bac40|2026-11-03T12:00","calendarId":"rrule-rdate","title":"Three weeks and one extra","allDay":false,"start":"2026-11-03T14:00","end":"2026-11-03T15:00"},
+                {"key":"rrule-rdate/b9e98a6c-7b85-45b3-b254-1c2b591bac40|2026-11-11T12:00","calendarId":"rrule-rdate","title":"Three weeks and one extra","allDay":false,"start":"2026-11-11T14:00","end":"2026-11-11T15:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-11-12T14:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-11-12T14:00","end":"2026-11-12T17:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-11-16T09:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-11-16T09:00","end":"2026-11-16T10:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-11-23T09:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-11-23T09:00","end":"2026-11-23T10:00"},
+                {"key":"rrule-rdate/b82aa849-3e98-48d2-b89c-0918b3aa13d8|2026-12-01","calendarId":"rrule-rdate","title":"An extra date after the end","allDay":true,"start":"2026-12-01T00:00","end":"2026-12-01T24:00"},
+                {"key":"rrule-rdate/e7500fc0-597a-48a9-974e-5214c442a0d9|2026-12-01","calendarId":"rrule-rdate","title":"An extra date that is also excluded","allDay":true,"start":"2026-12-01T00:00","end":"2026-12-01T24:00"},
+                {"key":"rrule-rdate/b82aa849-3e98-48d2-b89c-0918b3aa13d8|2026-12-02","calendarId":"rrule-rdate","title":"An extra date after the end","allDay":true,"start":"2026-12-02T00:00","end":"2026-12-02T24:00"},
+                {"key":"rrule-rdate/b82aa849-3e98-48d2-b89c-0918b3aa13d8|2026-12-03","calendarId":"rrule-rdate","title":"An extra date after the end","allDay":true,"start":"2026-12-03T00:00","end":"2026-12-03T24:00"},
+                {"key":"rrule-rdate/e7500fc0-597a-48a9-974e-5214c442a0d9|2026-12-08","calendarId":"rrule-rdate","title":"An extra date that is also excluded","allDay":true,"start":"2026-12-08T00:00","end":"2026-12-08T24:00"},
+                {"key":"rrule-rdate/b82aa849-3e98-48d2-b89c-0918b3aa13d8|2026-12-15","calendarId":"rrule-rdate","title":"An extra date after the end","allDay":true,"start":"2026-12-15T00:00","end":"2026-12-15T24:00"}
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"set","uid":"b9c4888c-28ce-4a1f-b750-8d764e943466","recurrenceId":null,"fields":{"start":{"kind":"zoned","value":"2026-10-19T10:00","tzid":"Europe/Tallinn"},"end":{"kind":"zoned","value":"2026-10-19T11:00","tzid":"Europe/Tallinn"},"exdates":[{"kind":"zoned","value":"2026-11-09T10:00","tzid":"Europe/Tallinn"},{"kind":"zoned","value":"2026-11-02T16:00","tzid":"Europe/Tallinn"}],"rdates":[{"value":{"kind":"zoned","value":"2026-11-02T16:00","tzid":"Europe/Tallinn"},"period":null},{"value":{"kind":"zoned","value":"2026-11-12T15:00","tzid":"Europe/Tallinn"},"period":"PT3H"}],"sequence":2,"lastModified":{"kind":"utc","value":"2026-10-19T06:41"}}}
+          ],
+          "expected": "edits/own-time-rdate-retimed.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-10-01T00:00","to":"2027-01-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-10-19T10:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-10-19T10:00","end":"2026-10-19T11:00"},
+                {"key":"rrule-rdate/b9e98a6c-7b85-45b3-b254-1c2b591bac40|2026-10-20T12:00","calendarId":"rrule-rdate","title":"Three weeks and one extra","allDay":false,"start":"2026-10-20T15:00","end":"2026-10-20T16:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-10-26T10:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-10-26T10:00","end":"2026-10-26T11:00"},
+                {"key":"rrule-rdate/b9e98a6c-7b85-45b3-b254-1c2b591bac40|2026-10-27T12:00","calendarId":"rrule-rdate","title":"Three weeks and one extra","allDay":false,"start":"2026-10-27T14:00","end":"2026-10-27T15:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-11-02T10:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-11-02T10:00","end":"2026-11-02T11:00"},
+                {"key":"rrule-rdate/b9e98a6c-7b85-45b3-b254-1c2b591bac40|2026-11-03T12:00","calendarId":"rrule-rdate","title":"Three weeks and one extra","allDay":false,"start":"2026-11-03T14:00","end":"2026-11-03T15:00"},
+                {"key":"rrule-rdate/b9e98a6c-7b85-45b3-b254-1c2b591bac40|2026-11-11T12:00","calendarId":"rrule-rdate","title":"Three weeks and one extra","allDay":false,"start":"2026-11-11T14:00","end":"2026-11-11T15:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-11-12T15:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-11-12T15:00","end":"2026-11-12T18:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-11-16T10:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-11-16T10:00","end":"2026-11-16T11:00"},
+                {"key":"rrule-rdate/b9c4888c-28ce-4a1f-b750-8d764e943466|2026-11-23T10:00","calendarId":"rrule-rdate","title":"Consultation","allDay":false,"start":"2026-11-23T10:00","end":"2026-11-23T11:00"},
+                {"key":"rrule-rdate/b82aa849-3e98-48d2-b89c-0918b3aa13d8|2026-12-01","calendarId":"rrule-rdate","title":"An extra date after the end","allDay":true,"start":"2026-12-01T00:00","end":"2026-12-01T24:00"},
+                {"key":"rrule-rdate/e7500fc0-597a-48a9-974e-5214c442a0d9|2026-12-01","calendarId":"rrule-rdate","title":"An extra date that is also excluded","allDay":true,"start":"2026-12-01T00:00","end":"2026-12-01T24:00"},
+                {"key":"rrule-rdate/b82aa849-3e98-48d2-b89c-0918b3aa13d8|2026-12-02","calendarId":"rrule-rdate","title":"An extra date after the end","allDay":true,"start":"2026-12-02T00:00","end":"2026-12-02T24:00"},
+                {"key":"rrule-rdate/b82aa849-3e98-48d2-b89c-0918b3aa13d8|2026-12-03","calendarId":"rrule-rdate","title":"An extra date after the end","allDay":true,"start":"2026-12-03T00:00","end":"2026-12-03T24:00"},
+                {"key":"rrule-rdate/e7500fc0-597a-48a9-974e-5214c442a0d9|2026-12-08","calendarId":"rrule-rdate","title":"An extra date that is also excluded","allDay":true,"start":"2026-12-08T00:00","end":"2026-12-08T24:00"},
+                {"key":"rrule-rdate/b82aa849-3e98-48d2-b89c-0918b3aa13d8|2026-12-15","calendarId":"rrule-rdate","title":"An extra date after the end","allDay":true,"start":"2026-12-15T00:00","end":"2026-12-15T24:00"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Thirteen.Desktop.App"
+             Name="Thirteen"
+             RequestedThemeVariant="Default">
+  <!-- RequestedThemeVariant="Default" follows the Windows light/dark setting until Settings pins one.
+       The colour theme (Themes/ThemeTokens.cs, generated from design/tokens.json) is added to
+       Application.Resources at start-up and swapped at run time by Themes/ThemeService.cs. -->
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://Thirteen/Themes/Typography.axaml" />
+    <StyleInclude Source="avares://Thirteen/Themes/Controls.axaml" />
+    <StyleInclude Source="avares://Thirteen/Themes/Events.axaml" />
+    <StyleInclude Source="avares://Thirteen/Themes/Calendar.axaml" />
+    <StyleInclude Source="avares://Thirteen/Themes/EventEditor.axaml" />
+  </Application.Styles>
+</Application>

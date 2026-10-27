@@ -1,0 +1,182 @@
+/* A day outside the week: set apart from the grid by a perforation. */
+
+.slip {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.15rem 0.7rem;
+  width: 100%;
+  margin-top: 0.7rem;
+  padding: 0.6rem 0.75rem 0.55rem;
+  border: var(--t-hairline) dashed var(--t-accent);
+  border-radius: var(--t-radius-1);
+  background:
+    repeating-linear-gradient(-45deg, var(--t-accent-soft) 0 3px, transparent 3px 8px),
+    var(--t-paper-raised);
+  color: var(--t-ink);
+  text-align: left;
+  font: inherit;
+  outline-offset: 2px;
+  transition: background-color var(--t-dur-1) var(--t-ease-out);
+}
+
+/* The perforation that "tears" the slip off the month above. */
+.slip::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  top: -0.45rem;
+  border-top: 2px dotted var(--t-rule);
+}
+
+@media (hover: hover) {
+  button.slip:hover {
+    background:
+      repeating-linear-gradient(-45deg, var(--t-accent-soft) 0 3px, transparent 3px 8px),
+      var(--t-accent-wash);
+  }
+}
+
+.code {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  min-width: 2.3rem;
+  height: 2.3rem;
+  padding: 0 0.3rem;
+  border-radius: var(--t-radius-1);
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.name {
+  min-width: 0;
+  font-family: var(--t-font-display);
+  font-size: 1.0625rem;
+  font-weight: var(--t-weight-title);
+  line-height: 1.15;
+  letter-spacing: var(--t-tracking-title);
+}
+
+.note {
+  grid-column: 2;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+  line-height: 1.3;
+}
+
+.gregorian {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  color: var(--t-foil);
+  text-align: right;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.generated::before {
+  content: attr(data-text);
+}
+
+.today {
+  border-style: solid;
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.today .code {
+  background: var(--t-on-accent);
+  color: var(--t-accent);
+}
+
+.today .note,
+.today .gregorian {
+  color: var(--t-on-accent);
+}
+
+button.today:hover {
+  background: var(--t-accent);
+}
+
+.selected {
+  box-shadow:
+    0 0 0 2px var(--t-paper),
+    0 0 0 4px var(--t-ink);
+}
+
+/* Plate: the large form, for Today / Convert when the day is intercalary. */
+.plate {
+  display: grid;
+  gap: var(--t-space-3);
+  padding: var(--t-space-5);
+  border: var(--t-hairline) dashed var(--t-accent);
+  background:
+    repeating-linear-gradient(-45deg, var(--t-accent-soft) 0 4px, transparent 4px 11px),
+    var(--t-paper-raised);
+}
+
+.plate .code {
+  grid-row: auto;
+  justify-self: start;
+}
+
+.plate .name {
+  font-size: var(--t-text-3xl);
+  font-weight: var(--t-weight-numeral);
+  line-height: 1;
+  letter-spacing: var(--t-tracking-display);
+}
+
+.plate .note {
+  font-size: var(--t-text-2xs);
+}
+
+.plate .note,
+.plate .gregorian {
+  grid-column: auto;
+  grid-row: auto;
+  text-align: left;
+}
+
+.plate .gregorian {
+  font-size: var(--t-text-xs);
+}
+
+.plateDescription {
+  max-width: var(--t-measure);
+  color: var(--t-ink-2);
+}
+
+/* Event dots (Year mode, docs/EVENTS.md §2.3). */
+.marks {
+  display: inline-flex;
+  gap: 3px;
+  align-self: center;
+}
+
+.mark {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cal);
+  box-shadow: 0 0 0 0.5px var(--t-rule);
+}
+
+@media (forced-colors: active) {
+  .mark {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+}

@@ -1,0 +1,202 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Thirteen.Desktop.ViewModels"
+        xmlns:v="using:Thirteen.Desktop.Views"
+        xmlns:c="using:Thirteen.Desktop.Controls"
+        xmlns:cal="using:Thirteen.Desktop.Views.CalendarSection"
+        xmlns:ev="using:Thirteen.Desktop.Views.Events"
+        x:Class="Thirteen.Desktop.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="{Binding WindowTitle}"
+        Icon="avares://Thirteen/Assets/Thirteen.ico"
+        Width="1280" Height="860" MinWidth="680" MinHeight="520"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource ThPaperSunk}">
+  <!-- The main window, in the Windows 11 NavigationView idiom: a navigation pane on the left (a compact
+       icon rail on narrow windows, Settings at the bottom), the page on a raised layer with its title and
+       commands, and the day-detail pane on the right. -->
+  <Window.KeyBindings>
+    <KeyBinding Gesture="Ctrl+D1" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Today}" />
+    <KeyBinding Gesture="Ctrl+D2" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Calendar}" />
+    <KeyBinding Gesture="Ctrl+D3" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Convert}" />
+    <KeyBinding Gesture="Ctrl+D4" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Compare}" />
+    <KeyBinding Gesture="Ctrl+D5" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.History}" />
+    <KeyBinding Gesture="Ctrl+NumPad1" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Today}" />
+    <KeyBinding Gesture="Ctrl+NumPad2" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Calendar}" />
+    <KeyBinding Gesture="Ctrl+NumPad3" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Convert}" />
+    <KeyBinding Gesture="Ctrl+NumPad4" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Compare}" />
+    <KeyBinding Gesture="Ctrl+NumPad5" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.History}" />
+    <KeyBinding Gesture="Ctrl+OemComma" Command="{Binding NavigateCommand}" CommandParameter="{x:Static vm:AppSection.Settings}" />
+    <KeyBinding Gesture="Ctrl+T" Command="{Binding GoToTodayCommand}" />
+    <KeyBinding Gesture="Home" Command="{Binding HomeCommand}" />
+    <KeyBinding Gesture="Ctrl+Left" Command="{Binding PreviousPeriodCommand}" />
+    <KeyBinding Gesture="Ctrl+Right" Command="{Binding NextPeriodCommand}" />
+    <!-- Calendar (docs/EVENTS.md §2.21): modes, New event, Calendars, Refresh, Edit, Delete, Undo and Redo, Import and
+         Export. Text fields handle their own Delete, Ctrl+Z and Ctrl+Y first. -->
+    <KeyBinding Gesture="Ctrl+Shift+D1" Command="{Binding SetCalendarModeCommand}" CommandParameter="{x:Static vm:CalendarMode.Day}" />
+    <KeyBinding Gesture="Ctrl+Shift+D2" Command="{Binding SetCalendarModeCommand}" CommandParameter="{x:Static vm:CalendarMode.Week}" />
+    <KeyBinding Gesture="Ctrl+Shift+D3" Command="{Binding SetCalendarModeCommand}" CommandParameter="{x:Static vm:CalendarMode.Month}" />
+    <KeyBinding Gesture="Ctrl+Shift+D4" Command="{Binding SetCalendarModeCommand}" CommandParameter="{x:Static vm:CalendarMode.Year}" />
+    <KeyBinding Gesture="Ctrl+Shift+D5" Command="{Binding SetCalendarModeCommand}" CommandParameter="{x:Static vm:CalendarMode.List}" />
+    <KeyBinding Gesture="Ctrl+N" Command="{Binding NewEventCommand}" />
+    <KeyBinding Gesture="Ctrl+Shift+K" Command="{Binding ShowCalendarsPaneCommand}" />
+    <KeyBinding Gesture="F5" Command="{Binding RefreshSubscriptionsCommand}" />
+    <KeyBinding Gesture="Ctrl+R" Command="{Binding RefreshSubscriptionsCommand}" />
+    <KeyBinding Gesture="Ctrl+E" Command="{Binding EditEventCommand}" />
+    <KeyBinding Gesture="Delete" Command="{Binding DeleteEventCommand}" />
+    <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}" />
+    <KeyBinding Gesture="Ctrl+Y" Command="{Binding RedoCommand}" />
+    <KeyBinding Gesture="Ctrl+O" Command="{Binding CalendarsPane.ImportCommand, FallbackValue={x:Null}}" />
+    <KeyBinding Gesture="Ctrl+Shift+E" Command="{Binding CalendarsPane.ExportCommand, FallbackValue={x:Null}}" />
+    <KeyBinding Gesture="Alt+Left" Command="{Binding Detail.PreviousDayCommand}" />
+    <KeyBinding Gesture="Alt+Right" Command="{Binding Detail.NextDayCommand}" />
+    <KeyBinding Gesture="Escape" Command="{Binding EscapeCommand}" />
+  </Window.KeyBindings>
+
+  <Window.DataTemplates>
+    <DataTemplate DataType="vm:TodayViewModel">
+      <v:TodayView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:CalendarViewModel">
+      <cal:CalendarView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:ConvertViewModel">
+      <v:ConvertView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:CompareViewModel">
+      <v:CompareView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:HistoryViewModel">
+      <v:HistoryView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:SettingsViewModel">
+      <v:SettingsView />
+    </DataTemplate>
+  </Window.DataTemplates>
+
+  <Grid RowDefinitions="Auto,*">
+    <!-- Title bar (Windows only: the client area extends under the system caption buttons). -->
+    <Grid Name="TitleBar" Height="40" ColumnDefinitions="Auto,Auto,*" IsVisible="False" IsHitTestVisible="False">
+      <Image Source="avares://Thirteen/Assets/Thirteen.ico" Width="16" Height="16" Margin="20,0,12,0" VerticalAlignment="Center" />
+      <TextBlock Grid.Column="1" FontSize="12" VerticalAlignment="Center" Text="Thirteen" />
+    </Grid>
+
+    <SplitView Grid.Row="1" Name="Split" DisplayMode="CompactInline" IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}"
+               CompactPaneLength="56" OpenPaneLength="256" PaneBackground="{DynamicResource ThPaperSunk}">
+      <SplitView.Pane>
+        <!-- Rows in reading and tab order: menu button, the five pages (one tab stop, Up and Down move
+             between them as in WinUI's NavigationView), today at a glance, and Settings at the bottom. -->
+        <Grid Name="Pane" RowDefinitions="Auto,*,Auto" Margin="0,0,0,8">
+          <Button Classes="subtle" Command="{Binding TogglePaneCommand}" Width="48" Height="40" Margin="4,0,4,4"
+                  Padding="0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                  ToolTip.Tip="{Binding PaneToggleName}" AutomationProperties.Name="{Binding PaneToggleName}">
+            <TextBlock Classes="icon" Text="&#xE700;" />
+          </Button>
+
+          <DockPanel Grid.Row="1">
+            <ItemsControl Name="NavList" DockPanel.Dock="Top" ItemsSource="{Binding NavItems}" KeyboardNavigation.TabNavigation="Once">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:NavItemViewModel">
+                  <RadioButton Classes="nav" GroupName="Nav" IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                               ToolTip.Tip="{Binding ToolTip}" AutomationProperties.Name="{Binding Title}">
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock Classes="icon" Width="48" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Glyph}" />
+                      <TextBlock Classes="navLabel" VerticalAlignment="Center" Text="{Binding Title}"
+                                 IsVisible="{Binding $parent[SplitView].IsPaneOpen}" />
+                    </StackPanel>
+                  </RadioButton>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Today at a glance, from any screen (pane expanded); the Calendar section shows its Calendars list here instead. -->
+            <Button Name="TodaySummary" DockPanel.Dock="Top" Classes="subtle" Margin="8,20,8,0" Padding="12,10" HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left" IsVisible="{Binding ShowsTodaySummary}" Command="{Binding GoToTodayCommand}"
+                    ToolTip.Tip="Today (Ctrl+T)" AutomationProperties.Name="{Binding SummaryAutomationName}">
+              <StackPanel Spacing="3">
+                <TextBlock Classes="eyebrow" Text="TODAY" />
+                <TextBlock FontSize="15" FontWeight="SemiBold" LetterSpacing="-0.2" TextWrapping="Wrap" Text="{Binding SummaryThirteen}" />
+                <TextBlock Classes="caption foil" TextWrapping="Wrap" Text="{Binding SummaryGregorian}" />
+                <TextBlock Classes="caption ink3" TextWrapping="Wrap" Text="{Binding SummaryCountdown}" />
+              </StackPanel>
+            </Button>
+
+            <!-- The Calendars list under the sections while Calendar is selected (docs/EVENTS.md §2.1, §2.15). -->
+            <ev:CalendarsPane Name="CalendarsPaneView" Margin="0,12,0,0" DataContext="{Binding CalendarsPane}"
+                              IsVisible="{Binding $parent[Window].((vm:MainViewModel)DataContext).ShowsCalendarsPane, FallbackValue=False}" />
+          </DockPanel>
+
+          <RadioButton Grid.Row="2" Name="SettingsNav" Classes="nav" GroupName="Nav" DataContext="{Binding SettingsItem}"
+                       IsChecked="{Binding IsSelected, Mode=TwoWay}" ToolTip.Tip="{Binding ToolTip}"
+                       AutomationProperties.Name="{Binding Title}">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Classes="icon" Width="48" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Glyph}" />
+              <TextBlock Classes="navLabel" VerticalAlignment="Center" Text="{Binding Title}"
+                         IsVisible="{Binding $parent[SplitView].IsPaneOpen}" />
+            </StackPanel>
+          </RadioButton>
+        </Grid>
+      </SplitView.Pane>
+
+      <!-- Content layer: rounded top-left corner like a Windows 11 NavigationView page. -->
+      <Border Name="ContentLayer" Background="{DynamicResource ThPaper}" BorderBrush="{DynamicResource ThRuleSoft}"
+              BorderThickness="1,1,0,0" CornerRadius="8,0,0,0" ClipToBounds="True">
+        <Grid Name="ContentGrid" ColumnDefinitions="*,Auto">
+          <DockPanel>
+            <!-- The header shares the page's column (Controls/PageColumn), so the title and the commands line up with the content. -->
+            <c:PageColumn DockPanel.Dock="Top" MaxContentWidth="{Binding CurrentPage.ContentMaxWidth}">
+              <Grid Name="Header" ColumnDefinitions="*,Auto" Margin="32,18,32,12" MinHeight="40">
+                <!-- The page title; the Calendar section's toolbar in its place (§2.1). -->
+                <ContentControl Name="HeaderContent" Content="{Binding CurrentPage}" VerticalAlignment="Center" HorizontalContentAlignment="Stretch">
+                  <ContentControl.DataTemplates>
+                    <DataTemplate DataType="vm:CalendarViewModel">
+                      <cal:CalendarToolbar />
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:PageViewModel">
+                      <TextBlock Classes="pageTitle" VerticalAlignment="Center" Text="{Binding Title}" />
+                    </DataTemplate>
+                  </ContentControl.DataTemplates>
+                </ContentControl>
+                <Border Grid.Column="1" Classes="segmented" VerticalAlignment="Top" Margin="12,4,0,0" IsVisible="{Binding ShowsSystemSwitch}"
+                        ToolTip.Tip="The 13-month calendar system" AutomationProperties.Name="Calendar system">
+                  <StackPanel Orientation="Horizontal" Spacing="2">
+                    <RadioButton Classes="segment" GroupName="System" IsChecked="{Binding IsIfc, Mode=TwoWay}" Content="{Binding IfcLabel}"
+                                 AutomationProperties.Name="International Fixed Calendar" />
+                    <RadioButton Classes="segment" GroupName="System" IsChecked="{Binding IsPositivist, Mode=TwoWay}"
+                                 Content="{Binding PositivistLabel}" AutomationProperties.Name="Positivist calendar" />
+                  </StackPanel>
+                </Border>
+              </Grid>
+            </c:PageColumn>
+
+            <!-- The pages get their own adorner layer, clipped to the page area: focus rings sit outside their
+                 controls (Themes/Controls.axaml) but never spill over the header when a focused control is
+                 scrolled out of view. -->
+            <VisualLayerManager ClipToBounds="True">
+              <Panel Name="Pages">
+                <ContentControl Content="{Binding TodayPage.Loaded}" IsVisible="{Binding TodayPage.IsActive}" />
+                <ContentControl Content="{Binding CalendarPage.Loaded}" IsVisible="{Binding CalendarPage.IsActive}" />
+                <ContentControl Content="{Binding ConvertPage.Loaded}" IsVisible="{Binding ConvertPage.IsActive}" />
+                <ContentControl Content="{Binding ComparePage.Loaded}" IsVisible="{Binding ComparePage.IsActive}" />
+                <ContentControl Content="{Binding HistoryPage.Loaded}" IsVisible="{Binding HistoryPage.IsActive}" />
+                <ContentControl Content="{Binding SettingsPage.Loaded}" IsVisible="{Binding SettingsPage.IsActive}" />
+              </Panel>
+            </VisualLayerManager>
+          </DockPanel>
+
+          <!-- Result toasts of import and restore (docs/EVENTS.md §2.17 step 4), over the page. -->
+          <ev:NoticeToast Name="Notice" Grid.ColumnSpan="2" Margin="0,0,0,8" />
+
+          <!-- The toast of event changes (task W7, docs/EVENTS.md §2.11): Undo, Try again, Show event; over the page. -->
+          <ev:EventToastHost Name="EventToasts" Grid.ColumnSpan="2" Margin="0,0,0,8" />
+
+          <!-- Day details. Beside the page on wide windows, over it on narrow ones. -->
+          <Border Grid.Column="1" Name="DetailHost" Width="408" IsVisible="{Binding HasDetail}"
+                  Background="{DynamicResource ThPaperRaised}" BorderBrush="{DynamicResource ThRule}" BorderThickness="1,0,0,0">
+            <v:DayDetailView DataContext="{Binding Detail}" />
+          </Border>
+        </Grid>
+      </Border>
+    </SplitView>
+  </Grid>
+</Window>

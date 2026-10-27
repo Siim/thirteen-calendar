@@ -1,0 +1,34 @@
+/*
+ * The Calendar's banner when storage is unavailable (design/events/mockups.html,
+ * board L2 "Web, storage unavailable"). The Calendars list itself is styled by
+ * CalendarsPanel.module.css of @thirteen/ui.
+ */
+
+.notice {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9px;
+  background: var(--t-accent-wash);
+  color: var(--t-ink);
+  font-size: var(--t-text-xs);
+  line-height: 1.45;
+}
+
+.noticeIcon {
+  flex: none;
+  margin-top: 1px;
+  color: var(--t-accent-text);
+}
+
+@media (forced-colors: active) {
+  .notice {
+    border: 1px solid CanvasText;
+  }
+
+  .noticeIcon {
+    color: CanvasText;
+  }
+}

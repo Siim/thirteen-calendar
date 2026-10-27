@@ -1,0 +1,320 @@
+.page {
+  display: grid;
+  gap: clamp(2.75rem, 1.5rem + 4vw, 5rem);
+}
+
+.section {
+  display: grid;
+  gap: var(--t-space-5);
+  min-width: 0;
+}
+
+/* ---- Systems side by side ------------------------------------------ */
+
+.systems {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border-block: 2px solid var(--t-rule-strong);
+}
+
+@media (min-width: 56rem) {
+  .systems {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+}
+
+.system {
+  display: grid;
+  align-content: start;
+  gap: var(--t-space-4);
+  min-width: 0;
+  padding: clamp(1.25rem, 0.8rem + 2vw, 2.5rem) 0;
+}
+
+@media (min-width: 56rem) {
+  .system:first-child {
+    padding-right: clamp(1.5rem, 1rem + 2vw, 3rem);
+  }
+
+  .system:last-child {
+    padding-left: clamp(1.5rem, 1rem + 2vw, 3rem);
+  }
+}
+
+.versus {
+  display: grid;
+  place-items: center;
+  padding: var(--t-space-2) 0;
+  border-block: var(--t-hairline) solid var(--t-rule);
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-xl);
+  color: var(--t-ink-3);
+  font-weight: 300;
+}
+
+@media (min-width: 56rem) {
+  .versus {
+    padding: 0 var(--t-space-3);
+    border-block: 0;
+    border-inline: var(--t-hairline) solid var(--t-rule);
+  }
+}
+
+.systemName {
+  font-size: var(--t-text-2xl);
+  font-weight: var(--t-weight-numeral);
+  line-height: 1.02;
+  letter-spacing: var(--t-tracking-display);
+}
+
+.foil .systemName {
+  font-family: var(--t-font-text);
+  font-weight: var(--t-weight-text);
+  color: var(--t-foil);
+}
+
+.inventor {
+  color: var(--t-ink-2);
+}
+
+.summary {
+  max-width: 60ch;
+  font-size: var(--t-text-md);
+  color: var(--t-ink-2);
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: var(--t-space-4);
+  padding-top: var(--t-space-4);
+  border-top: var(--t-hairline) solid var(--t-rule);
+}
+
+.months {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.25rem, 1fr));
+  gap: 0.15rem 1rem;
+  list-style: none;
+  counter-reset: month;
+}
+
+.monthItem {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0.2rem 0;
+  border-bottom: var(--t-hairline) dotted var(--t-rule);
+  font-size: var(--t-text-sm);
+  white-space: nowrap;
+}
+
+.monthIndex {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  color: var(--t-ink-3);
+}
+
+.monthName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.monthDays {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  color: var(--t-ink-2);
+}
+
+.monthLong .monthDays {
+  color: var(--t-accent-text);
+}
+
+.monthSol .monthName {
+  color: var(--t-accent-text);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}
+
+/* ---- Stats board ---------------------------------------------------- */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--t-space-4);
+}
+
+.card {
+  display: grid;
+  /* One column no wider than the card, so a long figure wraps instead of pushing past the padding. */
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: var(--t-space-3);
+  padding: var(--t-space-5);
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+  min-width: 0;
+}
+
+.cardTitle {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: 500;
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.versusFigures {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  font-family: var(--t-font-display);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.figGregorian {
+  font-family: var(--t-font-text);
+  font-size: clamp(2.2rem, 1.6rem + 2vw, 3.2rem);
+  font-weight: 300;
+  letter-spacing: var(--t-tracking-display);
+  color: var(--t-foil);
+}
+
+.figThirteen {
+  font-size: clamp(2.2rem, 1.6rem + 2vw, 3.2rem);
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-numeral);
+  color: var(--t-accent-text);
+}
+
+.figVs {
+  font-size: var(--t-text-lg);
+  color: var(--t-ink-3);
+  font-weight: 300;
+}
+
+.figWord {
+  font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem);
+  letter-spacing: var(--t-tracking-title);
+}
+
+.cardBody {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+}
+
+.chip {
+  padding: 0.2rem 0.45rem;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-1);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.chipFoil {
+  border-color: var(--t-foil);
+  color: var(--t-foil);
+}
+
+.chipAccent {
+  border-color: var(--t-accent);
+  color: var(--t-accent-text);
+}
+
+.quarters {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.quarterRow {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--t-text-xs);
+}
+
+.quarterLabel {
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  color: var(--t-ink-2);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  text-transform: uppercase;
+}
+
+.quarterBars {
+  display: flex;
+  gap: 2px;
+}
+
+.quarterBar {
+  display: grid;
+  place-items: center;
+  height: 1.35rem;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--t-on-foil);
+}
+
+/*
+ * Flat foil, or hatched where the theme cannot tell the calendars apart by colour
+ * (Mono), with a halo that keeps the hatching out of the figures.
+ */
+.quarterBarFoil {
+  background-color: var(--t-foil-band, var(--t-foil));
+  background-image: var(--t-foil-hatch, none);
+  box-shadow: inset 0 0 0 var(--t-hairline) var(--t-foil);
+  color: var(--t-on-foil-band, var(--t-on-foil));
+  text-shadow: var(--t-foil-halo, none);
+}
+
+.quarterBarAccent {
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.quarterBarGap {
+  background: repeating-linear-gradient(-45deg, var(--t-accent) 0 2px, transparent 2px 4px);
+}
+
+/* ---- Drift ---------------------------------------------------------- */
+
+.strips {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-6);
+}
+
+@media (min-width: 60rem) {
+  .strips {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.prose {
+  display: grid;
+  gap: var(--t-space-3);
+  max-width: 68ch;
+  font-size: var(--t-text-md);
+  color: var(--t-ink-2);
+}
+
+.prose strong {
+  color: var(--t-ink);
+}

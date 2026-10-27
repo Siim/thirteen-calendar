@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Example Corp//Calendar Export 4.2//EN
+X-WR-CALNAME:Kontserdid
+BEGIN:VEVENT
+UID:bdbef287-e0d9-41c0-bd50-af4768e99de1
+DTSTAMP:20261015T080000Z
+DTSTART:20261220T170000Z
+DTEND:20261220T190000Z
+SUMMARY:Jõulukontsert: Händel, Pärt ja Tormis 🎄 Kaarli kirikus, Talli
+ nn (Eesti Filharmoonia Kammerkoor)
+DESCRIPTION:Программа: Арво Пярт, «Магнификат»
+ . 日本語の説明もあります。Tickets at the door 🎟️\nÕhtu l
+ õpeb kell 21.00.
+LOCATION:Kaarli kirik, Toompuiestee 4, 10142 Tallinn, Harju 
+	maakond, Eesti Vabariik
+ATTENDEE;CN="Ülle Õunapuu-Šmidt, Eesti Filharmo
+ onia Kammerkoor";ROLE=REQ-PARTICIPANT:mailto:ulle
+ @example.com
+COMMENT:The space after this colon and before the next
+  word is content.
+END:VEVENT
+END:VCALENDAR

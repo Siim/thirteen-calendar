@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Thirteen.Desktop.Views.Events.NoticeToast"
+             HorizontalAlignment="Center" VerticalAlignment="Bottom" IsVisible="False">
+  <!-- A result toast over the window (docs/EVENTS.md §2.17 step 4: "Added 46, updated 0, unchanged 0."; "Restored 3
+       calendars."): the sentence, read politely, and its Close button (toast.close). It goes after a while. -->
+  <Border Classes="calendarToast" MaxWidth="560">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="14">
+      <TextBlock Name="Message" VerticalAlignment="Center" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+      <Button Grid.Column="1" Name="CloseButton" Classes="subtle" Width="32" Height="32" Padding="0" VerticalAlignment="Center"
+              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+              ToolTip.Tip="Close" AutomationProperties.Name="Close">
+        <TextBlock Classes="icon" FontSize="10" Foreground="{DynamicResource ThPaper}" Text="&#xE711;" />
+      </Button>
+    </Grid>
+  </Border>
+</UserControl>

@@ -1,0 +1,81 @@
+/* The Events section of the Year day sheet (docs/EVENTS.md §2.9). */
+
+.events {
+  display: grid;
+  gap: var(--t-space-2);
+  min-width: 0;
+  padding-bottom: var(--t-space-3);
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+}
+
+/* The sheet already pads its content: rows run edge to edge of it. */
+.rows > li > button {
+  padding-inline: 0;
+}
+
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: 0.25rem;
+  margin: 0;
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.empty p {
+  margin: 0;
+}
+
+.textButton {
+  min-height: 2.25rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--t-accent-text);
+  font: inherit;
+  font-weight: var(--t-weight-medium);
+  cursor: pointer;
+}
+
+.textButton:focus-visible,
+.open:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--t-space-2) var(--t-space-4);
+}
+
+.open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.25rem;
+  color: var(--t-ink);
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  text-decoration: none;
+  border-bottom: var(--t-hairline) solid var(--t-accent);
+}
+
+.open:hover {
+  color: var(--t-accent-text);
+}
+
+@media (pointer: coarse), (max-width: 40rem) {
+  .textButton,
+  .open {
+    min-height: 2.75rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .textButton,
+  .open {
+    color: LinkText;
+  }
+}

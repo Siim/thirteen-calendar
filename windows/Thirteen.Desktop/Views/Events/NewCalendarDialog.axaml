@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Thirteen.Desktop.ViewModels"
+        x:Class="Thirteen.Desktop.Views.Events.NewCalendarDialog"
+        x:DataType="vm:NewCalendarViewModel"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding Title}"
+        Width="420">
+  <!-- "New calendar" (§2.15 footer): a local calendar's name and color. -->
+  <StackPanel Margin="24,20,24,20" Spacing="14">
+    <TextBlock Classes="dialogTitle" Text="{Binding Title}" />
+    <StackPanel Spacing="6">
+      <TextBlock Classes="fieldLabel" Text="{Binding NameLabel}" />
+      <TextBox Name="NameBox" Text="{Binding Name, Mode=TwoWay}" AutomationProperties.Name="{Binding NameLabel}" />
+    </StackPanel>
+    <StackPanel Spacing="6">
+      <TextBlock Classes="fieldLabel" Text="{Binding ColorLabel}" />
+      <ListBox Classes="colors" ItemsSource="{Binding Colors}" SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
+               AutomationProperties.Name="{Binding ColorLabel}">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:ColorOption">
+            <Border Classes="ring" BorderThickness="2" CornerRadius="12" Padding="2" ToolTip.Tip="{Binding Name}"
+                    AutomationProperties.Name="{Binding Name}">
+              <Ellipse Width="18" Height="18" Fill="{Binding Brush}" />
+            </Border>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,6,0,0">
+      <Button MinWidth="96" HorizontalContentAlignment="Center" Content="{Binding CancelText}" Command="{Binding CancelCommand}"
+              IsCancel="True" AutomationProperties.Name="{Binding CancelText}" />
+      <Button Classes="accent" MinWidth="96" HorizontalContentAlignment="Center" Content="{Binding SaveText}" Command="{Binding SaveCommand}"
+              IsDefault="True" AutomationProperties.Name="{Binding SaveText}" />
+    </StackPanel>
+  </StackPanel>
+</Window>

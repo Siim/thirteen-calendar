@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "case": "cases/duration.ics",
+  "calendarId": "duration",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Durations",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Durations"}
+    ],
+    "timeZones": [
+      {"tzid":"Europe/Tallinn","observances":2,"generated":null,"line":5}
+    ],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"7802ce3c-ff42-4fc0-a233-247bdd252122","master":{"uid":"7802ce3c-ff42-4fc0-a233-247bdd252122","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"P1D across spring forward (wall clock: 23 hours)","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-28T12:00","tzid":"Europe/Tallinn"},"end":null,"duration":"P1D","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":23},"overrides":[]},
+    {"uid":"4f0df3c0-730c-4800-92c1-f01e1b63f00e","master":{"uid":"4f0df3c0-730c-4800-92c1-f01e1b63f00e","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"PT24H across spring forward (exact)","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-28T12:00","tzid":"Europe/Tallinn"},"end":null,"duration":"PT24H","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":30},"overrides":[]},
+    {"uid":"08e55331-4e3a-495d-b4c1-5b3841366ed6","master":{"uid":"08e55331-4e3a-495d-b4c1-5b3841366ed6","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"P1DT2H (a day on the wall clock, then 2 hours)","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-28T12:00","tzid":"Europe/Tallinn"},"end":null,"duration":"P1DT2H","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":37},"overrides":[]},
+    {"uid":"d1fb78f9-b3ff-453b-ab43-ecaae4ddad14","master":{"uid":"d1fb78f9-b3ff-453b-ab43-ecaae4ddad14","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"PT3H across fall back","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-10-25T02:00","tzid":"Europe/Tallinn"},"end":null,"duration":"PT3H","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":44},"overrides":[]},
+    {"uid":"69bf5e10-ab47-496d-bd16-41fa6304f5e0","master":{"uid":"69bf5e10-ab47-496d-bd16-41fa6304f5e0","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"P1W across spring forward","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-25T09:00","tzid":"Europe/Tallinn"},"end":null,"duration":"P1W","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":51},"overrides":[]},
+    {"uid":"72eb73b3-aa11-4e8a-bd58-e77fc66d4c6c","master":{"uid":"72eb73b3-aa11-4e8a-bd58-e77fc66d4c6c","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"PT1H30M in UTC","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-11-05T10:00"},"end":null,"duration":"PT1H30M","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":58},"overrides":[]},
+    {"uid":"3d0f68a4-478b-4b8a-8d73-2006d2eec2c1","master":{"uid":"3d0f68a4-478b-4b8a-8d73-2006d2eec2c1","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"PT45M30S (seconds dropped)","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-11-05T13:00"},"end":null,"duration":"PT45M30S","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":65},"overrides":[]},
+    {"uid":"02b3b9fe-b28c-4933-b11d-7fcca624215c","master":{"uid":"02b3b9fe-b28c-4933-b11d-7fcca624215c","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"PT0S","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-11-05T15:00"},"end":null,"duration":"PT0S","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":72},"overrides":[]},
+    {"uid":"f3e49c4f-c480-49b2-89f5-1a3e933f0a0c","master":{"uid":"f3e49c4f-c480-49b2-89f5-1a3e933f0a0c","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"All-day P3D","location":"","description":"","url":"","start":{"kind":"date","date":"2026-12-24"},"end":null,"duration":"P3D","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":79},"overrides":[]},
+    {"uid":"30cf802d-0d65-4028-917a-98245f7c15fd","master":{"uid":"30cf802d-0d65-4028-917a-98245f7c15fd","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Daily PT25H across fall back","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-10-23T12:00","tzid":"Europe/Tallinn"},"end":null,"duration":"PT25H","rrules":["FREQ=DAILY;COUNT=3"],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":86},"overrides":[]},
+    {"uid":"cc46854c-6f14-4545-984a-00441f3cd5dd","master":{"uid":"cc46854c-6f14-4545-984a-00441f3cd5dd","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Daily P1D across spring forward (each ends at 12:00)","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-27T12:00","tzid":"Europe/Tallinn"},"end":null,"duration":"P1D","rrules":["FREQ=DAILY;COUNT=3"],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":94},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"duration/69bf5e10-ab47-496d-bd16-41fa6304f5e0|2026-03-25T09:00","calendarId":"duration","title":"P1W across spring forward","allDay":false,"start":"2026-03-25T09:00","end":"2026-04-01T09:00"},
+        {"key":"duration/cc46854c-6f14-4545-984a-00441f3cd5dd|2026-03-27T12:00","calendarId":"duration","title":"Daily P1D across spring forward (each ends at 12:00)","allDay":false,"start":"2026-03-27T12:00","end":"2026-03-28T12:00"},
+        {"key":"duration/08e55331-4e3a-495d-b4c1-5b3841366ed6|2026-03-28T12:00","calendarId":"duration","title":"P1DT2H (a day on the wall clock, then 2 hours)","allDay":false,"start":"2026-03-28T12:00","end":"2026-03-29T14:00"},
+        {"key":"duration/4f0df3c0-730c-4800-92c1-f01e1b63f00e|2026-03-28T12:00","calendarId":"duration","title":"PT24H across spring forward (exact)","allDay":false,"start":"2026-03-28T12:00","end":"2026-03-29T13:00"},
+        {"key":"duration/7802ce3c-ff42-4fc0-a233-247bdd252122|2026-03-28T12:00","calendarId":"duration","title":"P1D across spring forward (wall clock: 23 hours)","allDay":false,"start":"2026-03-28T12:00","end":"2026-03-29T12:00"},
+        {"key":"duration/cc46854c-6f14-4545-984a-00441f3cd5dd|2026-03-28T12:00","calendarId":"duration","title":"Daily P1D across spring forward (each ends at 12:00)","allDay":false,"start":"2026-03-28T12:00","end":"2026-03-29T12:00"},
+        {"key":"duration/cc46854c-6f14-4545-984a-00441f3cd5dd|2026-03-29T12:00","calendarId":"duration","title":"Daily P1D across spring forward (each ends at 12:00)","allDay":false,"start":"2026-03-29T12:00","end":"2026-03-30T12:00"},
+        {"key":"duration/30cf802d-0d65-4028-917a-98245f7c15fd|2026-10-23T12:00","calendarId":"duration","title":"Daily PT25H across fall back","allDay":false,"start":"2026-10-23T12:00","end":"2026-10-24T13:00"},
+        {"key":"duration/30cf802d-0d65-4028-917a-98245f7c15fd|2026-10-24T12:00","calendarId":"duration","title":"Daily PT25H across fall back","allDay":false,"start":"2026-10-24T12:00","end":"2026-10-25T12:00"},
+        {"key":"duration/d1fb78f9-b3ff-453b-ab43-ecaae4ddad14|2026-10-25T02:00","calendarId":"duration","title":"PT3H across fall back","allDay":false,"start":"2026-10-25T02:00","end":"2026-10-25T04:00"},
+        {"key":"duration/30cf802d-0d65-4028-917a-98245f7c15fd|2026-10-25T12:00","calendarId":"duration","title":"Daily PT25H across fall back","allDay":false,"start":"2026-10-25T12:00","end":"2026-10-26T13:00"},
+        {"key":"duration/72eb73b3-aa11-4e8a-bd58-e77fc66d4c6c|2026-11-05T10:00","calendarId":"duration","title":"PT1H30M in UTC","allDay":false,"start":"2026-11-05T12:00","end":"2026-11-05T13:30"},
+        {"key":"duration/3d0f68a4-478b-4b8a-8d73-2006d2eec2c1|2026-11-05T13:00","calendarId":"duration","title":"PT45M30S (seconds dropped)","allDay":false,"start":"2026-11-05T15:00","end":"2026-11-05T15:45"},
+        {"key":"duration/02b3b9fe-b28c-4933-b11d-7fcca624215c|2026-11-05T15:00","calendarId":"duration","title":"PT0S","allDay":false,"start":"2026-11-05T17:00","end":"2026-11-05T17:00"},
+        {"key":"duration/f3e49c4f-c480-49b2-89f5-1a3e933f0a0c|2026-12-24","calendarId":"duration","title":"All-day P3D","allDay":true,"start":"2026-12-24T00:00","end":"2026-12-26T24:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"duration/69bf5e10-ab47-496d-bd16-41fa6304f5e0|2026-03-25T09:00","calendarId":"duration","title":"P1W across spring forward","allDay":false,"start":"2026-03-25T03:00","end":"2026-04-01T02:00"},
+        {"key":"duration/cc46854c-6f14-4545-984a-00441f3cd5dd|2026-03-27T12:00","calendarId":"duration","title":"Daily P1D across spring forward (each ends at 12:00)","allDay":false,"start":"2026-03-27T06:00","end":"2026-03-28T06:00"},
+        {"key":"duration/08e55331-4e3a-495d-b4c1-5b3841366ed6|2026-03-28T12:00","calendarId":"duration","title":"P1DT2H (a day on the wall clock, then 2 hours)","allDay":false,"start":"2026-03-28T06:00","end":"2026-03-29T07:00"},
+        {"key":"duration/4f0df3c0-730c-4800-92c1-f01e1b63f00e|2026-03-28T12:00","calendarId":"duration","title":"PT24H across spring forward (exact)","allDay":false,"start":"2026-03-28T06:00","end":"2026-03-29T06:00"},
+        {"key":"duration/7802ce3c-ff42-4fc0-a233-247bdd252122|2026-03-28T12:00","calendarId":"duration","title":"P1D across spring forward (wall clock: 23 hours)","allDay":false,"start":"2026-03-28T06:00","end":"2026-03-29T05:00"},
+        {"key":"duration/cc46854c-6f14-4545-984a-00441f3cd5dd|2026-03-28T12:00","calendarId":"duration","title":"Daily P1D across spring forward (each ends at 12:00)","allDay":false,"start":"2026-03-28T06:00","end":"2026-03-29T05:00"},
+        {"key":"duration/cc46854c-6f14-4545-984a-00441f3cd5dd|2026-03-29T12:00","calendarId":"duration","title":"Daily P1D across spring forward (each ends at 12:00)","allDay":false,"start":"2026-03-29T05:00","end":"2026-03-30T05:00"},
+        {"key":"duration/30cf802d-0d65-4028-917a-98245f7c15fd|2026-10-23T12:00","calendarId":"duration","title":"Daily PT25H across fall back","allDay":false,"start":"2026-10-23T05:00","end":"2026-10-24T06:00"},
+        {"key":"duration/30cf802d-0d65-4028-917a-98245f7c15fd|2026-10-24T12:00","calendarId":"duration","title":"Daily PT25H across fall back","allDay":false,"start":"2026-10-24T05:00","end":"2026-10-25T06:00"},
+        {"key":"duration/d1fb78f9-b3ff-453b-ab43-ecaae4ddad14|2026-10-25T02:00","calendarId":"duration","title":"PT3H across fall back","allDay":false,"start":"2026-10-24T19:00","end":"2026-10-24T22:00"},
+        {"key":"duration/30cf802d-0d65-4028-917a-98245f7c15fd|2026-10-25T12:00","calendarId":"duration","title":"Daily PT25H across fall back","allDay":false,"start":"2026-10-25T06:00","end":"2026-10-26T07:00"},
+        {"key":"duration/72eb73b3-aa11-4e8a-bd58-e77fc66d4c6c|2026-11-05T10:00","calendarId":"duration","title":"PT1H30M in UTC","allDay":false,"start":"2026-11-05T05:00","end":"2026-11-05T06:30"},
+        {"key":"duration/3d0f68a4-478b-4b8a-8d73-2006d2eec2c1|2026-11-05T13:00","calendarId":"duration","title":"PT45M30S (seconds dropped)","allDay":false,"start":"2026-11-05T08:00","end":"2026-11-05T08:45"},
+        {"key":"duration/02b3b9fe-b28c-4933-b11d-7fcca624215c|2026-11-05T15:00","calendarId":"duration","title":"PT0S","allDay":false,"start":"2026-11-05T10:00","end":"2026-11-05T10:00"},
+        {"key":"duration/f3e49c4f-c480-49b2-89f5-1a3e933f0a0c|2026-12-24","calendarId":"duration","title":"All-day P3D","allDay":true,"start":"2026-12-24T00:00","end":"2026-12-26T24:00"}
+      ]
+    }
+  ]
+}

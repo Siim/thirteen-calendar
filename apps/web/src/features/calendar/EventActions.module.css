@@ -1,0 +1,54 @@
+/* The details popover and the list of changes that couldn't be saved (§2.10, §2.11). */
+
+.popover {
+  padding: 16px 16px 14px;
+  border-radius: 14px;
+}
+
+.failures {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.failure {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: var(--t-hairline) solid var(--t-rule-soft);
+  border-radius: 10px;
+  background: var(--t-paper);
+}
+
+.failureText {
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--t-ink);
+  font: inherit;
+  font-size: var(--t-text-sm);
+  text-align: start;
+  cursor: pointer;
+}
+
+.failureText:hover {
+  text-decoration: underline;
+}
+
+.retry {
+  flex: none;
+  min-height: 32px;
+  padding: 4px 12px;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: 8px;
+  background: var(--t-paper);
+  color: var(--t-ink);
+  font: inherit;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  cursor: pointer;
+}

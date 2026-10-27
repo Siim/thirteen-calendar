@@ -1,0 +1,108 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:v="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.Parts.DatePlateView"
+             x:DataType="vm:DatePlateModel"
+             AutomationProperties.Name="{Binding AutomationName}">
+  <!-- A date set like an almanac plate: eyebrow, big numeral with month and year (or an intercalary day's
+       name), a rule, and the other calendar's reading. Classes="hero" for the Today hero, compact otherwise. -->
+  <UserControl.Styles>
+    <!-- The numeral keeps Geist's full line box (a LineHeight below 1.3 em clips the glyphs' feet). Negative
+         margins trim the empty ascent above the figures (Apple's trimsTop, about 0.2 em) and the descent
+         below them, so the figures' baseline sits on the year line's baseline (Apple: .lastTextBaseline). -->
+    <Style Selector="TextBlock.plateNumeral">
+      <Setter Property="FontSize" Value="60" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="LetterSpacing" Value="-2.4" />
+      <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+      <Setter Property="Margin" Value="-2,-11,0,-12" />
+    </Style>
+    <Style Selector="v|DatePlateView.hero TextBlock.plateNumeral">
+      <Setter Property="FontSize" Value="112" />
+      <Setter Property="LetterSpacing" Value="-4.5" />
+      <Setter Property="Margin" Value="-5,-22,0,-26" />
+    </Style>
+    <Style Selector="TextBlock.plateMonth">
+      <Setter Property="FontSize" Value="24" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="LetterSpacing" Value="-0.8" />
+    </Style>
+    <Style Selector="v|DatePlateView.hero TextBlock.plateMonth">
+      <Setter Property="FontSize" Value="36" />
+      <Setter Property="LetterSpacing" Value="-1.25" />
+    </Style>
+    <Style Selector="TextBlock.plateName">
+      <Setter Property="FontSize" Value="30" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="LetterSpacing" Value="-1" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style Selector="v|DatePlateView.hero TextBlock.plateName">
+      <Setter Property="FontSize" Value="54" />
+      <Setter Property="LetterSpacing" Value="-1.9" />
+    </Style>
+    <Style Selector="TextBlock.plateYear">
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontWeight" Value="Medium" />
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    </Style>
+    <Style Selector="v|DatePlateView.hero TextBlock.plateYear">
+      <Setter Property="FontSize" Value="15" />
+    </Style>
+    <Style Selector="TextBlock.plateSecondary">
+      <Setter Property="FontSize" Value="15" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+    </Style>
+    <Style Selector="v|DatePlateView.hero TextBlock.plateSecondary">
+      <Setter Property="FontSize" Value="20" />
+      <Setter Property="LetterSpacing" Value="-0.3" />
+    </Style>
+    <Style Selector="StackPanel.plate">
+      <Setter Property="Spacing" Value="6" />
+    </Style>
+    <Style Selector="v|DatePlateView.hero StackPanel.plate">
+      <Setter Property="Spacing" Value="10" />
+    </Style>
+  </UserControl.Styles>
+
+  <StackPanel Classes="plate">
+    <TextBlock Classes="eyebrow" Classes.accent="{Binding !EyebrowIsFoil}" Classes.foil="{Binding EyebrowIsFoil}"
+               Text="{Binding Eyebrow}" TextWrapping="Wrap" />
+
+    <!-- Numeral face: day number beside month and year, on a shared bottom line. At large text sizes in a narrow
+         column the whole face scales down to fit rather than cutting the month (§2.20 "Text size"). -->
+    <Viewbox Stretch="Uniform" StretchDirection="DownOnly" HorizontalAlignment="Left" IsVisible="{Binding IsNumeral}">
+      <StackPanel Orientation="Horizontal" Spacing="14">
+        <TextBlock Classes="plateNumeral" Text="{Binding Numeral}" VerticalAlignment="Bottom" />
+        <StackPanel VerticalAlignment="Bottom" Spacing="0" Margin="0,0,0,2">
+          <TextBlock Classes="plateMonth" Text="{Binding Month}" />
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <TextBlock Classes="plateYear" Text="{Binding Year}" />
+            <TextBlock Classes="caption ink3" Text="{Binding YearNote}" IsVisible="{Binding HasYearNote}"
+                       VerticalAlignment="Center" />
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </Viewbox>
+
+    <!-- Intercalary face: the day's name and the year. -->
+    <StackPanel IsVisible="{Binding !IsNumeral}" Spacing="2">
+      <TextBlock Classes="plateName" Text="{Binding IntercalaryName}" />
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Classes="plateYear" Text="{Binding Year}" />
+        <TextBlock Classes="caption ink3" Text="{Binding YearNote}" IsVisible="{Binding HasYearNote}" VerticalAlignment="Center" />
+      </StackPanel>
+    </StackPanel>
+
+    <Border Classes="rule" Margin="0,4" />
+
+    <WrapPanel Orientation="Horizontal">
+      <TextBlock Classes="eyebrow" Classes.foil="{Binding SecondaryIsFoil}" Classes.accent="{Binding !SecondaryIsFoil}"
+                 Text="{Binding SecondaryTitle}" VerticalAlignment="Center" Margin="0,0,10,0" />
+      <TextBlock Classes="plateSecondary" Text="{Binding SecondaryText}" VerticalAlignment="Center" />
+    </WrapPanel>
+  </StackPanel>
+</UserControl>

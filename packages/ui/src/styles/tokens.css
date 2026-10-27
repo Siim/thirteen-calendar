@@ -1,0 +1,134 @@
+/*
+ * Thirteen design tokens: type, space, shape and motion.
+ *
+ * Every colour lives in themes.css, generated from design/tokens.json (five
+ * themes, each light and dark; see design/README.md). This file only holds
+ * what does not change between themes, plus the light/dark switch itself:
+ * `color-scheme` follows the OS until ThemeProvider pins `data-theme` on <html>,
+ * and the themes resolve their colours with light-dark().
+ *
+ * Type: Geist for display and text, Geist Mono for figures, codes and captions
+ * (both SIL OFL 1.1, self-hosted through Fontsource). Big numerals are set at
+ * weight 700 with tabular figures and about -0.04em of tracking.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---- Typefaces ------------------------------------------------------ */
+  --t-font-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --t-font-display: var(--t-font-sans);
+  --t-font-text: var(--t-font-sans);
+  --t-font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* ---- Type scale ----------------------------------------------------- */
+  --t-text-2xs: 0.6875rem; /* 11px: mono captions */
+  --t-text-xs: 0.75rem;
+  --t-text-sm: 0.875rem;
+  --t-text-md: 1rem; /* body */
+  --t-text-lg: 1.125rem;
+  --t-text-xl: clamp(1.25rem, 1.08rem + 0.6vw, 1.6rem);
+  --t-text-2xl: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
+  --t-text-3xl: clamp(2.25rem, 1.45rem + 3.4vw, 4.25rem);
+  --t-text-hero: clamp(6.5rem, 3.2rem + 14vw, 14rem);
+
+  /* Weights (Geist is variable, 100 to 900). */
+  --t-weight-text: 400;
+  --t-weight-medium: 500;
+  --t-weight-title: 600;
+  --t-weight-numeral: 700;
+
+  --t-leading-tight: 1.04;
+  --t-leading-snug: 1.3;
+  --t-leading-body: 1.6;
+
+  /* Tracking: tight for display, open for the mono caption voice. */
+  --t-tracking-numeral: -0.04em;
+  --t-tracking-display: -0.035em;
+  --t-tracking-title: -0.025em;
+  --t-tracking-text: -0.006em;
+  --t-tracking-caps: 0.08em;
+  --t-tracking-mono: 0.02em;
+
+  /* ---- Space & shape ------------------------------------------------- */
+  --t-space-1: 0.25rem;
+  --t-space-2: 0.5rem;
+  --t-space-3: 0.75rem;
+  --t-space-4: 1rem;
+  --t-space-5: 1.5rem;
+  --t-space-6: 2rem;
+  --t-space-7: 3rem;
+  --t-space-8: 4.5rem;
+  --t-gutter: clamp(1rem, 0.4rem + 2.6vw, 3rem);
+  --t-measure: 66ch;
+  --t-page-max: 1440px;
+
+  --t-radius-1: 3px;
+  --t-radius-2: 6px;
+  --t-radius-pill: 999px;
+  --t-hairline: 1px;
+
+  /* ---- Motion -------------------------------------------------------- */
+  --t-ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-dur-1: 120ms;
+  --t-dur-2: 220ms;
+  --t-dur-3: 480ms;
+  --t-reveal-step: 9ms;
+
+  /* ---- Paper grain (its tint is the theme's `grain` colour) ---------- */
+  --t-grain-opacity: 0.1;
+  --t-grain-blend: multiply;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --t-grain-opacity: 0.06;
+  --t-grain-blend: screen;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --t-grain-opacity: 0.06;
+    --t-grain-blend: screen;
+  }
+}
+
+/*
+ * Cues that do not depend on colour. Most themes set Sundays, the current month
+ * and the 13-month side apart with the accent colour. Where the accent is the
+ * ink itself (Mono), ThemeProvider and the boot script put `data-monochrome` on
+ * <html> and these tokens switch on (design/DECISIONS.md, "Follow-ups decided
+ * after the redesign review"). Components read them with their usual value as
+ * the fallback, so no other theme changes:
+ *   --t-mark-weight     Sunday numerals and headers, the current month and year labels
+ *   --t-mark-outline    outline of the current month's segment in the year bar
+ *   --t-foil-hatch      hatching over Gregorian bands in the Compare charts
+ *   --t-foil-band       fill of a Gregorian band (the wash, so the hatching shows)
+ *   --t-on-foil-band    text on that band
+ *   --t-foil-halo       text-shadow for labels on a hatched band
+ *
+ * The hatch lines are 40% foil, so foil text crossing them drops to about 3.2:1.
+ * The halo, a 1px ring in the wash colour, clears the hatching around each glyph,
+ * so labels keep the foil-on-wash contrast (5.6:1 light, 7.4:1 dark) while the
+ * band around them stays hatched.
+ */
+:root[data-monochrome] {
+  --t-mark-weight: 700;
+  --t-mark-outline: var(--t-ink);
+  --t-foil-hatch: repeating-linear-gradient(
+    45deg,
+    color-mix(in srgb, var(--t-foil) 40%, transparent) 0 1px,
+    transparent 1px 5px
+  );
+  --t-foil-band: var(--t-foil-wash);
+  --t-on-foil-band: var(--t-foil);
+  --t-foil-halo:
+    -1px -1px 0 var(--t-foil-wash), 0 -1px 0 var(--t-foil-wash), 1px -1px 0 var(--t-foil-wash),
+    -1px 0 0 var(--t-foil-wash), 1px 0 0 var(--t-foil-wash), -1px 1px 0 var(--t-foil-wash),
+    0 1px 0 var(--t-foil-wash), 1px 1px 0 var(--t-foil-wash);
+}

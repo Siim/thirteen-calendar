@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Android 12 and later. Thirteen keeps one small file worth restoring: the preferences DataStore
+    (calendar system, Gregorian overlay, theme and light or dark mode). Nothing else is backed up,
+    so caches and Compose saved state never travel to another device.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="file" path="datastore/thirteen_settings.preferences_pb" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="file" path="datastore/thirteen_settings.preferences_pb" />
+    </device-transfer>
+</data-extraction-rules>

@@ -1,0 +1,284 @@
+/*
+ * The event editor on the web (design/events/mockups.html, frame I1): a
+ * 560 px dialog, labels in a right-aligned column, field-like controls, the
+ * Gregorian captions in Geist Mono, and a footer with "Delete event" on the
+ * left and Cancel and Add / Save on the right. Phones get the full-screen
+ * sheet of the Dialog primitive; accessibility text sizes stack each row.
+ */
+
+.dialog {
+  --editor-label: 96px;
+}
+
+.body {
+  padding: 16px 18px 18px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: var(--editor-label) minmax(0, 1fr);
+  align-items: start;
+  gap: 12px 14px;
+}
+
+.label {
+  min-height: 36px;
+  padding-top: 8px;
+  color: var(--t-ink-2);
+  font-size: var(--t-text-sm);
+  text-align: end;
+}
+
+.control {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  margin: 0;
+}
+
+.input,
+.select {
+  min-height: 36px;
+  padding: 6px 10px;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: 8px;
+  background: var(--t-paper-sunk);
+  color: var(--t-ink);
+  font: inherit;
+  font-size: var(--t-text-sm);
+}
+
+.input::placeholder {
+  color: var(--t-ink-3);
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  border-color: var(--t-accent);
+  outline: 2px solid color-mix(in srgb, var(--t-accent) 35%, transparent);
+  outline-offset: 0;
+}
+
+.input[aria-invalid='true'],
+.select[aria-invalid='true'] {
+  border-color: var(--t-accent-text);
+  box-shadow: inset 0 0 0 1px var(--t-accent-text);
+}
+
+.select {
+  justify-self: start;
+  max-width: 100%;
+  padding-inline-end: 28px;
+}
+
+.wide {
+  width: 100%;
+}
+
+.notes {
+  min-height: 64px;
+  resize: vertical;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  margin: 9px 0;
+  accent-color: var(--t-accent);
+}
+
+.dateRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.time {
+  /* Room for the longest 12-hour value ("12:30 PM") and the picker icon in every engine (§2.19); in em, so it follows the text size. */
+  width: auto;
+  min-width: 9.5em;
+  font-variant-numeric: tabular-nums;
+}
+
+.caption {
+  margin: 0;
+  color: var(--t-ink-3);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-mono);
+}
+
+.error,
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 2px 0 0;
+  font-size: var(--t-text-xs);
+  line-height: var(--t-leading-snug);
+}
+
+.error {
+  color: var(--t-accent-text);
+}
+
+.error svg,
+.notice svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.notice {
+  color: var(--t-ink-2);
+}
+
+.notice svg {
+  color: var(--t-ink-3);
+}
+
+.banner {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--t-accent-soft);
+  font-size: var(--t-text-sm);
+}
+
+.banner svg {
+  flex: none;
+  margin-top: 1px;
+  color: var(--t-accent-text);
+}
+
+.calendarSelect {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--t-text-sm);
+}
+
+.countInput {
+  width: 5em;
+}
+
+.code {
+  margin: 0 0 14px;
+  color: var(--t-ink-3);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+}
+
+.kbd {
+  padding: 2px 6px;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: 5px;
+  color: var(--t-ink-3);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+}
+
+/* ---- footer ---- */
+
+.footer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.hint {
+  color: var(--t-ink-3);
+  font-size: var(--t-text-xs);
+}
+
+.button {
+  min-height: 34px;
+  padding: 6px 14px;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: 8px;
+  background: var(--t-paper);
+  color: var(--t-ink);
+  font: inherit;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-title);
+  cursor: pointer;
+}
+
+.button:hover {
+  border-color: var(--t-accent);
+}
+
+.primary {
+  border-color: var(--t-accent);
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.danger {
+  color: var(--t-accent-text);
+}
+
+/* ---- accessibility text sizes and phones: every row stacks ---- */
+
+.form[data-large] {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+}
+
+.form[data-large] .label {
+  min-height: 0;
+  padding-top: 10px;
+  text-align: start;
+}
+
+.form[data-large] .dateRow {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+@media (max-width: 40rem) {
+  .form {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .label {
+    min-height: 0;
+    padding-top: 10px;
+    text-align: start;
+  }
+}
+
+@media (forced-colors: active) {
+  .primary {
+    background: ButtonText;
+    color: ButtonFace;
+  }
+
+  .error,
+  .banner {
+    border: 1px solid CanvasText;
+  }
+}

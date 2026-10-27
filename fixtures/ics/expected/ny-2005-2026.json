@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "case": "cases/ny-2005-2026.ics",
+  "calendarId": "ny-2005-2026",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "New York",
+    "color": "#2563eb",
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Haugas Development OU//Thirteen 1.0//EN"},
+      {"name":"CALSCALE","params":[],"value":"GREGORIAN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"New York"},
+      {"name":"NAME","params":[],"value":"New York"},
+      {"name":"X-APPLE-CALENDAR-COLOR","params":[],"value":"#2563EB"},
+      {"name":"COLOR","params":[],"value":"royalblue"},
+      {"name":"X-THIRTEEN-CALENDAR-ID","params":[],"value":"2811f66f-7fc1-4db2-97b1-cae05191ec79"}
+    ],
+    "timeZones": [
+      {"tzid":"America/New_York","observances":4,"generated":{"first":2005,"last":2026},"line":10}
+    ],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"bc30c96f-93fd-4b6b-b803-15646662c678","master":{"uid":"bc30c96f-93fd-4b6b-b803-15646662c678","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Kickoff","location":"","description":"","url":"","start":{"kind":"zoned","value":"2005-01-10T09:00","tzid":"America/New_York"},"end":{"kind":"zoned","value":"2005-01-10T10:00","tzid":"America/New_York"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":38},"overrides":[]},
+    {"uid":"35662134-9855-4910-bc9f-becc205d6638","master":{"uid":"35662134-9855-4910-bc9f-becc205d6638","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Spring course","location":"","description":"","url":"","start":{"kind":"zoned","value":"2005-03-14T18:00","tzid":"America/New_York"},"end":{"kind":"zoned","value":"2005-03-14T20:00","tzid":"America/New_York"},"duration":null,"rrules":["FREQ=WEEKLY;COUNT=6"],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":50},"overrides":[]},
+    {"uid":"88367b15-e102-40b8-bab2-1f52ac3005be","master":{"uid":"88367b15-e102-40b8-bab2-1f52ac3005be","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Picnic","location":"","description":"","url":"","start":{"kind":"zoned","value":"2005-07-04T12:00","tzid":"America/New_York"},"end":{"kind":"zoned","value":"2005-07-04T15:00","tzid":"America/New_York"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":63},"overrides":[]},
+    {"uid":"d6034865-4b11-4c28-906f-00522dd2abd7","master":{"uid":"d6034865-4b11-4c28-906f-00522dd2abd7","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Kickoff","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-01-05T09:00","tzid":"America/New_York"},"end":{"kind":"zoned","value":"2026-01-05T10:00","tzid":"America/New_York"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":75},"overrides":[]},
+    {"uid":"116d8037-3b11-4149-886c-5c89de084ee0","master":{"uid":"116d8037-3b11-4149-886c-5c89de084ee0","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Standup","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-02T09:00","tzid":"America/New_York"},"end":{"kind":"zoned","value":"2026-03-02T09:15","tzid":"America/New_York"},"duration":null,"rrules":["FREQ=WEEKLY;COUNT=6"],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":87},"overrides":[]},
+    {"uid":"380b1719-700e-44e8-b482-7c41cba183ce","master":{"uid":"380b1719-700e-44e8-b482-7c41cba183ce","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Night shift","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-10-31T23:00","tzid":"America/New_York"},"end":{"kind":"zoned","value":"2026-11-01T07:00","tzid":"America/New_York"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":"CONFIRMED","transp":"OPAQUE","thirteenRule":null,"alarms":[],"created":{"kind":"utc","value":"2026-10-19T06:41"},"lastModified":{"kind":"utc","value":"2026-10-19T06:41"},"dtstamp":{"kind":"utc","value":"2026-10-19T06:41"},"importedLastModified":null,"extra":[],"line":100},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"ny-2005-2026/d6034865-4b11-4c28-906f-00522dd2abd7|2026-01-05T09:00","calendarId":"ny-2005-2026","title":"Kickoff","allDay":false,"start":"2026-01-05T16:00","end":"2026-01-05T17:00"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-02T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-02T16:00","end":"2026-03-02T16:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-09T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-09T15:00","end":"2026-03-09T15:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-16T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-16T15:00","end":"2026-03-16T15:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-23T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-23T15:00","end":"2026-03-23T15:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-30T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-30T16:00","end":"2026-03-30T16:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-04-06T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-04-06T16:00","end":"2026-04-06T16:15"},
+        {"key":"ny-2005-2026/380b1719-700e-44e8-b482-7c41cba183ce|2026-10-31T23:00","calendarId":"ny-2005-2026","title":"Night shift","allDay":false,"start":"2026-11-01T05:00","end":"2026-11-01T14:00"}
+      ]
+    },
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2005-01-01T00:00","to":"2005-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"ny-2005-2026/bc30c96f-93fd-4b6b-b803-15646662c678|2005-01-10T09:00","calendarId":"ny-2005-2026","title":"Kickoff","allDay":false,"start":"2005-01-10T16:00","end":"2005-01-10T17:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-03-14T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-03-15T01:00","end":"2005-03-15T03:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-03-21T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-03-22T01:00","end":"2005-03-22T03:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-03-28T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-03-29T02:00","end":"2005-03-29T04:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-04-04T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-04-05T01:00","end":"2005-04-05T03:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-04-11T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-04-12T01:00","end":"2005-04-12T03:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-04-18T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-04-19T01:00","end":"2005-04-19T03:00"},
+        {"key":"ny-2005-2026/88367b15-e102-40b8-bab2-1f52ac3005be|2005-07-04T12:00","calendarId":"ny-2005-2026","title":"Picnic","allDay":false,"start":"2005-07-04T19:00","end":"2005-07-04T22:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"ny-2005-2026/d6034865-4b11-4c28-906f-00522dd2abd7|2026-01-05T09:00","calendarId":"ny-2005-2026","title":"Kickoff","allDay":false,"start":"2026-01-05T09:00","end":"2026-01-05T10:00"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-02T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-02T09:00","end":"2026-03-02T09:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-09T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-09T09:00","end":"2026-03-09T09:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-16T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-16T09:00","end":"2026-03-16T09:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-23T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-23T09:00","end":"2026-03-23T09:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-03-30T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-03-30T09:00","end":"2026-03-30T09:15"},
+        {"key":"ny-2005-2026/116d8037-3b11-4149-886c-5c89de084ee0|2026-04-06T09:00","calendarId":"ny-2005-2026","title":"Standup","allDay":false,"start":"2026-04-06T09:00","end":"2026-04-06T09:15"},
+        {"key":"ny-2005-2026/380b1719-700e-44e8-b482-7c41cba183ce|2026-10-31T23:00","calendarId":"ny-2005-2026","title":"Night shift","allDay":false,"start":"2026-10-31T23:00","end":"2026-11-01T07:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2005-01-01T00:00","to":"2005-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"ny-2005-2026/bc30c96f-93fd-4b6b-b803-15646662c678|2005-01-10T09:00","calendarId":"ny-2005-2026","title":"Kickoff","allDay":false,"start":"2005-01-10T09:00","end":"2005-01-10T10:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-03-14T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-03-14T18:00","end":"2005-03-14T20:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-03-21T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-03-21T18:00","end":"2005-03-21T20:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-03-28T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-03-28T18:00","end":"2005-03-28T20:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-04-04T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-04-04T18:00","end":"2005-04-04T20:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-04-11T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-04-11T18:00","end":"2005-04-11T20:00"},
+        {"key":"ny-2005-2026/35662134-9855-4910-bc9f-becc205d6638|2005-04-18T18:00","calendarId":"ny-2005-2026","title":"Spring course","allDay":false,"start":"2005-04-18T18:00","end":"2005-04-18T20:00"},
+        {"key":"ny-2005-2026/88367b15-e102-40b8-bab2-1f52ac3005be|2005-07-04T12:00","calendarId":"ny-2005-2026","title":"Picnic","allDay":false,"start":"2005-07-04T12:00","end":"2005-07-04T15:00"}
+      ]
+    }
+  ]
+}

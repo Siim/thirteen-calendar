@@ -1,0 +1,7 @@
+/* "Your data" (docs/EVENTS.md §2.18): the row title reads like the other rows' labels. */
+.heading {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}

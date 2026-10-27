@@ -1,0 +1,215 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- The details flyout, the editor dialog, the 13-month date picker, the repeat pickers and the event toasts
+       (docs/EVENTS.md §2.10 to §2.13; boards A2, C2, C3, G, I1; task W7). -->
+
+  <!-- ===== Buttons ===== -->
+  <!-- Destructive: "Delete event", "Discard changes", "Save for future events" when it deletes (§2.11). -->
+  <Style Selector="Button.destructive">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="FontWeight" Value="Medium" />
+  </Style>
+  <Style Selector="Button.destructive:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+  <Style Selector="Button.destructive:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+
+  <!-- ===== Editor (board I1) ===== -->
+  <Style Selector="Border.editorHeader">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRuleSoft}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="Padding" Value="20,16,16,14" />
+  </Style>
+  <Style Selector="Border.editorFooter">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRuleSoft}" />
+    <Setter Property="BorderThickness" Value="0,1,0,0" />
+    <Setter Property="Padding" Value="20,14" />
+  </Style>
+  <Style Selector="TextBlock.rowLabel">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Margin" Value="0,0,14,0" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="TextAlignment" Value="Right" />
+  </Style>
+  <!-- Large text: the labels go above their fields, left aligned. -->
+  <Style Selector="TextBlock.rowLabel.stacked">
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="TextAlignment" Value="Left" />
+    <Setter Property="Margin" Value="0,0,0,4" />
+  </Style>
+  <Style Selector="TextBlock.caption">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.notice">
+    <Setter Property="FontSize" Value="12.5" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.hint">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.saveErrorCode">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+  </Style>
+  <!-- A date button of the editor: the 13-month date, then the calendar glyph. -->
+  <Style Selector="Button.dateButton">
+    <Setter Property="Padding" Value="10,5" />
+    <Setter Property="MinWidth" Value="172" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+  </Style>
+
+  <!-- ===== 13-month date picker (board C2) ===== -->
+  <Style Selector="ListBox.slots">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="ListBox.slots ListBoxItem">
+    <Setter Property="Padding" Value="5,2" />
+    <Setter Property="Margin" Value="0,0,3,3" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Background" Value="{DynamicResource ThWell}" />
+    <Setter Property="FontSize" Value="11" />
+  </Style>
+  <Style Selector="ListBox.slots ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <Style Selector="ListBox.days">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="ListBox.days ListBoxItem">
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Margin" Value="2" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Background" Value="{DynamicResource ThCell}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="ListBox.days ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThCellHover}" />
+  </Style>
+  <Style Selector="ListBox.days ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+  </Style>
+  <Style Selector="ListBox.days ListBoxItem:selected TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <Style Selector="Border.pickerCell">
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+  <Style Selector="Border.pickerCell.today">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+  </Style>
+  <Style Selector="TextBlock.pickerDay">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.pickerGregorian">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="9.5" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Border.badge">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="12,10" />
+    <Setter Property="Background" Value="{DynamicResource ThAccentWashSoft}" />
+  </Style>
+  <Style Selector="Border.pickerCaption">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="10,8" />
+  </Style>
+
+  <!-- ===== Repeat picker (board C3) ===== -->
+  <Style Selector="TextBlock.sectionHeader">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="Margin" Value="4,10,0,4" />
+    <!-- "International Fixed Calendar" outgrows the picker at Windows' largest text size. -->
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.sectionFooter">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="Margin" Value="4,4,0,0" />
+  </Style>
+  <Style Selector="TextBlock.next">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="Button.repeatRow">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="Background" Value="{DynamicResource ThPaper}" />
+    <Setter Property="Padding" Value="12,8" />
+    <Setter Property="Margin" Value="0,0,0,2" />
+  </Style>
+
+  <!-- ===== Details (board A2) ===== -->
+  <Style Selector="TextBlock.detailsTitle">
+    <Setter Property="FontSize" Value="22" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="TextBlock.lineLabel">
+    <Setter Property="FontSize" Value="12.5" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="Margin" Value="0,0,12,0" />
+  </Style>
+  <Style Selector="Button.lineLink">
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+  </Style>
+
+  <!-- ===== Toasts ===== -->
+  <Style Selector="Button.toastAction">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Foreground" Value="{DynamicResource ThPaper}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Padding" Value="8,4" />
+    <!-- §2.20 targets: at least 32 x 32 px. -->
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="MinWidth" Value="32" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.toastClose">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Width" Value="32" />
+    <Setter Property="Height" Value="32" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+</Styles>

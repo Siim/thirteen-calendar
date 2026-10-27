@@ -1,0 +1,227 @@
+/* "Get the app": a quiet row of small download buttons. */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--t-space-3) var(--t-space-5);
+  min-width: 0;
+}
+
+.heading {
+  flex: none;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  line-height: 1.2;
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--t-space-2);
+  list-style: none;
+  min-width: 0;
+}
+
+.item {
+  display: flex;
+}
+
+/* ---- Buttons --------------------------------------------------------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.7rem;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    border-color var(--t-dur-1) var(--t-ease-out),
+    background-color var(--t-dur-1) var(--t-ease-out),
+    transform var(--t-dur-1) var(--t-ease-out);
+}
+
+@media (hover: hover) {
+  .button:hover {
+    border-color: var(--t-rule-strong);
+    background: var(--t-paper);
+  }
+}
+
+.button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* The visitor's own platform: the same button, drawn in ink. */
+.primary {
+  border-color: var(--t-rule-strong);
+}
+
+.logo {
+  flex: none;
+  color: var(--t-ink);
+}
+
+.name {
+  letter-spacing: var(--t-tracking-text);
+}
+
+.meta {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-mono);
+  color: var(--t-ink-2);
+}
+
+/* Windows: the main installer and the other architecture, joined. */
+.pair {
+  display: inline-flex;
+}
+
+.pairMain {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.pairSide {
+  margin-left: -1px;
+  padding-inline: 0.7rem;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.pairMain.primary {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- App Store badge (Apple artwork: unmodified, at least 40px tall) ---- */
+
+.badge {
+  display: inline-flex;
+  flex: none;
+  /* Clear space of at least a quarter of the badge height. */
+  margin-inline: 0.625rem;
+  border-radius: 7px;
+}
+
+/* Clear space is from other graphics, not the column edge: first in the row, it lines up with the buttons. */
+.item:first-child > .badge {
+  margin-inline-start: 0;
+}
+
+.badge img {
+  display: block;
+  height: 40px;
+  width: auto;
+}
+
+.badgeDark {
+  display: none !important;
+}
+
+:root[data-theme='dark'] .badgeLight {
+  display: none !important;
+}
+
+:root[data-theme='dark'] .badgeDark {
+  display: block !important;
+}
+
+/* ---- Source --------------------------------------------------------- */
+
+.source {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--t-space-2);
+  margin-left: auto;
+  font-size: var(--t-text-sm);
+}
+
+.sourceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  color: var(--t-ink-2);
+  text-decoration: none;
+}
+
+.sourceLink:hover {
+  color: var(--t-ink);
+  text-decoration: underline;
+}
+
+.sourceLink .logo {
+  color: currentColor;
+}
+
+.license {
+  padding: 0.15rem 0.4rem;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-1);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  color: var(--t-ink-2);
+  text-decoration: none;
+}
+
+.license:hover {
+  border-color: var(--t-rule-strong);
+  color: var(--t-ink);
+}
+
+/* ---- Variants ------------------------------------------------------- */
+
+.footer .heading {
+  margin-right: var(--t-space-1);
+}
+
+.panel {
+  flex: 1 1 100%;
+  row-gap: var(--t-space-4);
+}
+
+.panel .heading {
+  flex-basis: 100%;
+}
+
+/* Phones: the heading on its own line; buttons keep their natural width and wrap. */
+@media (max-width: 40rem) {
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--t-space-3);
+  }
+
+  .button {
+    min-height: 2.75rem;
+    gap: 0.4rem;
+    padding-inline: 0.55rem 0.7rem;
+  }
+
+  .pairSide {
+    padding-inline: 0.6rem;
+  }
+
+  .source {
+    margin-left: 0;
+  }
+}

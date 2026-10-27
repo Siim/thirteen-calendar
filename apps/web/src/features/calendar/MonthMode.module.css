@@ -1,0 +1,49 @@
+.mode {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+}
+
+.dayList {
+  margin-top: 0.5rem;
+  border-top: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+}
+
+.empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.85rem 0.75rem;
+  color: var(--t-ink-2);
+}
+
+.mode > .empty {
+  margin-bottom: 0.75rem;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+}
+
+.textButton {
+  color: var(--t-accent-text);
+  font-weight: var(--t-weight-title);
+}
+
+.iconButton {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  color: var(--t-accent-text);
+}
+
+.morePopover {
+  padding: 0;
+}
+
+.moreBody {
+  display: grid;
+  max-height: min(28rem, 70dvh);
+  overflow: auto;
+}

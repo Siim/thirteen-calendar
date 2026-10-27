@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.DayDetailView"
+             x:DataType="vm:DayDetailViewModel">
+  <!-- The day-detail pane: the full comparison of one day, stepping day by day (Alt+Left / Alt+Right). -->
+  <DockPanel>
+    <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="20,14,10,6">
+      <StackPanel Spacing="0" VerticalAlignment="Center">
+        <TextBlock Classes="eyebrow" Text="DAY DETAILS" />
+        <TextBlock Classes="title" FontSize="20" Text="{Binding Content.Title}" />
+      </StackPanel>
+      <Button Grid.Column="1" Classes="subtle" Width="36" Height="36" Padding="0" HorizontalContentAlignment="Center"
+              VerticalContentAlignment="Center" Command="{Binding CloseCommand}" ToolTip.Tip="Close (Esc)"
+              AutomationProperties.Name="Close day details">
+        <TextBlock Classes="icon" FontSize="14" Text="&#xE711;" />
+      </Button>
+    </Grid>
+    <!-- Own adorner layer, clipped: focus rings never spill over the pane's title (see MainWindow.axaml). -->
+    <VisualLayerManager ClipToBounds="True">
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="20,6,20,24" Spacing="16">
+          <!-- Events (docs/EVENTS.md §2.9): the day's items as Up next draws them, "New event" and "Open in Calendar". -->
+          <p:DayEventsView DataContext="{Binding Events}" />
+          <p:DatePlateView DataContext="{Binding Content.Plate}" />
+          <WrapPanel Orientation="Horizontal">
+            <Button Classes="accentBordered" Command="{Binding PreviousDayCommand}" Margin="0,0,8,8" ToolTip.Tip="Previous day (Alt+Left)"
+                    AutomationProperties.Name="Previous day">
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <TextBlock Classes="icon" FontSize="12" Text="&#xE76B;" VerticalAlignment="Center" />
+                <TextBlock Text="Previous day" VerticalAlignment="Center" />
+              </StackPanel>
+            </Button>
+            <Button Classes="accentBordered" Command="{Binding NextDayCommand}" Margin="0,0,8,8" ToolTip.Tip="Next day (Alt+Right)"
+                    AutomationProperties.Name="Next day">
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <TextBlock Text="Next day" VerticalAlignment="Center" />
+                <TextBlock Classes="icon" FontSize="12" Text="&#xE76C;" VerticalAlignment="Center" />
+              </StackPanel>
+            </Button>
+            <Button Classes="subtle" Command="{Binding TodayCommand}" Margin="0,0,8,8" Content="Today"
+                    IsVisible="{Binding IsNotToday}" />
+          </WrapPanel>
+          <p:ComparisonDetailView DataContext="{Binding Content.Detail}" />
+          <Button Classes="accentBordered" Command="{Binding OpenInConverterCommand}" HorizontalAlignment="Left"
+                  AutomationProperties.Name="Open in Convert">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Classes="icon" FontSize="14" Text="&#xE8AB;" VerticalAlignment="Center" />
+              <TextBlock Text="Open in Convert" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+        </StackPanel>
+      </ScrollViewer>
+    </VisualLayerManager>
+  </DockPanel>
+</UserControl>

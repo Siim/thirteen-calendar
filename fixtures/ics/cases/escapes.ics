@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Example Corp//Calendar Export 4.2//EN
+X-WR-CALNAME:Escapes\, commas\; semicolons
+BEGIN:VEVENT
+UID:85cdeb6f-4a35-4076-aab8-c68362cf8dfc
+DTSTAMP:20261015T080000Z
+DTSTART:20261023T100000Z
+DTEND:20261023T113000Z
+SUMMARY:Lunch\, then a walk\; bring \\umbrella\\
+DESCRIPTION:Line one\nLine two\NLine three\, with a comma\nA backslash: \\ and a colon: here
+LOCATION:Kohvik "Must Puudel"\; 2nd floor
+URL:https://example.com/menu?day=fri&lang=en
+ATTENDEE;CN="Kask, Liis";ROLE=REQ-PARTICIPANT:mailto:liis.kask@example.com
+ATTACH;FMTTYPE=application/pdf;X-FILENAME="agenda: v2.pdf":https://example.com/agenda.pdf
+X-ALT-DESC;FMTTYPE=text/html:<p>Line one</p><p>Line two</p>
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,278 @@
+/*
+ * The Calendars dialogs of Windows and the web (design/events/mockups.html,
+ * boards D2 and I2): fields with a label above, help and error lines under
+ * them, the restore list, colour swatches.
+ */
+
+.body {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.lead {
+  margin: 0;
+  color: var(--t-ink-2);
+  font-size: 0.8125rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.label {
+  padding: 0;
+  font-size: 0.78125rem;
+  font-weight: var(--t-weight-title);
+  color: var(--t-ink);
+}
+
+.input,
+.select {
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.625rem;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: 8px;
+  background: var(--t-paper);
+  color: var(--t-ink);
+  font-family: var(--t-font-text);
+  font-size: var(--t-text-sm);
+}
+
+.mono {
+  font-family: var(--t-font-mono);
+  font-size: 0.75rem;
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  border-color: var(--t-accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--t-accent-soft);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--t-accent-text);
+}
+
+.input[readonly] {
+  background: var(--t-paper-sunk);
+  color: var(--t-ink-2);
+}
+
+.help {
+  margin: 0.2rem 0 0;
+  color: var(--t-ink-3);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.error {
+  display: flex;
+  gap: 0.375rem;
+  align-items: flex-start;
+  margin: 0.25rem 0 0;
+  color: var(--t-accent-text);
+  font-size: 0.78125rem;
+  line-height: 1.4;
+}
+
+.error svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.checking {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0;
+  color: var(--t-ink-2);
+  font-size: 0.78125rem;
+}
+
+.spinner {
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 1.5px solid var(--t-rule);
+  border-top-color: var(--t-ink-2);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2.4s;
+  }
+}
+
+.note {
+  margin: 0;
+  padding: 0.5rem 0.625rem;
+  border-radius: 9px;
+  background: var(--t-accent-wash);
+  color: var(--t-ink);
+  font-size: 0.78125rem;
+  line-height: 1.4;
+}
+
+/* ---- import: one block per file ---------------------------------------- */
+
+.source {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.source + .source {
+  padding-top: 0.875rem;
+  border-top: var(--t-hairline) solid var(--t-rule-soft);
+}
+
+.fileName {
+  margin: 0;
+  font-family: var(--t-font-mono);
+  font-size: 0.6875rem;
+  color: var(--t-ink-3);
+  overflow-wrap: anywhere;
+}
+
+/* ---- restore and export lists (I2) ------------------------------------- */
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.25rem 0;
+  border-top: var(--t-hairline) solid var(--t-rule-soft);
+}
+
+.list li:first-child {
+  border-top: 0;
+}
+
+.list input {
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin: 0;
+  accent-color: var(--cal, var(--t-accent));
+}
+
+.list label {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.kind {
+  flex: none;
+  margin-left: auto;
+  font-family: var(--t-font-mono);
+  font-size: 0.65625rem;
+  color: var(--t-ink-3);
+  white-space: nowrap;
+}
+
+/* ---- colour swatches (D2) ---------------------------------------------- */
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* 26 px targets: the eleven colours fit one row of the 400 px dialog. */
+.swatch {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swatch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.swatch span {
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 1px var(--t-rule);
+}
+
+.swatch input:checked + span {
+  box-shadow:
+    0 0 0 2px var(--t-paper-raised),
+    0 0 0 3.5px var(--t-ink);
+}
+
+.swatch input:focus-visible + span {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 4px;
+}
+
+/* ---- settings ------------------------------------------------------------ */
+
+.status {
+  margin: 0;
+  color: var(--t-ink-3);
+  font-size: 0.75rem;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.destructive {
+  color: var(--t-accent-text);
+  font-weight: var(--t-weight-title);
+}
+
+@media (forced-colors: active) {
+  .swatch span {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+  }
+
+  .swatch input:checked + span {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .note {
+    border: 1px solid CanvasText;
+  }
+}

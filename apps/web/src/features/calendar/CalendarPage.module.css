@@ -1,0 +1,37 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Regular width: the Calendars list in the left column (§2.1, §2.15). */
+@media (min-width: 48rem) {
+  .page {
+    grid-template-columns: 12.5rem minmax(0, 1fr);
+    padding-top: 0.5rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .page {
+    grid-template-columns: 14rem minmax(0, 1fr);
+    gap: 2rem;
+  }
+}
+
+.sidebar {
+  position: sticky;
+  top: 0.75rem;
+  max-height: calc(100dvh - 1.5rem);
+  overflow: auto;
+  padding: 0.85rem 0.25rem 1rem 0;
+}
+
+.main {
+  min-width: 0;
+}
+
+.view {
+  min-width: 0;
+}

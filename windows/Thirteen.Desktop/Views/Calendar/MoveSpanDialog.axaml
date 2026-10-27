@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Thirteen.Desktop.Views.CalendarSection.MoveSpanDialog"
+        Classes="eventDialog"
+        Width="560">
+  <!-- The span question of a drag edit on a repeating event (docs/EVENTS.md §2.11 "Drag edits"): "This is a repeating
+       event.", the question or what the move does to the repeat, the losses said before the choice
+       (span.future.exceptionsDropped), the choices in order ("Move and delete later events" in the destructive style)
+       and Cancel. Escape cancels; nothing moves without a choice. -->
+  <Window.Styles>
+    <Style Selector="Button.destructive">
+      <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThAccentText}" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.destructive:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThAccentText}" />
+    </Style>
+  </Window.Styles>
+  <StackPanel Margin="24,22,24,20" Spacing="10">
+    <TextBlock Name="TitleText" Classes="dialogTitle" FontSize="17" />
+    <TextBlock Name="Message" FontSize="14" TextWrapping="Wrap" />
+    <ItemsControl Name="Lines">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="x:String">
+          <TextBlock FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource ThInk2}" Text="{Binding}" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <WrapPanel Name="Buttons" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0" />
+  </StackPanel>
+</Window>

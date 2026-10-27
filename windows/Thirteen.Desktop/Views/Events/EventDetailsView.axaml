@@ -1,0 +1,101 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+             x:Class="Thirteen.Desktop.Views.Events.EventDetailsView"
+             x:DataType="ev:EventDetailsViewModel"
+             Width="340">
+  <!-- An event's details (docs/EVENTS.md §2.10, board A2): the title with the calendar's color bar and its tag, the date
+       plate in both calendars, the labelled lines (time with its zone line, repeat, calendar, alerts, show as, location
+       and URL as links, notes), the read-only reason, then Edit, More (Duplicate) and Delete event. The same view is the
+       flyout, the dialog at 150 % text and above, and the Day details panel. -->
+  <UserControl.Styles>
+    <Style Selector="DockPanel.detailLine">
+      <Setter Property="Margin" Value="0,0,0,6" />
+    </Style>
+    <Style Selector="DockPanel.detailLine > TextBlock.detailLabel">
+      <Setter Property="DockPanel.Dock" Value="Left" />
+      <Setter Property="Width" Value="86" />
+    </Style>
+    <Style Selector="StackPanel.stacked DockPanel.detailLine > TextBlock.detailLabel">
+      <Setter Property="DockPanel.Dock" Value="Top" />
+      <Setter Property="Width" Value="NaN" />
+      <Setter Property="Margin" Value="0,0,0,2" />
+    </Style>
+  </UserControl.Styles>
+  <StackPanel Spacing="12" Classes.stacked="{Binding Stacked}">
+    <Grid ColumnDefinitions="Auto,*,Auto">
+      <Border Width="4" CornerRadius="2" Margin="0,3,10,3" Background="{Binding ColorBrush}" />
+      <TextBlock Grid.Column="1" Name="TitleText" Classes="detailsTitle" Text="{Binding EventTitle}" />
+      <Border Grid.Column="2" Classes="tag" Margin="8,4,0,0" VerticalAlignment="Top" IsVisible="{Binding HasTag}">
+        <TextBlock FontSize="11" Text="{Binding Tag}" />
+      </Border>
+    </Grid>
+
+    <!-- Date plate. -->
+    <Border Classes="banner" Padding="12,10" AutomationProperties.Name="{Binding PlateName}">
+      <StackPanel Spacing="2">
+        <StackPanel IsVisible="{Binding SingleDay}" Spacing="2">
+          <TextBlock FontSize="15" FontWeight="SemiBold" TextWrapping="Wrap" Text="{Binding ThirteenDate}" />
+          <TextBlock Classes="caption" Text="{Binding GregorianDate}" />
+        </StackPanel>
+        <Grid IsVisible="{Binding MultiDay}" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto">
+          <TextBlock Classes="lineLabel" Text="{Binding StartsLabel}" />
+          <TextBlock Grid.Column="1" FontWeight="SemiBold" TextWrapping="Wrap" Text="{Binding ThirteenDate}" />
+          <TextBlock Grid.Row="1" Grid.Column="1" Classes="caption" Text="{Binding GregorianDate}" />
+          <TextBlock Grid.Row="2" Classes="lineLabel" Margin="0,6,12,0" Text="{Binding EndsLabel}" />
+          <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,6,0,0" FontWeight="SemiBold" TextWrapping="Wrap" Text="{Binding EndThirteenDate}" />
+          <TextBlock Grid.Row="3" Grid.Column="1" Classes="caption" Text="{Binding EndGregorianDate}" />
+        </Grid>
+      </StackPanel>
+    </Border>
+
+    <!-- Lines, in the order of §2.10: Time (the zone line under it), Repeat, Calendar, Alerts, Show as, Location, URL,
+         Notes. The label column is 86 px; at 150 % text and above each label goes above its value (Stacked). -->
+    <ItemsControl Name="LinesList" ItemsSource="{Binding Lines}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="ev:DetailLine">
+          <DockPanel Classes="detailLine">
+            <TextBlock Classes="lineLabel detailLabel" TextWrapping="Wrap" Text="{Binding Label}" />
+            <StackPanel Spacing="2">
+              <SelectableTextBlock TextWrapping="Wrap" FontSize="13.5" IsVisible="{Binding IsText}" Text="{Binding Value}"
+                                   AutomationProperties.Name="{Binding AccessibleName}" />
+              <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding HasDot}" AutomationProperties.Name="{Binding AccessibleName}">
+                <Ellipse Width="8" Height="8" Margin="0,0,7,0" VerticalAlignment="Center" Fill="{Binding Dot}" />
+                <TextBlock Grid.Column="1" FontSize="13.5" TextWrapping="Wrap" Text="{Binding Value}" />
+              </Grid>
+              <Button Classes="lineLink" IsVisible="{Binding IsLink}" AutomationProperties.Name="{Binding AccessibleName}"
+                      Command="{Binding $parent[UserControl].((ev:EventDetailsViewModel)DataContext).OpenLineCommand}" CommandParameter="{Binding}">
+                <TextBlock TextWrapping="Wrap" FontSize="13.5" Text="{Binding Value}" />
+              </Button>
+              <TextBlock Classes="caption" TextWrapping="Wrap" IsVisible="{Binding HasNote}" Text="{Binding Note}" />
+            </StackPanel>
+          </DockPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <!-- Read-only reason. -->
+    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding IsReadOnly}">
+      <TextBlock Classes="icon statusIcon" FontSize="13" Foreground="{DynamicResource ThInk3}" Text="&#xE72E;" />
+      <TextBlock Grid.Column="1" Name="ReadOnlyLine" Classes="status" Text="{Binding ReadOnlyText}" />
+    </Grid>
+
+    <!-- Actions. -->
+    <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8" Margin="0,4,0,0">
+      <Button Name="EditButton" Classes="accentBordered" IsVisible="{Binding CanEdit}" Content="{Binding EditText}"
+              Command="{Binding EditCommand}" AutomationProperties.Name="{Binding EditText}" />
+      <Button Name="EditAlertsButton" Classes="accentBordered" IsVisible="{Binding CanEditAlerts}" Content="{Binding EditAlertsText}"
+              Command="{Binding EditAlertsCommand}" AutomationProperties.Name="{Binding EditAlertsText}" />
+      <Button Grid.Column="1" Name="MoreButton" Padding="10,6" ToolTip.Tip="{Binding MoreTip}" AutomationProperties.Name="{Binding MoreText}">
+        <TextBlock Classes="icon" FontSize="13" Text="&#xE712;" />
+        <Button.Flyout>
+          <MenuFlyout Placement="BottomEdgeAlignedLeft">
+            <MenuItem Name="DuplicateItem" Header="{Binding DuplicateText}" Command="{Binding DuplicateCommand}" />
+          </MenuFlyout>
+        </Button.Flyout>
+      </Button>
+      <Button Grid.Column="3" Name="DeleteButton" Classes="destructive" IsVisible="{Binding CanDelete}" Content="{Binding DeleteText}"
+              Command="{Binding DeleteCommand}" AutomationProperties.Name="{Binding DeleteText}" />
+    </Grid>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,128 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Type roles (design/DECISIONS.md): Geist for display and text, Geist Mono for figures, labels and
+       code-like captions, both embedded from Assets/Fonts. Sizes follow the Windows 11 type ramp (body 14,
+       body large 18, subtitle 20, title 28) with Geist's tight tracking; big numerals are bold, tabular and
+       tracked at about -0.04 em. Colours come from the theme dictionary (Th* keys, Themes/ThemeResources.cs). -->
+  <Styles.Resources>
+    <FontFamily x:Key="ThirteenTextFont">avares://Thirteen/Assets/Fonts#Geist</FontFamily>
+    <FontFamily x:Key="ThirteenMonoFont">avares://Thirteen/Assets/Fonts#Geist Mono</FontFamily>
+    <!-- Fluent controls read their font from this key. -->
+    <FontFamily x:Key="ContentControlThemeFontFamily">avares://Thirteen/Assets/Fonts#Geist</FontFamily>
+    <!-- Windows 11 ships Segoe Fluent Icons; Windows 10 has Segoe MDL2 Assets with the same code points. -->
+    <FontFamily x:Key="IconFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+    <FontFeatureCollection x:Key="TabularFigures">
+      <FontFeature Tag="tnum" Value="1" />
+    </FontFeatureCollection>
+  </Styles.Resources>
+
+  <Style Selector="Window">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenTextFont}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+
+  <!-- Colour roles for text. -->
+  <Style Selector="TextBlock.ink2, SelectableTextBlock.ink2">
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+  </Style>
+  <Style Selector="TextBlock.ink3">
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+  </Style>
+  <Style Selector="TextBlock.accent">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+  <Style Selector="TextBlock.foil">
+    <Setter Property="Foreground" Value="{DynamicResource ThFoil}" />
+  </Style>
+
+  <!-- Roles. -->
+  <Style Selector="TextBlock.pageTitle">
+    <Setter Property="FontSize" Value="28" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="-0.7" />
+  </Style>
+  <Style Selector="TextBlock.title">
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="-0.45" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+  </Style>
+  <Style Selector="TextBlock.sectionTitle">
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="-0.5" />
+  </Style>
+  <Style Selector="TextBlock.subtitle">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <!-- Line spacing, not a fixed LineHeight: the extra space between lines grows with Windows' text size along with the
+       font (Support/TextScaling.cs), where a fixed line height let scaled lines overlap and cut their last line. At 100 %
+       these give the former 26, 20, 20 and 17 px lines (Geist's own line is 23.5, 18, 18.5 and 16 px). -->
+  <Style Selector="TextBlock.lede">
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="LineSpacing" Value="2.5" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.explanation">
+    <Setter Property="FontSize" Value="13.5" />
+    <Setter Property="LineSpacing" Value="2" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.body">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineSpacing" Value="1.5" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.footnote">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="LineSpacing" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.caption">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+  </Style>
+  <Style Selector="TextBlock.strong">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="TextBlock.factValue">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="-0.2" />
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+  </Style>
+  <!-- Uppercase, tracked Geist Mono label (the Apple apps' eyebrow). Text is upper-cased in the view model. -->
+  <Style Selector="TextBlock.eyebrow">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LetterSpacing" Value="0.9" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+  </Style>
+  <Style Selector="TextBlock.eyebrow.accent">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+  <Style Selector="TextBlock.eyebrow.foil">
+    <Setter Property="Foreground" Value="{DynamicResource ThFoil}" />
+  </Style>
+  <Style Selector="TextBlock.mono, SelectableTextBlock.mono">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+  </Style>
+  <Style Selector="TextBlock.numeral">
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+  </Style>
+  <Style Selector="TextBlock.icon">
+    <Setter Property="FontFamily" Value="{StaticResource IconFont}" />
+    <Setter Property="FontSize" Value="16" />
+  </Style>
+</Styles>

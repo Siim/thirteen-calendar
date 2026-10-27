@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+        x:Class="Thirteen.Desktop.Views.Events.FailedChangesDialog"
+        x:DataType="ev:FailedChangesViewModel"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding Title}"
+        Width="480">
+  <!-- "Changes that couldn't be saved" (docs/EVENTS.md §2.11 "Failures nobody saw"): one row per failure; a row opens
+       its event's details, rows with a transient cause have their own "Try again". -->
+  <StackPanel Margin="24,20,24,20" Spacing="12">
+    <TextBlock Classes="dialogTitle" FontSize="18" Text="{Binding Title}" />
+    <ItemsControl Name="RowList" ItemsSource="{Binding Rows}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="ev:FailedChangeRow">
+          <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,6">
+            <Button Classes="repeatRow" Command="{Binding OpenCommand}" AutomationProperties.Name="{Binding Text}">
+              <TextBlock FontSize="13.5" TextWrapping="Wrap" Text="{Binding Text}" />
+            </Button>
+            <Button Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center" IsVisible="{Binding CanRetry}" Content="{Binding RetryText}"
+                    Command="{Binding RetryCommand}" AutomationProperties.Name="{Binding RetryText}" />
+          </Grid>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <Button Name="CloseButton" HorizontalAlignment="Right" MinWidth="80" HorizontalContentAlignment="Center" IsCancel="True"
+            Content="{Binding CloseText}" AutomationProperties.Name="{Binding CloseText}" />
+  </StackPanel>
+</Window>

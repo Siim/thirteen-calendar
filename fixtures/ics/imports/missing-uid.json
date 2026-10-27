@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "description": "cases/missing-uid.ics imported twice into the same calendar: the derived UIDs come from the target calendar's id, so the second import finds both groups unchanged and adds nothing.",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "The same file twice",
+      "calendarId": "bc131974-deb2-4ab2-9bf6-efa2dd0f165d",
+      "start": {"new":{"calendarId":"bc131974-deb2-4ab2-9bf6-efa2dd0f165d","name":"Bookings","color":"#d97706"}},
+      "steps": [
+        {
+          "kind": "import",
+          "file": "cases/missing-uid.ics",
+          "result": {"added":2,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/missing-uid-1.ics"
+        },
+        {
+          "kind": "import",
+          "file": "cases/missing-uid.ics",
+          "result": {"added":0,"updated":0,"unchanged":2,"skipped":0},
+          "expected": "imports/missing-uid-2.ics"
+        }
+      ]
+    }
+  ]
+}

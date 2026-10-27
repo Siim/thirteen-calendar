@@ -1,0 +1,46 @@
+.year {
+  container-type: inline-size;
+  container-name: thirteen-year;
+}
+
+.months {
+  --legend-span: 1;
+  --cell-num-sm: 1.3rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.25rem, 0.8rem + 1.6vw, 2.25rem) clamp(1rem, 0.6rem + 1.4vw, 2rem);
+}
+
+.month {
+  min-width: 0;
+}
+
+.legend {
+  grid-column: span var(--legend-span);
+  align-self: stretch;
+  min-width: 0;
+}
+
+@container thirteen-year (min-width: 34rem) {
+  .months {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --legend-span: 1;
+    --cell-num-sm: 1.08rem;
+  }
+}
+
+@container thirteen-year (min-width: 54rem) {
+  .months {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    --legend-span: 2;
+    --cell-num-sm: 1.05rem;
+  }
+}
+
+@container thirteen-year (min-width: 74rem) {
+  .months {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    --legend-span: 3;
+  }
+}

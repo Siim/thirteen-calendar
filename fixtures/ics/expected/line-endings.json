@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "case": "cases/line-endings.ics",
+  "calendarId": "line-endings",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Line ends",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Line ends"}
+    ],
+    "timeZones": [],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"294cab18-8e19-4422-bbc5-a04420eb3d46","master":{"uid":"294cab18-8e19-4422-bbc5-a04420eb3d46","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Written with LF line ends","location":"","description":"","url":"","start":{"kind":"date","date":"2026-10-19"},"end":null,"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":5},"overrides":[]},
+    {"uid":"1e4524b5-85cd-4a29-a2be-0fb08e6b28fa","master":{"uid":"1e4524b5-85cd-4a29-a2be-0fb08e6b28fa","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Written with CR line ends","location":"","description":"Old Macstyle.","url":"","start":{"kind":"utc","value":"2026-10-20T09:00"},"end":null,"duration":"PT1H","rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":11},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"line-endings/294cab18-8e19-4422-bbc5-a04420eb3d46|2026-10-19","calendarId":"line-endings","title":"Written with LF line ends","allDay":true,"start":"2026-10-19T00:00","end":"2026-10-19T24:00"},
+        {"key":"line-endings/1e4524b5-85cd-4a29-a2be-0fb08e6b28fa|2026-10-20T09:00","calendarId":"line-endings","title":"Written with CR line ends","allDay":false,"start":"2026-10-20T12:00","end":"2026-10-20T13:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"line-endings/294cab18-8e19-4422-bbc5-a04420eb3d46|2026-10-19","calendarId":"line-endings","title":"Written with LF line ends","allDay":true,"start":"2026-10-19T00:00","end":"2026-10-19T24:00"},
+        {"key":"line-endings/1e4524b5-85cd-4a29-a2be-0fb08e6b28fa|2026-10-20T09:00","calendarId":"line-endings","title":"Written with CR line ends","allDay":false,"start":"2026-10-20T05:00","end":"2026-10-20T06:00"}
+      ]
+    }
+  ]
+}

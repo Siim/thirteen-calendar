@@ -1,0 +1,258 @@
+.page {
+  display: grid;
+  gap: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  padding-top: clamp(1.5rem, 0.8rem + 3vw, 3.5rem);
+}
+
+/* ---- Hero ----------------------------------------------------------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-6);
+}
+
+@media (min-width: 62rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .heroAside {
+    padding-left: clamp(2rem, 1rem + 2.5vw, 4rem);
+    border-left: var(--t-hairline) solid var(--t-rule-strong);
+  }
+
+  .heroMain {
+    padding-right: clamp(2rem, 1rem + 2.5vw, 4rem);
+  }
+}
+
+.heroMain {
+  display: grid;
+  align-content: start;
+  gap: var(--t-space-5);
+  min-width: 0;
+}
+
+.code {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  letter-spacing: 0.06em;
+  color: var(--t-ink-2);
+}
+
+.code b {
+  font-weight: 600;
+  color: var(--t-ink);
+}
+
+.headline {
+  max-width: 30ch;
+  font-family: var(--t-font-text);
+  font-size: var(--t-text-xl);
+  font-weight: var(--t-weight-text);
+  line-height: 1.3;
+  letter-spacing: var(--t-tracking-title);
+  text-wrap: balance;
+}
+
+.headline strong {
+  font-weight: var(--t-weight-title);
+  color: var(--t-accent-text);
+  white-space: nowrap;
+}
+
+.heroAside {
+  display: grid;
+  align-content: start;
+  gap: var(--t-space-5);
+  min-width: 0;
+}
+
+.notes {
+  display: grid;
+  gap: var(--t-space-4);
+}
+
+.note {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: var(--t-space-3);
+  border-top: var(--t-hairline) solid var(--t-rule);
+}
+
+.noteTerm {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.noteHead {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.noteBody {
+  font-size: var(--t-text-sm);
+  line-height: 1.5;
+  color: var(--t-ink-2);
+}
+
+/* ---- The year so far ------------------------------------------------ */
+
+.band {
+  display: grid;
+  gap: var(--t-space-5);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--t-space-5) var(--t-space-4);
+}
+
+@media (min-width: 52rem) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.countdown {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--t-space-4) var(--t-space-5);
+  padding: var(--t-space-5);
+  border: var(--t-hairline) solid var(--t-accent);
+  background:
+    repeating-linear-gradient(-45deg, var(--t-accent-soft) 0 3px, transparent 3px 9px),
+    var(--t-paper-raised);
+}
+
+.countdownNumber {
+  font-family: var(--t-font-display);
+  font-size: clamp(3.5rem, 2.4rem + 4vw, 6rem);
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.8;
+  letter-spacing: var(--t-tracking-numeral);
+  color: var(--t-accent-text);
+}
+
+.countdownText {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.countdownTitle {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}
+
+.countdownBody {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+/* ---- This month ----------------------------------------------------- */
+
+.month {
+  display: grid;
+  gap: var(--t-space-5);
+}
+
+.monthGrids {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-6);
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .monthGrids {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+  }
+}
+
+.monthColumn {
+  display: grid;
+  gap: var(--t-space-3);
+  min-width: 0;
+}
+
+.monthLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem var(--t-space-3);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.monthLabel strong {
+  color: var(--t-accent-text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.monthLabelFoil strong {
+  color: var(--t-foil);
+}
+
+.monthNote {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+  max-width: 52ch;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--t-space-3) var(--t-space-5);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--t-ink);
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: 0;
+  text-decoration: none;
+  border-bottom: var(--t-hairline) solid var(--t-accent);
+  padding-bottom: 0.1rem;
+}
+
+.more:hover {
+  color: var(--t-accent-text);
+}
+
+/* Touch: 44px-tall links; the rule stays under the words, the extra room sits above. */
+@media (pointer: coarse), (max-width: 40rem) {
+  .links {
+    row-gap: 0.25rem;
+  }
+
+  .more {
+    min-height: 2.75rem;
+    align-items: flex-end;
+    padding-bottom: 0.3rem;
+  }
+}

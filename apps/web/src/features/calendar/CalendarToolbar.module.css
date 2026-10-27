@@ -1,0 +1,229 @@
+/* The Calendar toolbar (docs/EVENTS.md §2.1; boards A1, A2, B2, J2). */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: var(--t-hairline) solid var(--t-rule-strong);
+  margin-bottom: 0.75rem;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.titles {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  margin-left: 0.25rem;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.6rem);
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-display);
+  line-height: 1.05;
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--t-font-mono);
+  font-size: 0.75rem;
+  color: var(--t-ink-2);
+  white-space: nowrap;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.modes {
+  flex: none;
+}
+
+.newEvent {
+  --button-bg: var(--t-accent);
+  --button-ink: var(--t-on-accent);
+  --button-border: var(--t-accent);
+  font-weight: var(--t-weight-title);
+}
+
+.newEvent:hover:not(:disabled) {
+  --button-bg: var(--t-accent-text);
+  --button-ink: var(--t-paper);
+  --button-border: var(--t-accent-text);
+}
+
+.plate {
+  padding: 0.2rem 0.4rem;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: 3px;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+  white-space: nowrap;
+}
+
+.stale {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.7rem;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: var(--t-weight-medium);
+  cursor: pointer;
+}
+
+.stale svg {
+  color: var(--t-accent-text);
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--t-rule);
+  border-top-color: var(--t-accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 3s;
+  }
+}
+
+/* ---- Compact width -------------------------------------------------------- */
+
+.compact {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.25rem 0 0.5rem;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  min-height: 2.75rem;
+  padding: 0 0.35rem 0 0;
+  border: 0;
+  background: none;
+  color: var(--t-accent-text);
+  font: inherit;
+  font-size: 1.0625rem;
+  font-weight: var(--t-weight-medium);
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.textAction {
+  min-height: 2.75rem;
+  color: var(--t-accent-text);
+  font-size: 1rem;
+  font-weight: var(--t-weight-title);
+}
+
+.round {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+  border-color: var(--t-rule);
+  border-radius: var(--t-radius-pill);
+  background: var(--t-paper-raised);
+  box-shadow: var(--t-shadow-1);
+}
+
+.compactTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.titleButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--t-ink);
+  font: inherit;
+  font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.1rem);
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-display);
+  line-height: 1.05;
+  text-align: left;
+  cursor: pointer;
+}
+
+.titleButton svg {
+  flex: none;
+  color: var(--t-accent-text);
+}
+
+.subRow[hidden] {
+  display: none;
+}
+
+.subRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.25rem;
+  margin-inline: -0.6rem;
+}
+
+.subRow .subtitle {
+  text-align: center;
+  white-space: normal;
+}
+
+.pager {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.staleRow {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,111 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+        x:Class="Thirteen.Desktop.Views.Events.CustomRepeatDialog"
+        x:DataType="ev:CustomRepeatViewModel"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding Title}"
+        Width="460">
+  <!-- Custom repeat (docs/EVENTS.md §2.13): Frequency, Every {n} {unit}, the weekdays of a weekly repeat, Each or On the
+       for a monthly one, the months (and On the) of a yearly one, with the live description, "Next:" and its notes. -->
+  <StackPanel Margin="24,20,24,20" Spacing="12">
+    <TextBlock Classes="dialogTitle" FontSize="18" Text="{Binding Title}" />
+    <Grid ColumnDefinitions="96,*" RowDefinitions="Auto,Auto" RowSpacing="10">
+      <TextBlock Classes="rowLabel" Text="{Binding FrequencyLabel}" />
+      <ComboBox Grid.Column="1" Name="FrequencyBox" MinWidth="140" ItemsSource="{Binding FrequencyOptions}"
+                SelectedIndex="{Binding Frequency, Mode=TwoWay}" AutomationProperties.Name="{Binding FrequencyLabel}" />
+      <TextBlock Grid.Row="1" Classes="rowLabel" Text="{Binding EveryLabel}" />
+      <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="8">
+        <NumericUpDown Name="IntervalBox" Width="120" Minimum="1" Maximum="99" Increment="1" FormatString="0"
+                       Value="{Binding IntervalValue, Mode=TwoWay}" AutomationProperties.Name="{Binding EveryLabel}"
+                       AutomationProperties.HelpText="{Binding UnitText}" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding UnitWord}" />
+      </StackPanel>
+    </Grid>
+
+    <!-- Weekly: the weekdays. -->
+    <ItemsControl Name="WeekdayList" IsVisible="{Binding IsWeekly}" ItemsSource="{Binding Weekdays}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <UniformGrid Columns="7" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="ev:ToggleOption">
+          <ToggleButton Margin="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="{Binding Text}"
+                        IsChecked="{Binding IsChecked, Mode=TwoWay}" AutomationProperties.Name="{Binding Name}" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <!-- Monthly: Each (month days) or On the (ordinal and day kind). -->
+    <StackPanel Spacing="8" IsVisible="{Binding IsMonthly}">
+      <StackPanel Orientation="Horizontal" Spacing="16">
+        <RadioButton Name="EachRadio" GroupName="Monthly" Content="{Binding EachLabel}" IsChecked="{Binding MonthlyEach, Mode=TwoWay}" />
+        <RadioButton Name="OnTheRadio" GroupName="Monthly" Content="{Binding OnTheLabel}" IsChecked="{Binding MonthlyOnThe, Mode=TwoWay}" />
+      </StackPanel>
+      <ItemsControl Name="MonthDayList" IsVisible="{Binding MonthlyEach}" ItemsSource="{Binding MonthDays}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="7" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="ev:ToggleOption">
+            <ToggleButton Margin="2" Padding="0,4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="{Binding Text}"
+                          IsChecked="{Binding IsChecked, Mode=TwoWay}" AutomationProperties.Name="{Binding Name}" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </StackPanel>
+
+    <!-- Yearly: the months, and On the. -->
+    <StackPanel Spacing="8" IsVisible="{Binding IsYearly}">
+      <ItemsControl Name="MonthList" ItemsSource="{Binding Months}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="4" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="ev:ToggleOption">
+            <ToggleButton Margin="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="{Binding Text}"
+                          IsChecked="{Binding IsChecked, Mode=TwoWay}" AutomationProperties.Name="{Binding Name}" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      <CheckBox Name="YearlyOnTheBox" Content="{Binding OnTheLabel}" IsChecked="{Binding YearlyOnThe, Mode=TwoWay}" />
+    </StackPanel>
+
+    <!-- On the: ordinal and day kind (monthly On the, yearly On the). -->
+    <StackPanel Name="OnTheLine" Orientation="Horizontal" Spacing="8">
+      <ComboBox Name="OrdinalBox" MinWidth="110" ItemsSource="{Binding OrdinalOptions}" SelectedIndex="{Binding Ordinal, Mode=TwoWay}"
+                AutomationProperties.Name="{Binding OnTheLabel}" />
+      <ComboBox Name="DayKindBox" MinWidth="140" ItemsSource="{Binding DayKindOptions}" SelectedIndex="{Binding DayKind, Mode=TwoWay}"
+                AutomationProperties.Name="{Binding OnTheLabel}" />
+    </StackPanel>
+
+    <!-- The live description. -->
+    <Border Classes="banner">
+      <StackPanel Spacing="3">
+        <TextBlock Name="DescriptionText" FontSize="13.5" FontWeight="Medium" TextWrapping="Wrap" Text="{Binding Description}"
+                   AutomationProperties.LiveSetting="Polite" />
+        <TextBlock Classes="next" Text="{Binding Next}" />
+        <ItemsControl ItemsSource="{Binding Notes}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="x:String">
+              <TextBlock Classes="sectionFooter" Margin="0" Text="{Binding}" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button Name="CancelButton" MinWidth="80" HorizontalContentAlignment="Center" IsCancel="True" Content="{Binding CancelText}"
+              AutomationProperties.Name="{Binding CancelText}" />
+      <Button Name="DoneButton" Classes="accent" MinWidth="80" HorizontalContentAlignment="Center" IsDefault="True" Content="{Binding DoneText}"
+              Command="{Binding DoneCommand}" AutomationProperties.Name="{Binding DoneText}" />
+    </StackPanel>
+  </StackPanel>
+</Window>

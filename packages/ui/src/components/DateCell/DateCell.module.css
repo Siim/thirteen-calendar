@@ -1,0 +1,249 @@
+.cell {
+  --cell-num: 1.15rem;
+  --cell-sec: 0.5625rem;
+  --cell-pad: 0.2rem;
+  position: relative;
+  padding: 0;
+  border: var(--t-hairline) solid var(--t-rule);
+  background: transparent;
+  color: var(--t-ink);
+  vertical-align: top;
+  cursor: default;
+  outline-offset: -3px;
+  transition: background-color var(--t-dur-1) var(--t-ease-out);
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+/* Hover only where hovering exists: on touch screens it would stick after a tap. */
+@media (hover: hover) {
+  .interactive:hover {
+    background: var(--t-accent-soft);
+  }
+}
+
+.sm {
+  --cell-num: var(--cell-num-sm, clamp(0.92rem, 0.78rem + 0.45vw, 1.08rem));
+  --cell-sec: 0.5625rem;
+  --cell-marker: 0.5rem;
+}
+
+.md {
+  --cell-num: clamp(1.15rem, 0.9rem + 0.9vw, 1.6rem);
+  --cell-sec: 0.65rem;
+  --cell-pad: 0.3rem;
+}
+
+.lg {
+  --cell-num: clamp(1.4rem, 1rem + 1.6vw, 2.4rem);
+  --cell-sec: 0.72rem;
+  --cell-pad: 0.45rem;
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  min-height: 2.1rem;
+  padding: var(--cell-pad);
+}
+
+/*
+ * Small phones (320 to 380 px): a full-width month leaves about 41 to 50 px per
+ * column, too little for a numeral, the reading in the other calendar and a
+ * month-start tab in a square. Those cells grow taller and the type a step smaller.
+ */
+@media (max-width: 24rem) {
+  .md,
+  .lg {
+    --cell-num: 1.1rem;
+    --cell-sec: 0.6rem;
+    --cell-pad: 0.22rem;
+  }
+
+  .hasSecondary .inner {
+    aspect-ratio: 5 / 6;
+  }
+}
+
+.num {
+  font-family: var(--cell-font, var(--t-font-display));
+  font-size: var(--cell-num);
+  font-weight: var(--cell-weight, 500);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: var(--t-tracking-title);
+}
+
+/*
+ * Leave room under a month-start tab, and above the small reading. The offset
+ * is set per table, not per cell, so every numeral in a grid shares one
+ * baseline: a tab on one day must not drop that day below its row.
+ */
+.num {
+  transform: translateY(var(--cell-num-shift, 0));
+}
+
+:where(table:has(.hasMarker)) {
+  --cell-num-shift: 0.18em;
+}
+
+:where(table:has(.hasSecondary)) {
+  --cell-num-shift: -0.14em;
+}
+
+:where(table:has(.hasMarker):has(.hasSecondary)) {
+  --cell-num-shift: 0.04em;
+}
+
+.sec {
+  position: absolute;
+  right: var(--cell-pad);
+  bottom: calc(var(--cell-pad) * 0.6);
+  font-family: var(--t-font-mono);
+  font-size: var(--cell-sec);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--t-foil);
+  white-space: nowrap;
+}
+
+.sec::before,
+.marker::before {
+  content: attr(data-text);
+}
+
+.secAccent {
+  color: var(--t-accent-text);
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.1rem 0.2rem 0.08rem;
+  font-family: var(--t-font-mono);
+  font-size: var(--cell-marker, var(--cell-sec));
+  font-weight: var(--t-weight-title);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--t-on-foil);
+  background: var(--t-foil);
+}
+
+.markerAccent {
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.rest .num {
+  color: var(--t-accent-text);
+  /* Mono: the accent is the ink, so Sundays are set in bold instead (tokens.css). */
+  font-weight: var(--t-mark-weight, var(--cell-weight, 500));
+}
+
+.hatched {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--t-accent-soft) 0 3px,
+    transparent 3px 7px
+  );
+}
+
+/* Today: an orange block, the one loud mark on the page. */
+.today {
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.today.interactive:hover {
+  background: var(--t-accent);
+}
+
+.today .num,
+.today.rest .num {
+  color: var(--t-on-accent);
+  font-weight: 700;
+}
+
+.today .sec {
+  color: var(--t-on-accent);
+}
+
+.today:focus-visible {
+  /* The accent focus ring would vanish on the orange block. */
+  outline-color: var(--t-on-accent);
+}
+
+.today .marker {
+  background: var(--t-on-accent);
+  color: var(--t-accent);
+}
+
+.selected {
+  box-shadow:
+    inset 0 0 0 2px var(--t-ink),
+    inset 0 0 0 4px var(--t-paper);
+}
+
+.today.selected {
+  box-shadow:
+    inset 0 0 0 2px var(--t-on-accent),
+    inset 0 0 0 4px var(--t-accent);
+}
+
+.blank {
+  border: var(--t-hairline) solid var(--t-rule-soft);
+  background: transparent;
+}
+
+/* Event dots (Year mode, docs/EVENTS.md §2.3): up to three 4 px dots in calendar colours under the numeral. */
+.marks {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--cell-pad) * 0.7);
+  display: flex;
+  gap: 2px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* With the Gregorian reading in the bottom right corner, the dots move to the left. */
+.hasSecondary .marks {
+  left: var(--cell-pad);
+  transform: none;
+}
+
+.mark {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cal);
+  box-shadow: 0 0 0 0.5px var(--t-rule);
+}
+
+.today .mark {
+  box-shadow: 0 0 0 1px var(--t-on-accent);
+}
+
+@media (forced-colors: active) {
+  .mark {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .today {
+    outline: 3px solid CanvasText;
+    outline-offset: -3px;
+  }
+
+  .selected {
+    outline: 3px double Highlight;
+    outline-offset: -4px;
+  }
+}

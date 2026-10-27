@@ -1,0 +1,170 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.ConvertView"
+             x:DataType="vm:ConvertViewModel">
+  <!-- Convert (SPEC 5.3). Wide: input, lookups and notable days on the left, the result on the right.
+       Narrow: input, result, lookups, notable days. -->
+  <ScrollViewer Name="Scroller" HorizontalScrollBarVisibility="Disabled">
+    <c:PageColumn MaxContentWidth="{Binding ContentMaxWidth}">
+      <StackPanel Margin="32,4,32,32" Spacing="16">
+        <StackPanel Orientation="Horizontal" Spacing="12">
+          <Border Classes="segmented" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" Spacing="2">
+              <RadioButton Classes="segment" GroupName="ConvertDirection" IsChecked="{Binding IsFromGregorian}"
+                           Content="{Binding FromGregorianLabel}" ToolTip.Tip="Enter a Gregorian date" />
+              <RadioButton Classes="segment" GroupName="ConvertDirection" IsChecked="{Binding IsFromThirteen}"
+                           Content="{Binding FromThirteenLabel}" ToolTip.Tip="Enter a 13-month date" />
+            </StackPanel>
+          </Border>
+          <Button Classes="subtle" Command="{Binding SwapCommand}" ToolTip.Tip="Swap input and result" VerticalAlignment="Center"
+                  AutomationProperties.Name="Swap">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Classes="icon" FontSize="14" Text="&#xE8AB;" VerticalAlignment="Center" />
+              <TextBlock Text="Swap" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+        </StackPanel>
+
+        <c:SplitColumns Threshold="900" Ratios="1,1" Spacing="16">
+          <!-- Input: Gregorian side. -->
+          <Border c:SplitColumns.Column="0" c:SplitColumns.Order="0" Classes="card" IsVisible="{Binding Content.IsFromGregorian}">
+            <StackPanel Spacing="14">
+              <TextBlock Classes="title" Text="{Binding Content.InputTitle}" />
+              <c:SplitColumns Threshold="560" Spacing="20" Ratios="5,4">
+                <Border c:SplitColumns.Column="0" Classes="calendarFrame">
+                  <!-- One tab stop like the Windows calendar: Tab enters on the picked day, arrow keys pick
+                       another and the keyboard focus goes with it (ConvertView.axaml.cs). -->
+                  <Calendar Name="Picker" KeyboardNavigation.TabNavigation="Once" SelectedDate="{Binding SelectedDateTime, Mode=TwoWay}"
+                            DisplayDate="{Binding CalendarDisplayDate, Mode=TwoWay}" FirstDayOfWeek="{Binding FirstDayOfWeek}"
+                            AutomationProperties.Name="Gregorian calendar" />
+                </Border>
+                <StackPanel c:SplitColumns.Column="1" Spacing="12">
+                  <TextBlock Classes="caption" Text="Type a date" />
+                  <!-- Not a tab stop itself: it hands its focus to its text box, which made Shift+Tab loop on it. -->
+                    <CalendarDatePicker Name="TypedDate" Classes="typed" KeyboardNavigation.IsTabStop="False" SelectedDate="{Binding SelectedDateTime, Mode=TwoWay}" SelectedDateFormat="Custom"
+                                      CustomDateFormatString="yyyy-MM-dd" Watermark="YYYY-MM-DD" HorizontalAlignment="Stretch"
+                                      FirstDayOfWeek="{Binding FirstDayOfWeek}" AutomationProperties.Name="Type a date" />
+                  <Button Classes="accentBordered" Command="{Binding TodayCommand}" ToolTip.Tip="Today (Home)" AutomationProperties.Name="Today">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                      <TextBlock Classes="icon" FontSize="14" Text="&#xE706;" VerticalAlignment="Center" />
+                      <TextBlock Text="Today" VerticalAlignment="Center" />
+                    </StackPanel>
+                  </Button>
+                </StackPanel>
+              </c:SplitColumns>
+            </StackPanel>
+          </Border>
+
+          <!-- Input: 13-month side. -->
+          <Border c:SplitColumns.Column="0" c:SplitColumns.Order="0" Classes="card" IsVisible="{Binding Content.IsFromThirteen}">
+            <StackPanel Spacing="14">
+              <TextBlock Classes="title" Text="{Binding Content.InputTitle}" />
+              <Grid ColumnDefinitions="64,*" RowDefinitions="Auto,Auto" RowSpacing="10">
+                <TextBlock Classes="ink2" Text="Year" VerticalAlignment="Center" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
+                  <NumericUpDown Name="YearBox" Value="{Binding DisplayYear, Mode=TwoWay}" Minimum="{Binding YearMinimum}" Maximum="{Binding YearMaximum}"
+                                 Increment="1" FormatString="0" ParsingNumberStyle="Integer" Width="150" ClipValueToMinMax="True"
+                                 AutomationProperties.Name="Year" />
+                  <TextBlock Classes="caption ink3" Text="{Binding Content.YearNote}" IsVisible="{Binding Content.HasYearNote}"
+                             VerticalAlignment="Center" />
+                </StackPanel>
+                <TextBlock Grid.Row="1" Classes="ink2" Text="Month" VerticalAlignment="Center" />
+                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Slots}" SelectedItem="{Binding SelectedSlot, Mode=TwoWay}"
+                          MinWidth="220" AutomationProperties.Name="Month">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SlotOption">
+                      <TextBlock Text="{Binding Label}" />
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </Grid>
+              <TextBlock Classes="ink2" Text="Day" IsVisible="{Binding Content.DayGrid, Converter={x:Static ObjectConverters.IsNotNull}}" />
+              <Panel IsVisible="{Binding Content.DayGrid, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <p:MonthGridView DataContext="{Binding Content.DayGrid}" c:DayNavigation.IsScope="True" c:DayNavigation.SelectOnMove="True" />
+              </Panel>
+              <Panel IsVisible="{Binding Content.Badge, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <p:IntercalaryBadgeView DataContext="{Binding Content.Badge}" />
+              </Panel>
+            </StackPanel>
+          </Border>
+
+          <!-- Result. -->
+          <Border c:SplitColumns.Column="1" c:SplitColumns.Order="1" Classes="card">
+            <StackPanel Spacing="14">
+              <TextBlock Classes="title" Text="Result" />
+              <p:DatePlateView DataContext="{Binding Content.Plate}" />
+              <Button Classes="accentBordered" Command="{Binding ShowInYearCommand}" HorizontalAlignment="Left" AutomationProperties.Name="Show in Year"
+                      ToolTip.Tip="Open this day in the Year screen">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <TextBlock Classes="icon" FontSize="14" Text="&#xE787;" VerticalAlignment="Center" />
+                  <TextBlock Text="Show in Year" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+              <p:ComparisonDetailView DataContext="{Binding Content.Detail}" />
+            </StackPanel>
+          </Border>
+
+          <!-- Same label, other calendar. -->
+          <Border c:SplitColumns.Column="0" c:SplitColumns.Order="2" Classes="card">
+            <StackPanel Spacing="14">
+              <StackPanel Spacing="2">
+                <TextBlock Classes="title" Text="Same label, other calendar" />
+                <TextBlock Classes="subtitle" Text="The same words can name different days." />
+              </StackPanel>
+              <ItemsControl ItemsSource="{Binding Content.Lookups}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Spacing="14" />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:LookupRow">
+                    <StackPanel Spacing="4">
+                      <TextBlock FontWeight="SemiBold" TextWrapping="Wrap" Text="{Binding Heading}" />
+                      <TextBlock Classes="explanation" Text="{Binding Text}" />
+                      <Button Classes="link" Command="{Binding GoCommand}" IsVisible="{Binding HasGo}" AutomationProperties.Name="{Binding GoText}" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                          <TextBlock Classes="icon" FontSize="12" Text="&#xE72A;" VerticalAlignment="Center" />
+                          <TextBlock Text="{Binding GoText}" VerticalAlignment="Center" />
+                        </StackPanel>
+                      </Button>
+                    </StackPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </Border>
+
+          <!-- Notable days in the converter's year. -->
+          <Border c:SplitColumns.Column="0" c:SplitColumns.Order="3" Classes="card">
+            <StackPanel Spacing="14">
+              <TextBlock Classes="title" Text="{Binding Content.NotablesTitle}" />
+              <ItemsControl ItemsSource="{Binding Content.Notables}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <c:CardGrid MinItemWidth="156" MaxColumns="4" Spacing="8" />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:NotablePick">
+                    <Button Classes="pick" Classes.selected="{Binding IsSelected}" Command="{Binding Command}"
+                            AutomationProperties.Name="{Binding AutomationName}">
+                      <StackPanel Spacing="2">
+                        <TextBlock FontWeight="SemiBold" FontSize="13.5" TextWrapping="Wrap" Text="{Binding Name}" />
+                        <TextBlock Classes="caption foil" Text="{Binding GregorianText}" />
+                        <TextBlock Classes="caption accent" FontWeight="SemiBold" Text="{Binding ThirteenText}" />
+                      </StackPanel>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </Border>
+        </c:SplitColumns>
+      </StackPanel>
+    </c:PageColumn>
+  </ScrollViewer>
+</UserControl>

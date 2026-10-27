@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "case": "cases/missing-uid.ics",
+  "calendarId": "missing-uid",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Bookings",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Bookings"}
+    ],
+    "timeZones": [],
+    "others": []
+  },
+  "warnings": [
+    {"line":5,"code":"missing-uid","detail":"VEVENT without UID; derived missing-6e0af0db5bd59e54ecc98142debb04af"},
+    {"line":12,"code":"missing-uid","detail":"VEVENT without UID; derived missing-dbb39ba926ee1436b390ad29bdebc1db"}
+  ],
+  "groups": [
+    {"uid":"missing-6e0af0db5bd59e54ecc98142debb04af","master":{"uid":"missing-6e0af0db5bd59e54ecc98142debb04af","uidDerived":true,"recurrenceId":null,"sequence":0,"summary":"Concert: Estonian National Symphony Orchestra","location":"Estonia Concert Hall","description":"","url":"","start":{"kind":"utc","value":"2026-10-24T16:00"},"end":{"kind":"utc","value":"2026-10-24T18:00"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T12:00"},"importedLastModified":null,"extra":[],"line":5},"overrides":[]},
+    {"uid":"missing-dbb39ba926ee1436b390ad29bdebc1db","master":{"uid":"missing-dbb39ba926ee1436b390ad29bdebc1db","uidDerived":true,"recurrenceId":null,"sequence":0,"summary":"Museum day pass","location":"","description":"","url":"","start":{"kind":"date","date":"2026-11-07"},"end":null,"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T12:00"},"importedLastModified":null,"extra":[],"line":12},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"missing-uid/missing-6e0af0db5bd59e54ecc98142debb04af|2026-10-24T16:00","calendarId":"missing-uid","title":"Concert: Estonian National Symphony Orchestra","allDay":false,"start":"2026-10-24T19:00","end":"2026-10-24T21:00"},
+        {"key":"missing-uid/missing-dbb39ba926ee1436b390ad29bdebc1db|2026-11-07","calendarId":"missing-uid","title":"Museum day pass","allDay":true,"start":"2026-11-07T00:00","end":"2026-11-07T24:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"missing-uid/missing-6e0af0db5bd59e54ecc98142debb04af|2026-10-24T16:00","calendarId":"missing-uid","title":"Concert: Estonian National Symphony Orchestra","allDay":false,"start":"2026-10-24T12:00","end":"2026-10-24T14:00"},
+        {"key":"missing-uid/missing-dbb39ba926ee1436b390ad29bdebc1db|2026-11-07","calendarId":"missing-uid","title":"Museum day pass","allDay":true,"start":"2026-11-07T00:00","end":"2026-11-07T24:00"}
+      ]
+    }
+  ]
+}

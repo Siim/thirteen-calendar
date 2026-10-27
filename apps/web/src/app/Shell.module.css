@@ -1,0 +1,518 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--t-page-max);
+  margin-inline: auto;
+  /* viewport-fit=cover: keep clear of the notch in landscape. */
+  padding-inline: max(var(--t-gutter), env(safe-area-inset-left)) max(var(--t-gutter), env(safe-area-inset-right));
+}
+
+.skip {
+  position: absolute;
+  z-index: 50;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--t-radius-1);
+  background: var(--t-ink);
+  color: var(--t-paper);
+  font-weight: var(--t-weight-title);
+  transform: translateY(-200%);
+}
+
+.skip:focus-visible {
+  transform: none;
+}
+
+/* ---- Masthead ---------------------------------------------------- */
+
+.masthead {
+  padding-top: clamp(0.6rem, 0.4rem + 0.8vw, 1.1rem);
+}
+
+.folio {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  padding-bottom: 0.6rem;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.folio strong {
+  font-weight: var(--t-weight-title);
+  color: var(--t-accent-text);
+}
+
+.folioRight {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .folioRight {
+    display: block;
+  }
+}
+
+.nameplate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--t-space-3) var(--t-space-5);
+  padding-block: 0.9rem 1rem;
+  border-top: var(--t-hairline) solid var(--t-rule-strong);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand:hover .wordmark {
+  color: var(--t-accent-text);
+}
+
+.brand svg {
+  flex: none;
+}
+
+.brandText {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.wordmark {
+  font-family: var(--t-font-display);
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.6rem);
+  font-weight: var(--t-weight-numeral);
+  line-height: 0.9;
+  letter-spacing: var(--t-tracking-numeral);
+  transition: color var(--t-dur-1) var(--t-ease-out);
+}
+
+.tagline {
+  font-size: var(--t-text-sm);
+  line-height: 1.2;
+  color: var(--t-ink-2);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--t-space-3);
+}
+
+.tools {
+  display: flex;
+  gap: var(--t-space-2);
+}
+
+/* Header buttons that open the Theme and Get the app panels. */
+.tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.8rem 0.3rem 0.65rem;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  font-size: 0.8125rem;
+  font-weight: var(--t-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    background-color var(--t-dur-1) var(--t-ease-out),
+    transform var(--t-dur-1) var(--t-ease-out);
+}
+
+@media (hover: hover) {
+  .tool:hover {
+    background: var(--t-accent-soft);
+  }
+}
+
+.tool:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.toolOpen,
+.toolOpen:hover {
+  background: var(--t-ink);
+  color: var(--t-paper);
+}
+
+.chip {
+  display: inline-flex;
+  flex: none;
+}
+
+.chip > span {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--t-paper-raised);
+}
+
+.chip > span + span {
+  margin-left: -0.25rem;
+}
+
+.chip > span:nth-child(1) {
+  background: var(--chip-paper);
+  box-shadow:
+    inset 0 0 0 1px var(--t-rule-strong),
+    0 0 0 1.5px var(--t-paper-raised);
+}
+
+.chip > span:nth-child(2) {
+  background: var(--chip-ink);
+}
+
+.chip > span:nth-child(3) {
+  background: var(--chip-accent);
+}
+
+/* On the ink fill of an open button, a paper ring keeps the ink (and Mono's ink accent) dot visible. */
+.toolOpen .chip > span {
+  box-shadow: 0 0 0 1.5px var(--t-paper);
+}
+
+/* ---- Drawers (Theme, Get the app) --------------------------------- */
+
+.drawer {
+  position: relative;
+  margin-bottom: var(--t-space-4);
+  padding: var(--t-space-5) var(--t-space-5) var(--t-space-5);
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+  box-shadow: var(--t-shadow-2);
+  animation: drawer-in var(--t-dur-3) var(--t-ease-out) both;
+}
+
+.drawer[hidden] {
+  display: none;
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.drawerBody {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--t-space-5) var(--t-space-7);
+  padding-right: var(--t-space-6);
+}
+
+.drawerClose {
+  position: absolute;
+  top: var(--t-space-3);
+  right: var(--t-space-3);
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--t-radius-2);
+  background: transparent;
+  color: var(--t-ink-2);
+}
+
+.drawerClose:hover {
+  background: var(--t-accent-soft);
+  color: var(--t-ink);
+}
+
+.picker {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.mode {
+  flex: none;
+}
+
+.rule {
+  height: 0;
+  border-top: 2px solid var(--t-rule-strong);
+}
+
+/* ---- Navigation -------------------------------------------------- */
+
+.navWrap {
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+}
+
+.nav {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.25rem, 0.1rem + 1.4vw, 2rem);
+  overflow-x: auto;
+  scrollbar-width: none;
+  list-style: none;
+  margin-inline: calc(var(--t-space-2) * -1);
+  padding-inline: var(--t-space-2);
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.8rem 0.35rem 0.75rem;
+  color: var(--t-ink-2);
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 0.9375rem;
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-text);
+  outline-offset: -2px;
+  transition: color var(--t-dur-1) var(--t-ease-out);
+}
+
+.navLink:hover {
+  color: var(--t-ink);
+}
+
+.navNumeral {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-mono);
+  color: var(--t-ink-3);
+}
+
+.navLink[aria-current='page'] {
+  color: var(--t-ink);
+  font-weight: var(--t-weight-title);
+}
+
+.navLink[aria-current='page'] .navNumeral {
+  color: var(--t-accent-text);
+}
+
+.navLink[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: 0.35rem;
+  right: 0.35rem;
+  bottom: -1px;
+  height: 3px;
+  background: var(--t-accent);
+}
+
+/* ---- Main & footer ------------------------------------------------ */
+
+.main {
+  flex: 1;
+  padding-bottom: var(--t-space-8);
+  outline: none;
+}
+
+.footer {
+  border-top: 2px solid var(--t-rule-strong);
+  padding-block: var(--t-space-4) var(--t-space-6);
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.downloads {
+  padding-bottom: var(--t-space-4);
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+}
+
+.footerInner {
+  display: grid;
+  gap: var(--t-space-4);
+  padding-top: var(--t-space-5);
+}
+
+@media (min-width: 48rem) {
+  .footerInner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--t-space-6);
+  }
+}
+
+.footerMark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-display);
+  color: var(--t-ink);
+}
+
+.colophon {
+  max-width: 64ch;
+  line-height: 1.6;
+}
+
+.footerMeta {
+  display: grid;
+  gap: var(--t-space-2);
+  justify-items: start;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+
+@media (min-width: 48rem) {
+  .footerMeta {
+    justify-items: end;
+    text-align: right;
+  }
+}
+
+.footerLinks {
+  display: flex;
+  gap: var(--t-space-4);
+  list-style: none;
+}
+
+.footerLinks a {
+  display: inline-block;
+  padding-block: 0.35rem;
+  color: var(--t-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--t-rule-strong);
+  text-underline-offset: 0.25em;
+}
+
+.footerLinks a:hover {
+  color: var(--t-accent-text);
+}
+
+@media (max-width: 40rem) {
+  .nameplate {
+    gap: var(--t-space-3);
+  }
+
+  /* One row while it fits; at large text sizes the icon buttons wrap under the system switcher. */
+  .controls {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .tools {
+    margin-left: auto;
+  }
+
+  /* Phones: icon-only header buttons (their names stay for assistive technology). */
+  .toolLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .tool {
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.3rem;
+  }
+
+  .drawer {
+    padding: var(--t-space-4) var(--t-space-3) var(--t-space-4) var(--t-space-4);
+  }
+
+  .drawerBody {
+    flex-direction: column;
+    gap: var(--t-space-5);
+    padding-right: 0;
+  }
+
+  .drawerBody > * {
+    flex: none;
+    width: 100%;
+    max-width: none;
+  }
+
+  .drawerClose {
+    top: var(--t-space-2);
+    right: var(--t-space-2);
+  }
+
+  /*
+   * Phones: all five sections in one row, numeral set above the name. A column is never narrower than
+   * its name, so at large text sizes the row scrolls sideways instead of running the names together.
+   */
+  .nav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(max-content, 1fr));
+    gap: 0;
+    overflow-x: auto;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .navLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.5rem 0.4rem 0.55rem;
+    font-size: 0.8125rem;
+  }
+
+  .navNumeral {
+    font-size: 0.625rem;
+    line-height: 1;
+  }
+
+  .navLink[aria-current='page']::after {
+    left: 0.6rem;
+    right: 0.6rem;
+  }
+}
+
+/* The gear button for #/settings (docs/EVENTS.md §2.18): icon only, the same height as the other tools. */
+.toolIcon {
+  justify-content: center;
+  min-width: 2.5rem;
+  padding: 0.3rem 0.65rem;
+  text-decoration: none;
+}

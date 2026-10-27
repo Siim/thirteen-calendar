@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.Parts.UpNextCard"
+             x:DataType="vm:UpNextViewModel"
+             IsVisible="{Binding IsVisible}">
+  <!-- Today's Up next (docs/EVENTS.md §2.8, board B1): "+" and "Show all in Calendar" in the title row, the days
+       ("Today", "Tomorrow", then "Saturday, October 14" with "Gregorian Wed, Oct 21"), at most 6 rows, and
+       "{n} more in the next 7 days". Shown once a local calendar holds an event or a subscription exists. -->
+  <Border Classes="card" Name="UpNextBorder">
+    <StackPanel Spacing="6">
+      <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="6">
+        <TextBlock Classes="title" VerticalAlignment="Center" Text="{Binding Title}" />
+        <Button Grid.Column="1" Name="UpNextNewEvent" Classes="subtle" Width="32" Height="32" Padding="0"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                Command="{Binding NewEventCommand}" CommandParameter="{Binding $self}"
+                ToolTip.Tip="{Binding NewEventText}" AutomationProperties.Name="{Binding NewEventText}">
+          <TextBlock Classes="icon" FontSize="14" Text="&#xE710;" />
+        </Button>
+        <Button Grid.Column="2" Name="UpNextShowAll" Classes="link" VerticalAlignment="Center" Content="{Binding ShowAllText}"
+                Command="{Binding ShowAllCommand}" AutomationProperties.Name="{Binding ShowAllText}" />
+      </Grid>
+      <TextBlock Classes="explanation" Text="{Binding EmptyWeekText}" IsVisible="{Binding ShowsEmptyWeek}" />
+      <TextBlock Classes="explanation" Text="{Binding EmptyTodayText}" IsVisible="{Binding ShowsEmptyToday}" />
+      <StackPanel Orientation="Horizontal" Spacing="12" IsVisible="{Binding ShowsAllHidden}">
+        <TextBlock Classes="explanation" VerticalAlignment="Center" Text="{Binding AllHiddenText}" />
+        <Button Classes="link" VerticalAlignment="Center" Content="{Binding ShowCalendarsText}" Command="{Binding ShowCalendarsCommand}"
+                AutomationProperties.Name="{Binding ShowCalendarsText}" />
+      </StackPanel>
+      <ItemsControl Name="UpNextGroups" ItemsSource="{Binding Groups}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Spacing="8" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:UpNextGroup">
+            <StackPanel Spacing="0">
+              <StackPanel Orientation="Horizontal" Spacing="8" Margin="10,2,0,2" AutomationProperties.Name="{Binding AutomationName}">
+                <TextBlock Classes="strong" FontSize="13" Text="{Binding Heading}" />
+                <TextBlock Classes="caption foil" VerticalAlignment="Center" Text="{Binding Caption}" IsVisible="{Binding HasCaption}" />
+              </StackPanel>
+              <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:EventListRow">
+                    <p:EventListRowView TimeWidth="{Binding $parent[p:UpNextCard].((vm:UpNextViewModel)DataContext).TimeColumnWidth, FallbackValue=72}" />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      <Border Classes="rule" IsVisible="{Binding HasMore}" />
+      <TextBlock Classes="caption ink3" Margin="10,0,0,0" Text="{Binding MoreText}" IsVisible="{Binding HasMore}" />
+    </StackPanel>
+  </Border>
+</UserControl>

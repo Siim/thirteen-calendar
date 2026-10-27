@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "description": "Import baselines (§2.17 step 3, §3.6). A Google export imported into a new calendar (each group gets X-THIRTEEN-IMPORTED-LAST-MODIFIED in its raw text), edited in Thirteen, then a newer export (its version is later than the baseline: it replaces the edited group) and an older one (unchanged). And a Google export over two events created in Thirteen with the same UIDs and no baseline: the newer version wins either way.",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "A Google export imported, edited in Thirteen, then a newer and an older export",
+      "calendarId": "e0db80d4-505c-439e-b30f-eb5ff1c2b790",
+      "start": {"new":{"calendarId":"e0db80d4-505c-439e-b30f-eb5ff1c2b790","name":"Liis (Google)","color":"#2563eb"}},
+      "steps": [
+        {
+          "kind": "import",
+          "file": "cases/google-secret.ics",
+          "result": {"added":3,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/baseline-1-import.ics"
+        },
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"set","uid":"r08aoq6ufb53f6lh41ijuflp5u@google.com","recurrenceId":null,"fields":{"summary":"Choir rehearsal (bring water)","sequence":3,"lastModified":{"kind":"utc","value":"2026-10-19T06:41"}}}
+          ],
+          "expected": "imports/baseline-2-edit.ics"
+        },
+        {
+          "kind": "import",
+          "file": "imports/baseline-google-newer.ics",
+          "result": {"added":0,"updated":1,"unchanged":2,"skipped":0},
+          "expected": "imports/baseline-3-newer.ics"
+        },
+        {
+          "kind": "import",
+          "file": "imports/baseline-google-older.ics",
+          "result": {"added":0,"updated":0,"unchanged":3,"skipped":0},
+          "expected": "imports/baseline-4-older.ics"
+        }
+      ]
+    },
+    {
+      "name": "A Google export over events created in Thirteen",
+      "calendarId": "6a551915-c63b-4a71-bc55-210c1fe486b4",
+      "start": {"file":"imports/baseline-thirteen.ics"},
+      "steps": [
+        {
+          "kind": "import",
+          "file": "imports/baseline-google-roundtrip.ics",
+          "result": {"added":0,"updated":1,"unchanged":1,"skipped":0},
+          "expected": "imports/baseline-thirteen-1.ics"
+        }
+      ]
+    }
+  ]
+}

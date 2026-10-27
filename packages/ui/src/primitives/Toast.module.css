@@ -1,0 +1,113 @@
+/*
+ * Toast (design/events/mockups.html, frames G5 and I2): a dark card at the bottom
+ * of the window, the action in the accent, then a Close button.
+ *
+ * The card is drawn in the other colour scheme than the page: `color-scheme` is
+ * flipped on it, so every `light-dark()` token resolves to its other half inside
+ * it. In light modes that gives the board's dark toast (paper-raised #151820, ink
+ * #ece5d7, action #fb8b4b in Almanac); in dark modes a light one, which stands out
+ * from dark paper the same way. The always-dark themes have one set of colours,
+ * so their toast is their own raised paper with its hairline.
+ */
+
+.region {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--t-space-4) max(var(--t-space-4), env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.toast {
+  color-scheme: dark;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(460px, 100%);
+  padding: 10px 10px 10px 14px;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: 12px;
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  font-size: 0.8125rem;
+  line-height: var(--t-leading-snug);
+  box-shadow: var(--t-shadow-2);
+  pointer-events: auto;
+}
+
+:global(:root[data-theme='dark']) .toast {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme])) .toast {
+    color-scheme: light;
+  }
+}
+
+.text {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
+  margin: 0;
+}
+
+.detail {
+  color: var(--t-ink-2);
+}
+
+/* Action and Close: at least 32 x 32 px with room between them (§2.20, §2.11). */
+.action,
+.close {
+  flex: none;
+  min-width: 2rem;
+  min-height: 2rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.action {
+  padding: 0 8px;
+  color: var(--t-accent-text);
+  font-weight: var(--t-weight-title);
+  white-space: nowrap;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: var(--t-ink-2);
+}
+
+.action:hover,
+.close:hover {
+  background: var(--t-accent-soft);
+}
+
+.close:hover {
+  color: var(--t-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast {
+    animation: toast-in var(--t-dur-2) var(--t-ease-out);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (forced-colors: active) {
+  .toast {
+    border-color: CanvasText;
+  }
+}

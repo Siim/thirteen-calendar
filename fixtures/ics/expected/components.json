@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "case": "cases/components.ics",
+  "calendarId": "components",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Components",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Components"}
+    ],
+    "timeZones": [],
+    "others": [
+      {"name":"VTODO","line":5},
+      {"name":"VJOURNAL","line":12},
+      {"name":"VFREEBUSY","line":19}
+    ]
+  },
+  "warnings": [
+    {"line":5,"code":"skipped-component","detail":"VTODO is not read"},
+    {"line":12,"code":"skipped-component","detail":"VJOURNAL is not read"},
+    {"line":19,"code":"skipped-component","detail":"VFREEBUSY is not read"},
+    {"line":32,"code":"skipped-component","detail":"X-EXAMPLE-NOTE inside a VEVENT is not read"}
+  ],
+  "groups": [
+    {"uid":"710e0b21-4e34-4ba6-b64a-6953883b374d","master":{"uid":"710e0b21-4e34-4ba6-b64a-6953883b374d","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"The only event","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-10-21T09:00"},"end":{"kind":"utc","value":"2026-10-21T10:00"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":26},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"components/710e0b21-4e34-4ba6-b64a-6953883b374d|2026-10-21T09:00","calendarId":"components","title":"The only event","allDay":false,"start":"2026-10-21T12:00","end":"2026-10-21T13:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"components/710e0b21-4e34-4ba6-b64a-6953883b374d|2026-10-21T09:00","calendarId":"components","title":"The only event","allDay":false,"start":"2026-10-21T05:00","end":"2026-10-21T06:00"}
+      ]
+    }
+  ]
+}

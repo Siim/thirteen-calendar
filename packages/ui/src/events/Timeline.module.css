@@ -1,0 +1,774 @@
+/*
+ * The Week and Day timelines (docs/EVENTS.md §2.2, §2.5, §2.6; boards F1, F2, J1, K2, C4).
+ * Sizes are in rem, so the hour height and the label column grow with the browser's text size (§2.20).
+ * `--cal` is an event's calendar colour, set inline; `--columns` the day columns' widths (intercalary 0.6fr).
+ */
+
+.timeline {
+  --hour: 3rem;
+  --minute: calc(var(--hour) / 60);
+  /* Wide enough for "12 PM" at the current text size (§2.5). */
+  --axis: 3.6rem;
+  --lane-h: 1.375rem;
+  --chip-fs: 0.71875rem;
+  position: relative;
+  min-width: 0;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+  overflow: hidden;
+}
+
+.scroller {
+  position: relative;
+  height: 36rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+/* Column headers and the all-day row stay on top while the hours scroll. */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  background: var(--t-paper-raised);
+  border-bottom: var(--t-hairline) solid var(--t-rule-strong);
+}
+
+.head,
+.allDay,
+.body {
+  display: grid;
+  grid-template-columns: var(--axis) var(--columns);
+}
+
+/* ---- Column headers (§2.5): "Thu", "12", then "Mon, Oct 19" (boards F1, F2); intercalary: plate, name, date */
+
+.corner {
+  border-bottom: var(--t-hairline) solid var(--t-rule-soft);
+}
+
+.headCell {
+  display: block;
+  min-width: 0;
+  margin: 0;
+  padding: 0.45rem 0.5rem 0.4rem;
+  border: 0;
+  border-left: var(--t-hairline) solid var(--t-rule-soft);
+  border-bottom: var(--t-hairline) solid var(--t-rule-soft);
+  background: none;
+  color: var(--t-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.headCell:hover {
+  background: var(--t-accent-soft);
+}
+
+.headCell:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: -2px;
+}
+
+/* The weekday on its own line over the day number, the Gregorian date under both (boards F1, F2).
+   Items stretch to the column, so a Gregorian date wider than a narrow column ends in an ellipsis. */
+.headInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.05rem;
+  min-width: 0;
+}
+
+/* An intercalary column is narrow: plate, name and Gregorian date on their own lines (board F2). */
+.headStack {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  gap: 0.15rem;
+}
+
+.headWeekday {
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--t-ink-3);
+}
+
+.headDay {
+  font-size: 1.25rem;
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.headToday .headDay {
+  color: var(--t-accent-text);
+}
+
+.headGregorian {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  color: var(--t-ink-3);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.headIntercalary {
+  /* A container, so the narrow column of the smallest regular widths can shrink its name. */
+  container-type: inline-size;
+  padding-inline: 0.35rem;
+  background-image: repeating-linear-gradient(135deg, transparent 0 7px, var(--t-accent-soft) 7px 8px);
+  border-left: 1.5px dashed var(--t-accent);
+}
+
+@container (max-width: 4.5rem) {
+  .headStack .headName {
+    font-size: 0.6875rem;
+  }
+}
+
+.plate {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  height: 1.15rem;
+  padding: 0 0.25rem;
+  border-radius: 3px;
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font-family: var(--t-font-mono);
+  font-size: 0.5625rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: 0.04em;
+}
+
+.headName {
+  overflow: hidden;
+  font-size: 0.875rem;
+  font-weight: var(--t-weight-title);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- The all-day row: bars in lanes over the columns ------------------------------------------ */
+
+.allDay {
+  position: relative;
+  grid-auto-rows: var(--lane-h);
+  padding: 0.25rem 0;
+  min-height: calc(var(--lane-h) + 0.5rem);
+}
+
+.allDayLabel {
+  grid-column: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0.25rem 0.5rem 0 0;
+  font-family: var(--t-font-mono);
+  font-size: 0.59375rem;
+  color: var(--t-ink-3);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.allDayToggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--t-ink-2);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.allDayToggle:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.allDayCell {
+  border-left: var(--t-hairline) solid var(--t-rule-soft);
+  margin: -0.25rem 0;
+}
+
+.allDayCell.intercalary {
+  background-image: repeating-linear-gradient(-45deg, var(--t-accent-soft) 0 2px, transparent 2px 7px);
+}
+
+.bar {
+  position: relative;
+  z-index: 1;
+  align-self: stretch;
+  margin: 1px 2px;
+}
+
+.barDay {
+  margin-left: auto;
+  padding-left: 0.5rem;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  opacity: 0.75;
+}
+
+.allDayMore {
+  z-index: 1;
+  margin: 1px 2px;
+  padding: 0 0.35rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--t-ink-2);
+  font-family: var(--t-font-mono);
+  font-size: 0.6875rem;
+  font-weight: var(--t-weight-title);
+  text-align: left;
+  cursor: pointer;
+}
+
+.allDayMore:hover {
+  background: var(--t-accent-soft);
+}
+
+.allDayMore:focus-visible {
+  outline: 2px solid var(--t-focus);
+}
+
+.barGhost {
+  z-index: 2;
+  margin: 1px 2px;
+  padding: 0 0.4rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--cal) 24%, var(--t-paper-raised));
+  box-shadow: inset 0 0 0 1.5px var(--cal);
+  color: var(--t-ink);
+  font-size: var(--chip-fs);
+  font-weight: var(--t-weight-medium);
+  line-height: var(--lane-h);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ---- The timeline: hours, columns, blocks ------------------------------------------------------- */
+
+.body {
+  position: relative;
+  height: calc(24 * var(--hour));
+}
+
+.axis {
+  position: relative;
+  z-index: 3;
+}
+
+.hour {
+  position: absolute;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--t-ink-3);
+  white-space: nowrap;
+}
+
+.column {
+  position: relative;
+  min-width: 0;
+  border-left: var(--t-hairline) solid var(--t-rule-soft);
+  /* Hour rules every hour, half-hour hairlines (§2.5). */
+  background-image:
+    linear-gradient(var(--t-rule) var(--t-hairline), transparent var(--t-hairline)),
+    linear-gradient(color-mix(in srgb, var(--t-rule-soft) 70%, transparent) var(--t-hairline), transparent var(--t-hairline));
+  background-size:
+    100% var(--hour),
+    100% calc(var(--hour) / 2);
+  touch-action: pan-y;
+  cursor: default;
+}
+
+.column:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: -2px;
+}
+
+.columnToday {
+  background-color: color-mix(in srgb, var(--t-accent) 5%, transparent);
+}
+
+.column.intercalary {
+  background-image:
+    linear-gradient(var(--t-rule) var(--t-hairline), transparent var(--t-hairline)),
+    repeating-linear-gradient(-45deg, var(--t-accent-soft) 0 2px, transparent 2px 9px);
+  background-size:
+    100% var(--hour),
+    auto;
+  border-left: 1.5px dashed var(--t-accent);
+}
+
+.block {
+  --tint: light-dark(
+    color-mix(in srgb, var(--cal) 16%, var(--t-paper-raised)),
+    color-mix(in srgb, var(--cal) 24%, var(--t-paper-raised))
+  );
+  position: absolute;
+  z-index: 2;
+  /* A flex column, so title and time sit at the top of a tall block (boards F1, J1): a button with
+     `display: block` centres its content vertically. */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  box-sizing: border-box;
+  min-width: 0;
+  margin: 0;
+  padding: 0.2rem 0.35rem 0.2rem 0.45rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--tint);
+  box-shadow:
+    inset 3px 0 0 var(--cal),
+    0 0 0 1px color-mix(in srgb, var(--cal) 30%, transparent);
+  color: var(--t-ink);
+  font: inherit;
+  font-size: 0.6875rem;
+  line-height: 1.25;
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: pan-y;
+  animation: block-in var(--t-dur-2) var(--t-ease-out) both;
+}
+
+@keyframes block-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block {
+    animation: none;
+  }
+}
+
+.block[data-movable] {
+  cursor: grab;
+}
+
+.block:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 1px;
+  z-index: 4;
+}
+
+.blockBody {
+  display: block;
+  min-width: 0;
+}
+
+.blockTitle {
+  display: block;
+  overflow: hidden;
+  font-size: 0.71875rem;
+  font-weight: var(--t-weight-title);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.blockTime,
+.blockLocation {
+  display: block;
+  overflow: hidden;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  color: var(--t-ink-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.blockLocation {
+  font-family: inherit;
+}
+
+.short {
+  padding-block: 0.1rem;
+}
+
+.short .blockBody {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.short .blockTitle {
+  flex: 0 1 auto;
+}
+
+.short .blockTime {
+  flex: none;
+}
+
+.selected {
+  box-shadow:
+    inset 3px 0 0 var(--cal),
+    inset 0 0 0 1.5px var(--t-ink);
+}
+
+.tentative {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--t-ink) 8%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+}
+
+.canceled .blockTitle {
+  color: var(--t-ink-2);
+  text-decoration: line-through;
+}
+
+.tag {
+  display: inline-block;
+  margin-top: 0.15rem;
+  padding: 0.05rem 0.25rem;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: 3px;
+  font-family: var(--t-font-mono);
+  font-size: 0.5625rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.clippedStart {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.clippedEnd {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.dragging {
+  opacity: 0.4;
+}
+
+/* The bottom edge changes the end (pointer platforms, §2.5). */
+.resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 6px;
+  cursor: ns-resize;
+}
+
+@media (hover: hover) {
+  .block[data-movable]:hover .resize::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 2px;
+    width: 1.25rem;
+    height: 2px;
+    border-radius: 1px;
+    background: color-mix(in srgb, var(--cal) 70%, var(--t-ink));
+    transform: translateX(-50%);
+  }
+}
+
+/* The "+{n}" block of a crowded cluster (§2.5, board K2). */
+.more {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: var(--t-paper-sunk);
+  box-shadow: inset 0 0 0 1px var(--t-rule);
+  color: var(--t-ink);
+  font-family: var(--t-font-mono);
+  font-size: 0.75rem;
+  font-weight: var(--t-weight-title);
+  cursor: pointer;
+}
+
+.more:hover {
+  background: var(--t-accent-soft);
+}
+
+.more:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 1px;
+  z-index: 4;
+}
+
+/* A dragged event's ghost, a new draft, the compact placeholder (board C4: accent wash, accent outline). */
+.ghost,
+.draft {
+  position: absolute;
+  right: 2px;
+  left: 2px;
+  z-index: 5;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.2rem 0.35rem 0.2rem 0.45rem;
+  border: 0;
+  border-radius: 6px;
+  color: var(--t-ink);
+  font: inherit;
+  font-size: 0.6875rem;
+  line-height: 1.25;
+  text-align: left;
+  overflow: hidden;
+}
+
+.ghost {
+  background: color-mix(in srgb, var(--cal) 24%, var(--t-paper-raised));
+  box-shadow:
+    inset 3px 0 0 var(--cal),
+    0 0 0 1.5px var(--cal),
+    var(--t-shadow-1);
+  pointer-events: none;
+}
+
+.ghostCopy {
+  outline: 1.5px dashed var(--t-ink-2);
+  outline-offset: 1px;
+}
+
+.draft {
+  background: var(--t-accent-wash);
+  box-shadow: inset 0 0 0 1.5px var(--t-accent);
+}
+
+.draft .blockTitle {
+  color: var(--t-accent-text);
+}
+
+button.draft {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  cursor: pointer;
+}
+
+button.draft:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 1px;
+}
+
+/* A column's "New event" action (§2.20): out of sight until it has focus. */
+.add {
+  position: absolute;
+  top: 0.35rem;
+  left: 0.25rem;
+  z-index: 5;
+  padding: 0.2rem 0.5rem;
+  border: 1px dashed var(--t-accent);
+  border-radius: var(--t-radius-pill);
+  background: var(--t-paper-raised);
+  color: var(--t-accent-text);
+  font: inherit;
+  font-size: 0.6875rem;
+  font-weight: var(--t-weight-title);
+  white-space: nowrap;
+  cursor: pointer;
+  clip-path: inset(50%);
+}
+
+.add:focus-visible {
+  clip-path: none;
+  outline: 2px solid var(--t-focus);
+  outline-offset: 1px;
+}
+
+/* ---- Now (§2.2): a 2 px accent line under the blocks; its dot and time on the axis -------------- */
+
+.nowLine {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--t-accent);
+  pointer-events: none;
+}
+
+.nowFaint {
+  height: 1px;
+  margin-top: 0;
+  background: color-mix(in srgb, var(--t-accent) 45%, transparent);
+}
+
+.nowLabel {
+  position: absolute;
+  right: 0.55rem;
+  padding: 0 0.2rem;
+  border-radius: 3px;
+  background: var(--t-paper-raised);
+  color: var(--t-accent-text);
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: var(--t-weight-title);
+  font-variant-numeric: tabular-nums;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.nowDot {
+  position: absolute;
+  right: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--t-accent);
+  transform: translateY(-50%);
+}
+
+/* ---- The "+{n}" list -------------------------------------------------------------------------- */
+
+.morePopover {
+  padding: 0.85rem 1rem 0.6rem;
+}
+
+.moreTitle {
+  margin: 0 0 0.35rem;
+  font-size: 0.84375rem;
+  font-weight: var(--t-weight-title);
+}
+
+.moreBody {
+  display: grid;
+  gap: 0.35rem;
+}
+
+/* ---- Day mode's week strip (§2.6, board J1) ----------------------------------------------------- */
+
+.strip {
+  display: grid;
+  grid-template-columns: repeat(var(--days, 7), minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.25rem 0 0.6rem;
+}
+
+.stripDay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  min-width: 2rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0.15rem 0;
+  border: 0;
+  border-radius: var(--t-radius-2);
+  background: none;
+  color: var(--t-ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.stripDay:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 1px;
+}
+
+.stripWeekday,
+.stripGregorian {
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  color: var(--t-ink-3);
+}
+
+.stripNumber {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: var(--t-weight-title);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.stripToday .stripNumber {
+  color: var(--t-accent-text);
+}
+
+.stripOn .stripNumber {
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+/* ---- Forced colors (§2.20) ------------------------------------------------------------------------ */
+
+@media (forced-colors: active) {
+  .block,
+  .more,
+  .ghost,
+  .draft,
+  .barGhost {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+
+  .tentative {
+    background-image: none;
+    border-style: dashed;
+  }
+
+  .selected {
+    outline: 2px solid Highlight;
+  }
+
+  .nowLine,
+  .nowFaint,
+  .nowDot {
+    background: Highlight;
+  }
+
+  .nowLabel {
+    color: Highlight;
+  }
+
+  .stripOn .stripNumber,
+  .plate {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .column,
+  .column.intercalary {
+    background-image: none;
+  }
+}
+
+/* Lines break between words ("Year" over "Day"); a word is split only when it alone is wider than the column. */
+.headStack .headName,
+.headStack .headGregorian {
+  white-space: normal;
+  overflow-wrap: break-word;
+  line-height: 1.15;
+}

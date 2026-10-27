@@ -1,0 +1,295 @@
+.figure {
+  display: grid;
+  gap: var(--t-space-3);
+  min-width: 0;
+}
+
+.scroller {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  padding-bottom: 0.25rem;
+  border-radius: var(--t-radius-1);
+}
+
+.scroller:focus-visible {
+  outline-offset: 4px;
+}
+
+.canvas {
+  --track-h: 3.1rem;
+  --link-h: 3.75rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  grid-template-rows: auto var(--track-h) var(--link-h) var(--track-h) auto;
+  column-gap: var(--t-space-3);
+  min-width: 46rem;
+  padding: 1.6rem 0 0;
+}
+
+.side {
+  align-self: center;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  line-height: 1.3;
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.side strong {
+  display: block;
+  font-family: var(--t-font-display);
+  font-size: 1.6rem;
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--t-tracking-numeral);
+  line-height: 1;
+}
+
+.sideGregorian {
+  grid-row: 2;
+  color: var(--t-foil);
+}
+
+.sideThirteen {
+  grid-row: 4;
+  color: var(--t-accent-text);
+}
+
+.track {
+  position: relative;
+  grid-column: 2;
+  list-style: none;
+}
+
+.trackGregorian {
+  grid-row: 2;
+}
+
+.trackThirteen {
+  grid-row: 4;
+}
+
+.seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--x);
+  width: var(--w);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0 0.4rem;
+  overflow: hidden;
+  border-left: 2px solid currentColor;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.segName {
+  font-family: var(--t-font-text);
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-title);
+  letter-spacing: 0;
+}
+
+.segDays {
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Gregorian months: hatched as well where the theme cannot tell them apart by colour
+ * (Mono), with a halo that keeps the hatching out of the labels.
+ */
+.trackGregorian .seg {
+  color: var(--t-foil);
+  background-color: var(--t-foil-wash);
+  background-image: var(--t-foil-hatch, none);
+  text-shadow: var(--t-foil-halo, none);
+}
+
+.trackGregorian .seg:nth-child(even) {
+  background-color: var(--t-foil-soft);
+}
+
+.trackThirteen .seg {
+  color: var(--t-accent-text);
+  background: var(--t-accent-wash);
+}
+
+.trackThirteen .seg:nth-child(even) {
+  background: var(--t-accent-soft);
+}
+
+.trackThirteen .sliver {
+  width: max(4px, var(--w));
+  padding: 0;
+  border-left: 0;
+  background: var(--t-accent);
+  overflow: visible;
+}
+
+.flag {
+  --flag-w: 2.1rem;
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: var(--flag-w);
+  padding: 0.15rem 0.3rem;
+  text-align: center;
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/*
+ * Year-end flags hang inside the canvas, right-aligned to the sliver; with two
+ * year-end days (Positivist leap years) the earlier one steps one flag left.
+ */
+.sliver[data-flag-stack] .flag {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.sliver[data-flag-stack='1'] .flag {
+  right: calc(var(--flag-w) + 0.2rem - 100%);
+}
+
+.links {
+  grid-column: 2;
+  grid-row: 3;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.link {
+  stroke: var(--t-ink-3);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.linkZero {
+  stroke: var(--t-ink);
+}
+
+.drifts {
+  position: relative;
+  grid-column: 2;
+  grid-row: 3;
+  pointer-events: none;
+}
+
+.drift {
+  position: absolute;
+  top: 50%;
+  left: var(--x);
+  transform: translate(-50%, -50%);
+  padding: 0.05rem 0.25rem;
+  background: var(--t-paper);
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  color: var(--t-ink-2);
+  white-space: nowrap;
+}
+
+.axis {
+  position: relative;
+  grid-column: 2;
+  grid-row: 5;
+  height: 1.9rem;
+  margin-top: 0.35rem;
+  border-top: var(--t-hairline) solid var(--t-rule-strong);
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  padding-top: 0.3rem;
+  transform: translateX(-50%);
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  color: var(--t-ink-3);
+  white-space: nowrap;
+}
+
+.tick::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 0.25rem;
+  border-left: var(--t-hairline) solid var(--t-rule-strong);
+}
+
+.needle {
+  position: absolute;
+  z-index: 2;
+  top: -1.45rem;
+  bottom: 0;
+  left: var(--x);
+  width: 0;
+  border-left: 2px solid var(--t-accent);
+  pointer-events: none;
+}
+
+.needleLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-50%);
+  padding: 0.12rem 0.35rem;
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.needle[data-edge='start'] .needleLabel {
+  transform: translateX(-2px);
+}
+
+.needle[data-edge='end'] .needleLabel {
+  transform: translateX(-100%);
+}
+
+.needleWrap {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1 / 5;
+  pointer-events: none;
+}
+
+.caption {
+  max-width: var(--t-measure);
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.hint {
+  display: none;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-3);
+}
+
+@media (max-width: 52rem) {
+  .hint {
+    display: block;
+  }
+}

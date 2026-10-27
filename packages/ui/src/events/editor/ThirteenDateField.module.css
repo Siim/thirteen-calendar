@@ -1,0 +1,427 @@
+/*
+ * The 13-month date field and its picker (design/events/mockups.html, frames
+ * C2, I1 and J4): a field-like button with the date and a calendar glyph; a
+ * picker with IFC and Gregorian tabs, the year stepper, the slot strip, the
+ * 4 x 7 grid with the Gregorian day under each 13-month day, and a footer with
+ * the other calendar's date and Done.
+ */
+
+.field {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: 8px;
+  background: var(--t-paper-sunk);
+  color: var(--t-ink);
+  font: inherit;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button:hover {
+  border-color: var(--t-rule-strong);
+}
+
+.button[aria-invalid='true'] {
+  border-color: var(--t-accent-text);
+  box-shadow: inset 0 0 0 1px var(--t-accent-text);
+}
+
+.typing {
+  width: 13.5em;
+  cursor: text;
+  font-family: var(--t-font-mono);
+}
+
+.buttonText {
+  min-width: 0;
+}
+
+.buttonIcon {
+  flex: none;
+  color: var(--t-ink-3);
+}
+
+.error {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--t-accent-text);
+  font-size: var(--t-text-xs);
+}
+
+.popover {
+  padding: 0;
+}
+
+/* ---- the open picker ---- */
+
+.panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  color: var(--t-ink);
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--t-paper-sunk);
+}
+
+.tab {
+  min-height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--t-ink-2);
+  font: inherit;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  cursor: pointer;
+}
+
+.tab[aria-selected='true'] {
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  font-weight: var(--t-weight-title);
+  box-shadow: var(--t-shadow-1);
+}
+
+.pane {
+  display: grid;
+  gap: 10px;
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: 32px 1fr 32px;
+  align-items: center;
+  gap: 8px;
+}
+
+.arrow {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: 8px;
+  background: var(--t-paper);
+  color: var(--t-ink);
+  cursor: pointer;
+}
+
+.arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.year,
+.monthTitle {
+  font-size: 1.375rem;
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-numeral);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.monthTitle {
+  font-size: 1.0625rem;
+  letter-spacing: var(--t-tracking-title);
+}
+
+.year:focus-visible {
+  border-radius: 6px;
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.slots {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 2px;
+  scrollbar-width: thin;
+}
+
+.slot {
+  flex: none;
+  min-width: 34px;
+  min-height: 28px;
+  padding: 3px 6px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--t-paper-sunk);
+  color: var(--t-ink-2);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  cursor: pointer;
+}
+
+.slotIntercalary {
+  color: var(--t-accent-text);
+  background: repeating-linear-gradient(135deg, var(--t-paper-sunk) 0 5px, var(--t-accent-wash) 5px 6px);
+}
+
+.slot[aria-checked='true'] {
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font-weight: var(--t-weight-title);
+}
+
+.body {
+  min-height: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 4px;
+}
+
+.headRow,
+.row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.head {
+  display: grid;
+  justify-items: center;
+  color: var(--t-ink-3);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  line-height: 1.25;
+}
+
+.headGregorian {
+  color: var(--t-ink-3);
+  opacity: 0.8;
+}
+
+.cell {
+  display: grid;
+  min-height: 42px;
+  place-content: center;
+  justify-items: center;
+  border-radius: 8px;
+  background: var(--t-paper-sunk);
+  cursor: pointer;
+}
+
+.cellPlain {
+  min-height: 34px;
+}
+
+.cell:hover {
+  background: var(--t-accent-soft);
+}
+
+.cellDay {
+  font-size: var(--t-text-md);
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.cellGregorian {
+  color: var(--t-ink-3);
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  white-space: nowrap;
+}
+
+.cellToday .cellDay {
+  color: var(--t-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cellSelected,
+.cellSelected:hover {
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.cellSelected .cellGregorian,
+.cellSelected.cellToday .cellDay {
+  color: var(--t-on-accent);
+}
+
+/* A day the event's zone skips (§2.12, Pacific/Apia 2011-12-30): shown, never selected. */
+.cellDisabled,
+.cellDisabled:hover {
+  background: transparent;
+  color: var(--t-ink-3);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.cell:focus-visible,
+.badge:focus-visible,
+.listRow:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.blank {
+  min-height: 34px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1.5px dashed var(--t-accent);
+  border-radius: 12px;
+  background: repeating-linear-gradient(135deg, transparent 0 7px, var(--t-accent-wash) 7px 8px);
+}
+
+.badgeCode {
+  padding: 6px 7px;
+  border-radius: 6px;
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-title);
+}
+
+.badgeText {
+  display: grid;
+  gap: 2px;
+}
+
+.badgeText b {
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+}
+
+.badgeNote {
+  color: var(--t-ink-2);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+}
+
+.caption {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--t-accent-soft);
+  color: var(--t-ink);
+  font-size: var(--t-text-sm);
+}
+
+.caption svg {
+  flex: none;
+  margin-top: 1px;
+  color: var(--t-accent-text);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: var(--t-hairline) solid var(--t-rule-soft);
+}
+
+.footerDate {
+  color: var(--t-ink-2);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+}
+
+.done {
+  min-height: 32px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--t-radius-pill);
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font: inherit;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-title);
+  cursor: pointer;
+}
+
+/* ---- accessibility text sizes: a list of the month's days (board J4) ---- */
+
+.list {
+  display: grid;
+  max-height: 50vh;
+  overflow-y: auto;
+  border-top: var(--t-hairline) solid var(--t-rule);
+}
+
+.listRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px 4px;
+  border-bottom: var(--t-hairline) solid var(--t-rule-soft);
+  cursor: pointer;
+}
+
+.listRow b {
+  display: block;
+}
+
+.listGregorian {
+  display: block;
+  color: var(--t-ink-2);
+  font-family: var(--t-font-mono);
+  font-size: 0.85em;
+}
+
+.listRowSelected {
+  background: var(--t-accent-soft);
+}
+
+.listCheck {
+  color: var(--t-accent-text);
+}
+
+@media (forced-colors: active) {
+  .cell {
+    border: 1px solid CanvasText;
+  }
+
+  .cellSelected,
+  .slot[aria-checked='true'],
+  .tab[aria-selected='true'] {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .cellToday {
+    outline: 2px solid Highlight;
+  }
+
+  .badge {
+    border-color: CanvasText;
+  }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The notification icon of Thirteen's own alerts (docs/EVENTS.md §6.3, the V18 fallback): the
+    "Page 13" monochrome mark (ic_launcher_monochrome.xml) cropped to its centre, white on transparent.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+    <group
+        android:translateX="-18"
+        android:translateY="-18">
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M0 0H108V39.09H0ZM36.98 28.55A2.95 2.95 0 1 0 42.89 28.55A2.95 2.95 0 1 0 36.98 28.55ZM65.11 28.55A2.95 2.95 0 1 0 71.02 28.55A2.95 2.95 0 1 0 65.11 28.55Z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M38.11 79.88V60.72H31.04V54.63H33.81Q37.04 54.63 38.47 53.2Q39.9 51.76 39.9 48.09H46.88V79.88ZM63.76 80.59Q57.45 80.59 54.02 77.75Q50.6 74.91 50.37 69.8L59.28 69.53Q59.68 73.56 63.76 73.56Q65.68 73.56 66.82 72.6Q67.97 71.64 67.97 70.12Q67.97 68.42 66.76 67.5Q65.55 66.58 63.4 66.58H60.31V60.67H63.4Q64.92 60.67 65.97 59.96Q67.03 59.24 67.03 57.58Q67.03 56.2 66.22 55.3Q65.41 54.41 63.49 54.41Q61.56 54.41 60.6 55.26Q59.64 56.11 59.42 57.31L50.64 56.91Q51.14 52.53 54.49 49.95Q57.85 47.38 63.49 47.38Q69.67 47.38 72.82 49.82Q75.98 52.26 75.98 56.51Q75.98 58.88 74.52 60.63Q73.07 62.37 70.43 63.22Q76.96 64.97 76.96 70.92Q76.96 75.4 73.45 77.99Q69.94 80.59 63.76 80.59Z" />
+    </group>
+</vector>

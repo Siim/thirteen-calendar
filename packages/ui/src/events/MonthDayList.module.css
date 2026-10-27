@@ -1,0 +1,132 @@
+/* Month mode at accessibility text sizes (docs/EVENTS.md §2.4, board J3): a list of the month's days. */
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--t-hairline) solid var(--t-rule);
+}
+
+.line {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.6rem 0.75rem 0.75rem;
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+}
+
+.today {
+  background: var(--t-accent-wash);
+}
+
+.today .dayName {
+  color: var(--t-accent-text);
+}
+
+.selected:not(.today) {
+  box-shadow: inset 3px 0 0 var(--t-ink);
+}
+
+.dayButton {
+  display: grid;
+  gap: 0.2rem;
+  width: 100%;
+  padding: 0.2rem 0;
+  border: 0;
+  background: none;
+  color: var(--t-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dayButton:focus-visible,
+.event:focus-visible,
+.more:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.run {
+  font-size: 1rem;
+  color: var(--t-ink-2);
+}
+
+.dayName {
+  font-size: 1.35rem;
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-title);
+  line-height: 1.15;
+}
+
+.dayGreg {
+  font-family: var(--t-font-mono);
+  font-size: 0.9rem;
+  color: var(--t-ink-3);
+}
+
+.events {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.event {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.25rem 0;
+  border: 0;
+  background: none;
+  color: var(--t-ink);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dot {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: var(--cal);
+  box-shadow: 0 0 0 1px var(--t-rule);
+  transform: translateY(-0.05em);
+}
+
+.eventText {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.time {
+  font-family: var(--t-font-mono);
+  color: var(--t-ink-2);
+}
+
+.more {
+  justify-self: start;
+  padding: 0.2rem 0;
+  border: 0;
+  background: none;
+  color: var(--t-accent-text);
+  font: inherit;
+  font-weight: var(--t-weight-title);
+  cursor: pointer;
+}
+
+@media (forced-colors: active) {
+  .today {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+
+  .dot {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+}

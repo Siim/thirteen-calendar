@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+        x:Class="Thirteen.Desktop.Views.Events.ChoiceDialog"
+        x:DataType="ev:ChoiceQuestion"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding Title}"
+        Width="440">
+  <!-- The span questions, delete confirmations, discard questions and alerts of the editor (docs/EVENTS.md §2.11; board
+       G): the title, the message, the losses lines, then the choices stacked full width and Cancel last. -->
+  <StackPanel Margin="24,22,24,20" Spacing="12">
+    <TextBlock Name="Heading" Classes="dialogTitle" FontSize="17" Text="{Binding Title}" />
+    <TextBlock Name="Message" FontSize="14" TextWrapping="Wrap" Text="{Binding Message}" IsVisible="{Binding Message, Converter={x:Static ObjectConverters.IsNotNull}}" />
+    <ItemsControl Name="Lines" ItemsSource="{Binding Lines}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="x:String">
+          <Grid ColumnDefinitions="Auto,*" Margin="0,2,0,0">
+            <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xE7BA;" />
+            <TextBlock Grid.Column="1" FontSize="13.5" TextWrapping="Wrap" Text="{Binding}" />
+          </Grid>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <StackPanel Name="Buttons" Spacing="8" Margin="0,6,0,0" />
+  </StackPanel>
+</Window>

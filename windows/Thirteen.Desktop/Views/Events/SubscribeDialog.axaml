@@ -1,0 +1,77 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Thirteen.Desktop.ViewModels"
+        x:Class="Thirteen.Desktop.Views.Events.SubscribeDialog"
+        x:DataType="vm:SubscribeDialogViewModel"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding WindowTitle}"
+        Width="480">
+  <!-- "Subscribe to a calendar" (§2.17 "Subscribe", board D2): the link, "Checking the link", errors under the field;
+       once read, "{name}: {n} events" with Name, Color and Update. -->
+  <StackPanel Margin="24,20,24,20" Spacing="14">
+    <TextBlock Name="Heading" Classes="dialogTitle" Text="{Binding Title}" />
+
+    <!-- The link. -->
+    <StackPanel Spacing="6" IsVisible="{Binding IsEntering}">
+      <TextBlock Classes="fieldLabel" Text="{Binding LinkLabel}" />
+      <TextBox Name="LinkBox" Text="{Binding Link, Mode=TwoWay}" Watermark="{Binding Placeholder}" IsEnabled="{Binding !IsChecking}"
+               AutomationProperties.Name="{Binding LinkLabel}" AutomationProperties.HelpText="{Binding Help}" />
+      <Grid Name="ErrorLine" ColumnDefinitions="Auto,*" IsVisible="{Binding HasError}">
+        <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" />
+        <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding Error}" />
+      </Grid>
+      <StackPanel Name="CheckingLine" Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsChecking}">
+        <TextBlock Classes="icon spinner" FontSize="14" VerticalAlignment="Center" Text="&#xE895;" />
+        <TextBlock FontSize="13" VerticalAlignment="Center" Text="{Binding CheckingText}" />
+      </StackPanel>
+      <TextBlock Classes="status" FontSize="12.5" Text="{Binding Help}" />
+    </StackPanel>
+
+    <!-- Found: Name, Color, Update. -->
+    <Grid Name="FoundFields" ColumnDefinitions="90,*" RowDefinitions="Auto,Auto,Auto" IsVisible="{Binding IsFound}">
+      <TextBlock Classes="fieldLabel" VerticalAlignment="Center" Text="{Binding NameLabel}" />
+      <TextBox Grid.Column="1" Name="NameBox" Text="{Binding Name, Mode=TwoWay}" AutomationProperties.Name="{Binding NameLabel}" />
+      <TextBlock Grid.Row="1" Classes="fieldLabel" Margin="0,14,0,0" VerticalAlignment="Top" Text="{Binding ColorLabel}" />
+      <ListBox Grid.Row="1" Grid.Column="1" Classes="colors" Margin="0,10,0,0" ItemsSource="{Binding Colors}"
+               SelectedItem="{Binding SelectedColor, Mode=TwoWay}" AutomationProperties.Name="{Binding ColorLabel}">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:ColorOption">
+            <Border Classes="ring" BorderThickness="2" CornerRadius="12" Padding="2" ToolTip.Tip="{Binding Name}"
+                    AutomationProperties.Name="{Binding Name}">
+              <Ellipse Width="18" Height="18" Fill="{Binding Brush}" />
+            </Border>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <TextBlock Grid.Row="2" Classes="fieldLabel" Margin="0,10,0,0" VerticalAlignment="Center" Text="{Binding UpdateLabel}" />
+      <ComboBox Grid.Row="2" Grid.Column="1" Name="IntervalBox" Margin="0,10,0,0" MinWidth="180" ItemsSource="{Binding Intervals}"
+                SelectedItem="{Binding SelectedInterval, Mode=TwoWay}" AutomationProperties.Name="{Binding UpdateLabel}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:IntervalOption">
+            <TextBlock Text="{Binding Label}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+    </Grid>
+    <Grid Name="HttpWarning" ColumnDefinitions="Auto,*" IsVisible="{Binding ShowHttpWarning}">
+      <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xE7BA;" />
+      <TextBlock Grid.Column="1" FontSize="13" TextWrapping="Wrap" Text="{Binding HttpWarning}" />
+    </Grid>
+    <Grid Name="FoundError" ColumnDefinitions="Auto,*" IsVisible="{Binding ShowFoundError}">
+      <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" />
+      <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding Error}" />
+    </Grid>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,6,0,0">
+      <Button Name="CancelButton" MinWidth="96" HorizontalContentAlignment="Center" Content="{Binding CancelText}"
+              Command="{Binding CancelCommand}" IsCancel="True" AutomationProperties.Name="{Binding CancelText}" />
+      <Button Name="SubscribeButton" Classes="accent" MinWidth="96" HorizontalContentAlignment="Center" Content="{Binding SubscribeText}"
+              Command="{Binding SubscribeCommand}" IsDefault="True" AutomationProperties.Name="{Binding SubscribeText}" />
+    </StackPanel>
+  </StackPanel>
+</Window>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- iOS/iPadOS app for App Store Connect. destination "upload" sends the build to App Store
+	     Connect; scripts/release/ios-upload.sh --export-only swaps in "export" to write an .ipa.
+	     Xcode never bumps the version or build number (manageAppVersionAndBuildNumber false):
+	     raise CURRENT_PROJECT_VERSION in apple/project.yml before every upload. -->
+	<key>method</key>
+	<string>app-store-connect</string>
+	<key>destination</key>
+	<string>upload</string>
+	<key>teamID</key>
+	<string>5ZJ9N8WURW</string>
+	<key>signingStyle</key>
+	<string>automatic</string>
+	<key>stripSwiftSymbols</key>
+	<true/>
+	<key>uploadSymbols</key>
+	<true/>
+	<key>manageAppVersionAndBuildNumber</key>
+	<false/>
+</dict>
+</plist>

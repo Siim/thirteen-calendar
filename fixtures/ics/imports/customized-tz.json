@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "description": "Two Outlook files whose different VTIMEZONEs are both named \"Customized Time Zone\" (UTC+05:30, and UTC-03:00 with DST), imported one after the other into one calendar: the second is renamed \"Customized Time Zone (2)\", its group re-serialized with the new TZID, and its event keeps its time. A third file with the same definition as the first shares it (nothing renamed, raw text kept).",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "Three Outlook files into one calendar",
+      "calendarId": "314db1ef-adc1-4687-b7a6-cf3608976179",
+      "start": {"new":{"calendarId":"314db1ef-adc1-4687-b7a6-cf3608976179","name":"Outlook","color":"#2563eb"}},
+      "steps": [
+        {
+          "kind": "import",
+          "file": "imports/customized-tz-a.ics",
+          "result": {"added":1,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/customized-tz-1.ics"
+        },
+        {
+          "kind": "import",
+          "file": "imports/customized-tz-b.ics",
+          "result": {"added":1,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/customized-tz-2.ics"
+        },
+        {
+          "kind": "import",
+          "file": "imports/customized-tz-c.ics",
+          "result": {"added":1,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/customized-tz-3.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-11-01T00:00","to":"2026-12-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"314db1ef-adc1-4687-b7a6-cf3608976179/040000008200E00074C5B7101A82E0080000000094DEF5E1C4A4E996634AFD539C72193522EC58D39DDB8F47A0254DDC|2026-11-04T15:30","calendarId":"314db1ef-adc1-4687-b7a6-cf3608976179","title":"Call with the Bengaluru team","allDay":false,"start":"2026-11-04T12:00","end":"2026-11-04T13:00"},
+                {"key":"314db1ef-adc1-4687-b7a6-cf3608976179/040000008200E00074C5B7101A82E00800000000277929067E4301D5561BACFCA8BB928D95438CD41BBB664842482BBC|2026-11-05T10:00","calendarId":"314db1ef-adc1-4687-b7a6-cf3608976179","title":"Call with Nuuk","allDay":false,"start":"2026-11-05T15:00","end":"2026-11-05T16:00"},
+                {"key":"314db1ef-adc1-4687-b7a6-cf3608976179/040000008200E00074C5B7101A82E00800000000E40645D175362673591775D971DFAF55A2B2447AC82F7FE26DC9F7C9|2026-11-11T15:30","calendarId":"314db1ef-adc1-4687-b7a6-cf3608976179","title":"Follow-up with the Bengaluru team","allDay":false,"start":"2026-11-11T12:00","end":"2026-11-11T13:00"}
+              ]
+            },
+            {
+              "deviceZone": "America/New_York",
+              "window": {"from":"2026-11-01T00:00","to":"2026-12-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"314db1ef-adc1-4687-b7a6-cf3608976179/040000008200E00074C5B7101A82E0080000000094DEF5E1C4A4E996634AFD539C72193522EC58D39DDB8F47A0254DDC|2026-11-04T15:30","calendarId":"314db1ef-adc1-4687-b7a6-cf3608976179","title":"Call with the Bengaluru team","allDay":false,"start":"2026-11-04T05:00","end":"2026-11-04T06:00"},
+                {"key":"314db1ef-adc1-4687-b7a6-cf3608976179/040000008200E00074C5B7101A82E00800000000277929067E4301D5561BACFCA8BB928D95438CD41BBB664842482BBC|2026-11-05T10:00","calendarId":"314db1ef-adc1-4687-b7a6-cf3608976179","title":"Call with Nuuk","allDay":false,"start":"2026-11-05T08:00","end":"2026-11-05T09:00"},
+                {"key":"314db1ef-adc1-4687-b7a6-cf3608976179/040000008200E00074C5B7101A82E00800000000E40645D175362673591775D971DFAF55A2B2447AC82F7FE26DC9F7C9|2026-11-11T15:30","calendarId":"314db1ef-adc1-4687-b7a6-cf3608976179","title":"Follow-up with the Bengaluru team","allDay":false,"start":"2026-11-11T05:00","end":"2026-11-11T06:00"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:cal="using:Thirteen.Desktop.Views.CalendarSection"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.ListModeView"
+             x:DataType="vm:ListModeViewModel">
+  <!-- Calendar's List mode (docs/EVENTS.md §2.7, board K1): every event from the Calendar's day onward, grouped by
+       13-month month (the sticky header) and day ("Thursday, October 12" + "Gregorian Mon, Oct 19"); days without
+       events are skipped, multi-day events appear on every day with "Day 2 of 3". Scrolling to the end loads the next
+       Gregorian year, scrolling up past the start the year before. Empty: "No upcoming events." with "New event". -->
+  <UserControl.DataTemplates>
+    <DataTemplate DataType="vm:ListMonthHeader">
+      <Border Classes="listMonthHeader" Margin="0,10,0,4">
+        <TextBlock Classes="listMonthHeader" Text="{Binding Text}" AutomationProperties.HeadingLevel="2" />
+      </Border>
+    </DataTemplate>
+    <DataTemplate DataType="vm:ListDayHeader">
+      <StackPanel Margin="16,10,16,4" AutomationProperties.Name="{Binding AutomationName}">
+        <TextBlock Classes="dayHeading" Classes.today="{Binding IsToday}" Text="{Binding Heading}" AutomationProperties.HeadingLevel="3" />
+        <TextBlock Classes="dayCaption" Text="{Binding Caption}" />
+      </StackPanel>
+    </DataTemplate>
+    <DataTemplate DataType="vm:CalendarRow">
+      <cal:EventRowView Margin="6,0" TimeWidth="{Binding $parent[cal:ListModeView].((vm:ListModeViewModel)DataContext).TimeColumnWidth, FallbackValue=72}" />
+    </DataTemplate>
+  </UserControl.DataTemplates>
+
+  <Grid RowDefinitions="Auto,*" Margin="32,0,32,0">
+    <!-- The sticky month header: the month of the first row on screen. -->
+    <Border Name="StickyHeader" Classes="listMonthHeader" IsVisible="False" ZIndex="1" AutomationProperties.AccessibilityView="Raw">
+      <TextBlock Name="StickyText" Classes="listMonthHeader" />
+    </Border>
+
+    <ScrollViewer Grid.Row="0" Grid.RowSpan="2" Name="Scroller" HorizontalScrollBarVisibility="Disabled">
+      <c:PageColumn MaxContentWidth="960">
+        <StackPanel Margin="0,0,0,24">
+          <ItemsControl Name="Rows" ItemsSource="{Binding Rows}" AutomationProperties.Name="{Binding Calendar.PeriodTitle}" />
+
+          <!-- Empty: "No upcoming events." with "New event". -->
+          <StackPanel Name="Empty" Spacing="10" Margin="16,24" IsVisible="{Binding ShowsEmpty}">
+            <TextBlock FontSize="15" TextWrapping="Wrap" Text="{Binding EmptyText}" />
+            <Button Classes="link" HorizontalAlignment="Left" Content="{Binding NewEventText}"
+                    Command="{Binding Calendar.NewEventCommand}" CommandParameter="{Binding $self}" />
+          </StackPanel>
+          <!-- Every calendar hidden. -->
+          <StackPanel Name="AllHidden" Spacing="10" Margin="16,24" IsVisible="{Binding ShowsAllHidden}">
+            <TextBlock FontSize="15" TextWrapping="Wrap" Text="{Binding AllHiddenText}" />
+            <Button Classes="link" HorizontalAlignment="Left" Content="{Binding ShowCalendarsText}"
+                    Command="{Binding Calendar.ShowHiddenCalendarsCommand}" />
+          </StackPanel>
+        </StackPanel>
+      </c:PageColumn>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

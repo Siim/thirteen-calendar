@@ -1,0 +1,274 @@
+.page {
+  display: grid;
+  gap: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+.plates {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 2px solid var(--t-rule-strong);
+}
+
+@media (min-width: 60rem) {
+  .plates {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.plate {
+  display: grid;
+  align-content: start;
+  gap: var(--t-space-3);
+  padding: var(--t-space-5) 0;
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+  min-width: 0;
+}
+
+@media (min-width: 60rem) {
+  .plate {
+    padding: var(--t-space-5) var(--t-space-5);
+    border-bottom: 0;
+    border-left: var(--t-hairline) solid var(--t-rule);
+  }
+
+  .plate:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+.plateYear {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-3xl);
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.9;
+  letter-spacing: var(--t-tracking-numeral);
+}
+
+.plateName {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-xl);
+  font-weight: var(--t-weight-title);
+  line-height: 1.1;
+  letter-spacing: var(--t-tracking-title);
+}
+
+.plateBy {
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  color: var(--t-ink-2);
+  font-family: var(--t-font-mono);
+  text-transform: uppercase;
+}
+
+.plateSummary {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.selected .plateYear {
+  color: var(--t-accent-text);
+}
+
+.foil .plateYear,
+.foil .plateName {
+  color: var(--t-foil);
+}
+
+.foil .plateYear {
+  font-family: var(--t-font-text);
+  font-weight: 300;
+}
+
+.foil .plateName {
+  font-family: var(--t-font-text);
+  font-weight: var(--t-weight-text);
+}
+
+/* ---- Timeline ------------------------------------------------------- */
+
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 0;
+  list-style: none;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  left: calc(var(--year-col) + var(--t-space-4));
+  border-left: var(--t-hairline) solid var(--t-rule-strong);
+}
+
+.timeline {
+  --year-col: clamp(4.25rem, 3rem + 6vw, 8.5rem);
+}
+
+.year {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--year-col) minmax(0, 1fr);
+  gap: var(--t-space-4) calc(var(--t-space-4) * 2);
+  padding-block: var(--t-space-4);
+}
+
+.year::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--t-space-4) + 0.95rem);
+  left: calc(var(--year-col) + var(--t-space-4) - 4px);
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--t-paper);
+  border-radius: 50%;
+  background: var(--t-ink);
+}
+
+.yearNumber {
+  font-family: var(--t-font-display);
+  font-size: clamp(1.6rem, 1.1rem + 2vw, 2.6rem);
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: var(--t-tracking-numeral);
+  text-align: right;
+}
+
+.events {
+  display: grid;
+  gap: var(--t-space-3);
+  list-style: none;
+  padding-top: 0.3rem;
+}
+
+.event {
+  display: grid;
+  gap: 0.25rem;
+  max-width: 62ch;
+}
+
+.tag {
+  justify-self: start;
+  padding: 0.12rem 0.4rem;
+  border: var(--t-hairline) solid currentColor;
+  border-radius: var(--t-radius-1);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+}
+
+.tag-gregorian {
+  color: var(--t-foil);
+}
+
+.tag-ifc,
+.tag-positivist {
+  color: var(--t-accent-text);
+}
+
+.dim .tag-ifc,
+.dim .tag-positivist {
+  color: var(--t-ink-2);
+}
+
+.eventText {
+  font-size: var(--t-text-md);
+  line-height: var(--t-leading-body);
+}
+
+.now::before {
+  background: var(--t-accent);
+  width: 13px;
+  height: 13px;
+  left: calc(var(--year-col) + var(--t-space-4) - 6px);
+}
+
+.now .yearNumber {
+  color: var(--t-accent-text);
+}
+
+/* ---- Chronology + month names --------------------------------------- */
+
+.chronology {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-7);
+  align-items: start;
+}
+
+@media (min-width: 64rem) {
+  .chronology {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  }
+
+  .names {
+    position: sticky;
+    top: var(--t-space-5);
+  }
+}
+
+.names {
+  display: grid;
+  gap: var(--t-space-4);
+  padding: var(--t-space-5);
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+}
+
+.nameList {
+  display: grid;
+  list-style: none;
+}
+
+.nameItem {
+  display: grid;
+  grid-template-columns: 1.8rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: var(--t-hairline) dotted var(--t-rule);
+}
+
+.nameIndex {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  color: var(--t-accent-text);
+}
+
+.nameText {
+  display: grid;
+  gap: 0.05rem;
+}
+
+.nameMonth {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-title);
+  line-height: 1.15;
+  letter-spacing: var(--t-tracking-title);
+}
+
+.nameMeaning {
+  font-size: var(--t-text-xs);
+  color: var(--t-ink-2);
+  line-height: 1.35;
+}
+
+.nameExtras {
+  display: grid;
+  gap: var(--t-space-2);
+  list-style: none;
+  font-size: var(--t-text-xs);
+  line-height: 1.45;
+  color: var(--t-ink-2);
+}
+
+.nameExtras strong {
+  color: var(--t-ink);
+}

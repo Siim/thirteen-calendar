@@ -1,0 +1,45 @@
+/* Keyboard help (§2.21): two columns that wrap at large text sizes. */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-text-sm);
+}
+
+.table th,
+.table td {
+  padding: 0.45rem 0;
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead th {
+  padding-top: 0;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.table tbody th {
+  padding-right: 1rem;
+  font-weight: var(--t-weight-medium);
+}
+
+.keys {
+  font-family: var(--t-font-mono);
+  font-size: 0.95em;
+}
+
+.off {
+  color: var(--t-ink-2);
+}
+
+.note {
+  margin-top: 0.9rem;
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}

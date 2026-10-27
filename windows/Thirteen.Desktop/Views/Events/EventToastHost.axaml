@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+             x:Class="Thirteen.Desktop.Views.Events.EventToastHost"
+             x:DataType="ev:EventActions"
+             HorizontalAlignment="Center" VerticalAlignment="Bottom">
+  <!-- The toast of event changes (docs/EVENTS.md §2.11 "Toast timing"): the message (announced politely, with "Undo
+       available: Control Z." for Undo), its one action and its Close button (an X named "Close", 32 x 32 px, after
+       the action in the focus order). It stays 8 seconds or the longer time Windows asks for, paused while the pointer
+       is over it or focus is inside it, and until the next action while a screen reader runs. -->
+  <Border Name="ToastBox" Classes="calendarToast" MaxWidth="600" Padding="16,6,6,6" IsVisible="{Binding HasToast}">
+    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+      <TextBlock Name="MessageText" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,8,0"
+                 Text="{Binding Toast.Message, FallbackValue={x:Null}}"
+                 AutomationProperties.Name="{Binding Toast.Announcement, FallbackValue={x:Null}}"
+                 AutomationProperties.LiveSetting="Polite" />
+      <Button Grid.Column="1" Name="ActionButton" Classes="toastAction" VerticalAlignment="Center"
+              IsVisible="{Binding Toast.HasAction, FallbackValue=False}" Content="{Binding Toast.ActionText, FallbackValue={x:Null}}"
+              Command="{Binding Toast.ActionCommand, FallbackValue={x:Null}}"
+              AutomationProperties.Name="{Binding Toast.ActionText, FallbackValue={x:Null}}" />
+      <Button Grid.Column="2" Name="CloseButton" Classes="toastClose" VerticalAlignment="Center"
+              Command="{Binding Toast.CloseCommand, FallbackValue={x:Null}}"
+              ToolTip.Tip="{Binding Toast.CloseText, FallbackValue={x:Null}}"
+              AutomationProperties.Name="{Binding Toast.CloseText, FallbackValue={x:Null}}">
+        <TextBlock Classes="icon" FontSize="10" Foreground="{DynamicResource ThPaper}" Text="&#xE711;" />
+      </Button>
+    </Grid>
+  </Border>
+</UserControl>

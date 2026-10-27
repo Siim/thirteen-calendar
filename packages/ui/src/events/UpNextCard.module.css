@@ -1,0 +1,170 @@
+/* Today's Up next card (docs/EVENTS.md §2.8, board B1). Rows are AgendaRows (AgendaList.module.css). */
+
+.card {
+  display: grid;
+  min-width: 0;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  flex-wrap: wrap;
+  padding: 0.85rem 1.1rem 0.35rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.1875rem;
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-title);
+  line-height: 1.2;
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.add {
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: -0.25rem 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--t-radius-pill);
+  background: none;
+  color: var(--t-accent-text);
+  cursor: pointer;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  color: var(--t-accent-text);
+  font-size: 0.8125rem;
+  font-weight: var(--t-weight-medium);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (hover: hover) {
+  .add:hover {
+    background: var(--t-accent-soft);
+  }
+}
+
+.add:focus-visible,
+.link:focus-visible,
+.textButton:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.group {
+  display: grid;
+}
+
+.groupHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.5rem;
+  margin: 0;
+  padding: 0.75rem 1.1rem 0.25rem;
+  font: inherit;
+}
+
+.groupName {
+  font-size: 0.8125rem;
+  font-weight: var(--t-weight-title);
+}
+
+.groupGreg {
+  font-family: var(--t-font-mono);
+  font-size: 0.6875rem;
+  color: var(--t-ink-3);
+}
+
+/* The rows of a group: the board's 20 px side padding, a hairline above each. */
+.rows > li > button {
+  padding-inline: 1.1rem;
+  border-top: var(--t-hairline) solid var(--t-rule-soft);
+}
+
+.empty {
+  margin: 0;
+  padding: 0.35rem 1.1rem 0.85rem;
+  font-size: 0.875rem;
+  color: var(--t-ink-2);
+}
+
+.more {
+  margin: 0;
+  padding: 0.5rem 1.1rem 0.8rem;
+  border-top: var(--t-hairline) solid var(--t-rule-soft);
+  font-size: 0.8125rem;
+  color: var(--t-ink-3);
+}
+
+.state {
+  display: grid;
+  justify-items: start;
+  gap: 0.35rem;
+  padding: 0.35rem 1.1rem 0.9rem;
+  font-size: 0.875rem;
+  color: var(--t-ink-2);
+}
+
+.state p {
+  margin: 0;
+}
+
+.textButton {
+  min-height: 2.25rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--t-accent-text);
+  font: inherit;
+  font-weight: var(--t-weight-medium);
+  cursor: pointer;
+}
+
+@media (pointer: coarse), (max-width: 40rem) {
+  .add,
+  .link,
+  .textButton {
+    min-height: 2.75rem;
+  }
+
+  .add {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .card {
+    border-color: CanvasText;
+  }
+
+  .add,
+  .link,
+  .textButton {
+    color: LinkText;
+  }
+}

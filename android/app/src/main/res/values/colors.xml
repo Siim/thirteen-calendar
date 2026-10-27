@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Window background before the first Compose frame: the default theme's paper (Almanac light,
+        design/tokens.json). Compose then paints the chosen theme over it.
+    -->
+    <color name="thirteen_window_background">#FFF4EFE4</color>
+</resources>

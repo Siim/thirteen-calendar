@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "description": "Restore of Thirteen's own exports (§2.17 \"Restore\"): version against version, baselines ignored and none added, nothing deleted. Personal.ics restored into a store without it becomes a new calendar that keeps the file's id, name and color, with the file's groups; restored again, it leaves that one calendar unchanged. older.ics, an earlier export of the same calendar, restored over the calendar edited since: the Dentist event edited since is kept (counted as kept newer), the Piano lesson deleted since comes back, the Passport renewal created since stays.",
+  "now": "2026-10-19T06:41",
+  "calendars": [
+    {"file":"restore/Personal.ics","calendarId":"0ab6ab60-378b-4c89-8a97-2770524d4fae","name":"Personal","color":"#ea580c","kind":"local","subscription":null,"groups":4},
+    {"file":"restore/Work.ics","calendarId":"4074b90e-c55e-46db-882c-8096d5beef46","name":"Work","color":"#2563eb","kind":"local","subscription":null,"groups":2},
+    {"file":"restore/Holidays in Estonia.ics","calendarId":"ac8b5389-489e-422e-b633-807e74445762","name":"Holidays in Estonia","color":"#57534e","kind":"subscription","subscription":{"url":"https://calendar.example.com/holidays/ee.ics","interval":"P1D"},"groups":16}
+  ],
+  "zip": {
+    "file": "restore/Thirteen calendars 2026-10-19.zip",
+    "entries": [
+      "Personal.ics",
+      "Work.ics",
+      "Holidays in Estonia.ics"
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "Personal.ics into a store without it, twice",
+      "calendarId": "0ab6ab60-378b-4c89-8a97-2770524d4fae",
+      "start": {"new":{"calendarId":"0ab6ab60-378b-4c89-8a97-2770524d4fae","name":"Personal","color":"#ea580c"}},
+      "steps": [
+        {
+          "kind": "restore",
+          "file": "restore/Personal.ics",
+          "result": {"added":4,"updated":0,"unchanged":0,"keptNewer":0},
+          "expected": "restore/personal-restored.ics"
+        },
+        {
+          "kind": "restore",
+          "file": "restore/Personal.ics",
+          "result": {"added":0,"updated":0,"unchanged":4,"keptNewer":0},
+          "expected": "restore/personal-restored-twice.ics"
+        }
+      ]
+    },
+    {
+      "name": "older.ics over the calendar edited since",
+      "calendarId": "0ab6ab60-378b-4c89-8a97-2770524d4fae",
+      "start": {"file":"restore/Personal.ics"},
+      "steps": [
+        {
+          "kind": "restore",
+          "file": "restore/older.ics",
+          "result": {"added":1,"updated":0,"unchanged":2,"keptNewer":1},
+          "expected": "restore/older-restored.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-10-19T00:00","to":"2026-11-02T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"0ab6ab60-378b-4c89-8a97-2770524d4fae/c519f72d-2474-4e3f-a9b5-f86daaeff9c2|2026-10-19T19:00","calendarId":"0ab6ab60-378b-4c89-8a97-2770524d4fae","title":"Book club: Cotsworth","allDay":false,"start":"2026-10-19T19:00","end":"2026-10-19T21:00"},
+                {"key":"0ab6ab60-378b-4c89-8a97-2770524d4fae/2ad4e8a3-f1b5-4c5d-85d8-20cd3b7c448b|2026-10-21T10:00","calendarId":"0ab6ab60-378b-4c89-8a97-2770524d4fae","title":"Dentist","allDay":false,"start":"2026-10-21T10:00","end":"2026-10-21T10:45"},
+                {"key":"0ab6ab60-378b-4c89-8a97-2770524d4fae/c1641eeb-4f3e-474f-bac2-029b357c652b|2026-10-24T11:00","calendarId":"0ab6ab60-378b-4c89-8a97-2770524d4fae","title":"Piano lesson","allDay":false,"start":"2026-10-24T11:00","end":"2026-10-24T11:45"},
+                {"key":"0ab6ab60-378b-4c89-8a97-2770524d4fae/d98461be-3496-4b3a-80cd-d649d4696bae|2026-10-24T18:00","calendarId":"0ab6ab60-378b-4c89-8a97-2770524d4fae","title":"Sauna","allDay":false,"start":"2026-10-24T18:00","end":"2026-10-24T20:00"},
+                {"key":"0ab6ab60-378b-4c89-8a97-2770524d4fae/d98461be-3496-4b3a-80cd-d649d4696bae|2026-10-31T18:00","calendarId":"0ab6ab60-378b-4c89-8a97-2770524d4fae","title":"Sauna","allDay":false,"start":"2026-10-31T18:00","end":"2026-10-31T20:00"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

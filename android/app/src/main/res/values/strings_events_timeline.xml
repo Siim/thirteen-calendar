@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Events copy for the Week and Day timelines and drag and drop (task D5): docs/EVENTS.md §2.19,
+    verbatim, with the catalogue ids (dots become underscores). The move toasts, commit failures,
+    editor errors, span_title, span_future_exceptionsDropped and editor_invitees_android that drags
+    share with the editor are in strings_events_editor.xml (task D6); the Calendar's own strings in
+    strings_calendar.xml. Copy rule (design/DECISIONS.md): no em or en dash characters anywhere.
+-->
+<resources>
+    <!-- Week and Day timelines (§2.5, §2.6, §2.20) -->
+    <plurals name="calendar_moreAt_a11y">
+        <item quantity="one">%1$d more event at %2$s</item>
+        <item quantity="other">%1$d more events at %2$s</item>
+    </plurals>
+    <string name="calendar_placeholder">New event</string>
+    <string name="calendar_placeholder_a11y">New event, %1$s</string>
+    <string name="calendar_column_a11y">%1$s. Gregorian %2$s</string>
+    <string name="calendar_column_intercalary_a11y">%1$s, no weekday. Gregorian %2$s</string>
+
+    <!-- Drag moves (§2.11 "Drag edits") -->
+    <string name="span_move_message">Move this event only, or this and all future events?</string>
+    <string name="span_move_this">Move this event only</string>
+    <string name="span_move_future">Move future events</string>
+    <string name="span_move_changesRepeat">Moving future events to %1$s changes the repeat to %2$s.</string>
+    <plurals name="span_move_dropsRepeat">
+        <item quantity="one">Moving future events to %1$s ends the repeat. %2$d later event in this series will be deleted.</item>
+        <item quantity="other">Moving future events to %1$s ends the repeat. The %2$d later events in this series will be deleted.</item>
+    </plurals>
+    <string name="span_move_dropsRepeat_endless">Moving future events to %1$s ends the repeat. Every later event in this series will be deleted.</string>
+    <string name="span_move_dropsRepeat_first">Moving the first event to %1$s ends the repeat. The series becomes one event on %1$s.</string>
+    <string name="span_move_futureChange">Move future events and change repeat</string>
+    <string name="span_move_deleteLater">Move and delete later events</string>
+    <string name="span_move_notAllowed">%1$s can’t keep the repeat this move needs, so only this event can be moved.</string>
+    <string name="span_move_keep_message">Its repeat was set in another app, so only this event can be moved.</string>
+    <string name="move_invitees_title_android">Move this event?</string>
+    <string name="move_invitees_move">Move</string>
+</resources>

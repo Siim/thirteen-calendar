@@ -1,0 +1,246 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+  <!-- Settings, laid out like Windows Settings: a section heading over cards. Every choice applies at once
+       and is saved to %APPDATA%\Thirteen\settings.json. -->
+  <UserControl.Styles>
+    <Style Selector="TextBlock.section">
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Margin" Value="2,14,0,0" />
+    </Style>
+    <!-- Each swatch is a list item: arrow keys move the selection (and re-theme the app as they go), and a
+         screen reader reads the theme's name and summary. -->
+    <Style Selector="ListBox.swatches ListBoxItem" x:DataType="vm:ThemeOption">
+      <Setter Property="AutomationProperties.Name" Value="{Binding Name}" />
+      <Setter Property="AutomationProperties.HelpText" Value="{Binding Summary}" />
+      <Setter Property="ToolTip.Tip" Value="{Binding Summary}" />
+    </Style>
+    <Style Selector="Border.key">
+      <Setter Property="Background" Value="{DynamicResource ThWell}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="Padding" Value="8,3" />
+      <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer Name="Scroller" HorizontalScrollBarVisibility="Disabled">
+    <c:PageColumn MaxContentWidth="{Binding ContentMaxWidth}">
+      <StackPanel Margin="32,4,32,32" Spacing="8">
+
+        <!-- Theme. -->
+        <TextBlock Classes="section" Text="Theme" Margin="2,0,0,0" />
+        <Border Classes="settingsRow">
+          <StackPanel Spacing="14">
+            <!-- One list per group (design/DECISIONS.md): "Light and dark", then "Dark". Arrow keys browse a
+                 group and re-theme the app as they go; Tab moves to the next group. -->
+            <ItemsControl ItemsSource="{Binding ThemeGroups}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Spacing="10" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:ThemeGroupOption">
+                  <StackPanel Spacing="8">
+                    <StackPanel Spacing="1">
+                      <TextBlock Classes="strong" FontSize="13" Text="{Binding Name}" />
+                      <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding Summary}" />
+                    </StackPanel>
+                    <ListBox Classes="swatches" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
+                             SelectionMode="Single" AutomationProperties.Name="{Binding Name, StringFormat='Theme: {0}'}">
+                      <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                      </ListBox.ItemsPanel>
+                      <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ThemeOption">
+                          <StackPanel Spacing="8">
+                            <c:ThemeSwatchSample SwatchTheme="{Binding Theme}" IsSelected="{Binding $parent[ListBoxItem].IsSelected}" />
+                            <StackPanel Orientation="Horizontal" Spacing="6" Margin="2,0,0,2">
+                              <TextBlock Classes="swatchName" FontSize="13" Text="{Binding Name}" />
+                              <TextBlock Classes="icon check" FontSize="12" Foreground="{DynamicResource ThAccentText}" Text="&#xE73E;"
+                                         VerticalAlignment="Center" />
+                            </StackPanel>
+                          </StackPanel>
+                        </DataTemplate>
+                      </ListBox.ItemTemplate>
+                    </ListBox>
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Classes="explanation" Text="{Binding ThemeSummary}" />
+            <!-- Live preview: today's plate and progress in the chosen theme. -->
+            <Border Background="{DynamicResource ThPaper}" BorderBrush="{DynamicResource ThRule}" BorderThickness="1"
+                    CornerRadius="6" Padding="20" AutomationProperties.Name="Preview">
+              <StackPanel Spacing="16">
+                <p:DatePlateView DataContext="{Binding Preview.Plate}" />
+                <c:YearProgressBar Comparison="{Binding Preview.Comparison}" ShowsLabels="False"
+                                   AccentColor="{DynamicResource ThAccentColor}" TrackColor="{DynamicResource ThPaperSunkColor}"
+                                   LabelColor="{DynamicResource ThInk3Color}" CurrentLabelColor="{DynamicResource ThAccentTextColor}"
+                                   AutomationProperties.AccessibilityView="Raw" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </Border>
+
+        <!-- Light or dark. -->
+        <TextBlock Classes="section" Text="Appearance" />
+        <Border Classes="settingsRow">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="explanation" Text="{Binding AppearanceNote}" />
+            <ItemsControl ItemsSource="{Binding Appearances}" AutomationProperties.Name="Appearance" IsEnabled="{Binding IsAppearanceEnabled}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Spacing="2" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:AppearanceOption">
+                  <RadioButton GroupName="Appearance" IsChecked="{Binding IsSelected, Mode=TwoWay}" Content="{Binding Name}" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+
+        <!-- Calendar system. -->
+        <TextBlock Classes="section" Text="Calendar system" />
+        <Border Classes="settingsRow">
+          <StackPanel Spacing="8">
+            <ItemsControl ItemsSource="{Binding Systems}" AutomationProperties.Name="Calendar system">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Spacing="6" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:SystemOption">
+                  <RadioButton GroupName="CalendarSystem" IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                               AutomationProperties.Name="{Binding Name}">
+                    <StackPanel Spacing="1">
+                      <TextBlock Text="{Binding Name}" />
+                      <TextBlock Classes="caption" Text="{Binding Origin}" />
+                    </StackPanel>
+                  </RadioButton>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Classes="footnote" Text="Both are 13 × 28-day calendars. The choice applies to every screen." />
+          </StackPanel>
+        </Border>
+
+        <!-- Year grids. -->
+        <TextBlock Classes="section" Text="Year grids" />
+        <Border Classes="settingsRow">
+          <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+            <StackPanel Spacing="2" VerticalAlignment="Center">
+              <TextBlock Text="Show Gregorian dates in Year grids" />
+              <TextBlock Classes="caption" TextWrapping="Wrap" Text="Every 13-month day also shows the Gregorian date it falls on." />
+            </StackPanel>
+            <ToggleSwitch Grid.Column="1" IsChecked="{Binding ShowsGregorianOverlay, Mode=TwoWay}" OnContent="On" OffContent="Off"
+                          AutomationProperties.Name="Show Gregorian dates in Year grids" />
+          </Grid>
+        </Border>
+
+        <!-- Calendar (docs/EVENTS.md §2.18): the default calendar, event dots in Year, the alerts note and your data. -->
+        <TextBlock Classes="section" Text="{Binding CalendarGroupText}" />
+        <Border Classes="settingsRow" Name="CalendarSettings">
+          <StackPanel Spacing="14">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+              <StackPanel Spacing="2" VerticalAlignment="Center">
+                <TextBlock Text="{Binding DefaultCalendarText}" />
+                <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding DefaultCalendarFooter}" />
+              </StackPanel>
+              <ComboBox Grid.Column="1" Name="DefaultCalendarBox" MinWidth="200" VerticalAlignment="Center"
+                        ItemsSource="{Binding DefaultCalendars}" SelectedItem="{Binding SelectedDefaultCalendar, Mode=TwoWay}"
+                        IsEnabled="{Binding HasDefaultCalendars}" AutomationProperties.Name="{Binding DefaultCalendarText}">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate x:DataType="vm:DefaultCalendarChoice">
+                    <TextBlock Text="{Binding Name}" />
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </Grid>
+            <Border Classes="rule" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+              <TextBlock VerticalAlignment="Center" Text="{Binding YearDotsText}" />
+              <ToggleSwitch Grid.Column="1" Name="YearDotsSwitch" IsChecked="{Binding ShowsYearEvents, Mode=TwoWay}" OnContent="On" OffContent="Off"
+                            AutomationProperties.Name="{Binding YearDotsText}" />
+            </Grid>
+            <Border Classes="rule" />
+            <StackPanel Spacing="2">
+              <TextBlock Text="{Binding AlertsText}" />
+              <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding AlertsFooter}" />
+            </StackPanel>
+            <Border Classes="rule" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+              <StackPanel Spacing="2" VerticalAlignment="Center">
+                <TextBlock Text="{Binding YourDataText}" />
+                <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding StorageText}" />
+              </StackPanel>
+              <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                <Button Name="OpenFolderButton" Content="{Binding OpenFolderText}" Command="{Binding OpenFolderCommand}"
+                        AutomationProperties.Name="{Binding OpenFolderText}" />
+                <Button Name="ExportAllButton" Content="{Binding ExportAllText}" Command="{Binding ExportAllCommand}"
+                        AutomationProperties.Name="{Binding ExportAllText}" />
+              </StackPanel>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <!-- Keyboard. -->
+        <TextBlock Classes="section" Text="Keyboard shortcuts" />
+        <Border Classes="settingsRow">
+          <!-- The keys' column fits the longest keys (at least 200 px), the same in every row, so large text never cuts them. -->
+          <ItemsControl ItemsSource="{Binding Shortcuts}" Grid.IsSharedSizeScope="True">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <StackPanel Spacing="8" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:ShortcutRow">
+                <Grid ColumnSpacing="12">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="200" SharedSizeGroup="ShortcutKeys" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <Border Classes="key">
+                    <TextBlock Classes="mono" FontSize="12" Text="{Binding Keys}" />
+                  </Border>
+                  <TextBlock Grid.Column="1" Classes="ink2" FontSize="13.5" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Action}" />
+                </Grid>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </Border>
+
+        <!-- About. -->
+        <TextBlock Classes="section" Text="About" />
+        <Border Classes="settingsRow">
+          <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+            <Image Source="avares://Thirteen/Assets/Thirteen.ico" Width="48" Height="48" VerticalAlignment="Top"
+                   AutomationProperties.AccessibilityView="Raw" />
+            <StackPanel Grid.Column="1" Spacing="4">
+              <TextBlock FontSize="16" FontWeight="SemiBold" Text="{Binding VersionText}" />
+              <TextBlock Classes="caption mono" Text="{Binding VersionDetail}" />
+              <TextBlock Classes="explanation" Margin="0,6,0,0"
+                         Text="The 13-month calendar next to the Gregorian one. Thirteen connects to the internet only to download calendars you subscribe to." />
+              <TextBlock Classes="footnote" Text="Copyright © Haugas Development OU. MIT License." />
+              <TextBlock Classes="footnote" Text="Geist and Geist Mono are licensed under the SIL Open Font License 1.1 (Licenses\Geist-OFL.txt)." />
+            </StackPanel>
+          </Grid>
+        </Border>
+      </StackPanel>
+    </c:PageColumn>
+  </ScrollViewer>
+</UserControl>

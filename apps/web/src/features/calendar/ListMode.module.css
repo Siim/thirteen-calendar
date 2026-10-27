@@ -1,0 +1,19 @@
+.mode {
+  min-width: 0;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-top: 0;
+  background: var(--t-paper-raised);
+}
+
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  padding: 1.5rem 0.75rem;
+  border-top: var(--t-hairline) solid var(--t-rule);
+  color: var(--t-ink-2);
+}
+
+.end {
+  height: 1px;
+}

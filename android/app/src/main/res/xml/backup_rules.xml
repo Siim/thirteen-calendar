@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 11 and earlier (Auto Backup): the same single settings file as data_extraction_rules. -->
+<full-backup-content>
+    <include domain="file" path="datastore/thirteen_settings.preferences_pb" />
+</full-backup-content>

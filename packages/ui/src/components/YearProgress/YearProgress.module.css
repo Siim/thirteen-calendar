@@ -1,0 +1,107 @@
+.progress {
+  container-type: inline-size;
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.track {
+  display: flex;
+  gap: 3px;
+  height: var(--progress-height, 2.25rem);
+}
+
+/*
+ * A month still to come is an empty well with an outline, and the outlines are what
+ * let you count the 13 parts. In light modes the warm sunk well and the rule read
+ * well enough. In dark modes the well is within 1.05:1 of the paper and the rule
+ * about 1.4:1, so the empty months all but vanished: there the outline is ink-3,
+ * which is at least 5.6:1 against both the paper and the well in every dark theme,
+ * including the always-dark ones (WCAG 1.4.11 asks for 3:1).
+ */
+.segment {
+  --segment-edge: light-dark(var(--t-rule), var(--t-ink-3));
+  position: relative;
+  flex: 28 1 0;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--t-paper-sunk);
+  box-shadow: inset 0 0 0 var(--t-hairline) var(--segment-edge);
+}
+
+.sliver {
+  flex: 1 0 5px;
+  background: repeating-linear-gradient(-45deg, var(--t-accent) 0 2px, transparent 2px 4px);
+  box-shadow: inset 0 0 0 var(--t-hairline) var(--t-accent);
+}
+
+.sliverDone {
+  background: var(--t-accent);
+}
+
+.fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--fill, 0%);
+  background: var(--t-ink);
+  transform-origin: left center;
+}
+
+/* Mono: the accent fill matches the finished months, so the current month is also outlined in ink. */
+.current {
+  box-shadow: inset 0 0 0 1.5px var(--t-mark-outline, transparent), inset 0 0 0 var(--t-hairline) var(--segment-edge);
+}
+
+.current .fill {
+  background: var(--t-accent);
+}
+
+.needle {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: var(--at, 0%);
+  width: max(3px, calc(100% / 28));
+  background: var(--t-accent);
+  box-shadow: 0 0 0 1.5px var(--t-paper);
+}
+
+.labels {
+  display: flex;
+  gap: 3px;
+}
+
+.label {
+  flex: 28 1 0;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: 0.04em;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--t-ink-3);
+}
+
+.labelSliver {
+  flex: 1 0 5px;
+}
+
+.labelCurrent {
+  color: var(--t-accent-text);
+  font-weight: var(--t-mark-weight, 700);
+}
+
+.narrow {
+  display: none;
+}
+
+@container (max-width: 34rem) {
+  .short {
+    display: none;
+  }
+
+  .narrow {
+    display: inline;
+  }
+}

@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             x:Class="Thirteen.Desktop.Views.Parts.MonthGridView"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             x:DataType="vm:MonthGridModel">
+  <!-- One month as a grid of day buttons, 7 to a row, under weekday headers. Classes="compact" for
+       Calendar's Year mode (with its event dots). Arrow keys move between days when an ancestor is a DayNavigation scope. -->
+  <StackPanel Spacing="0">
+    <ItemsControl ItemsSource="{Binding Weekdays}" AutomationProperties.AccessibilityView="Raw">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <UniformGrid Columns="7" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="x:String">
+          <TextBlock Classes="gridHeader" Text="{Binding}" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <ItemsControl Name="Cells" ItemsSource="{Binding Cells}" AutomationProperties.Name="{Binding AutomationName}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <UniformGrid Columns="7" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="vm:DayCellViewModel">
+          <Panel Margin="2">
+            <Button Classes="day" Classes.today="{Binding IsToday}" Classes.selected="{Binding IsSelected}"
+                    Classes.greg="{Binding IsGregorianCell}" Classes.sunday="{Binding IsSunday}" IsVisible="{Binding !IsBlank}"
+                    Command="{Binding Command}" AutomationProperties.Name="{Binding AutomationName}"
+                    AutomationProperties.ItemStatus="{Binding EventStatus}">
+              <Panel>
+                <Rectangle Classes="dash" IsVisible="{Binding IsIntercalary}" />
+                <Border Classes="monthBar" IsVisible="{Binding IsMonthStart}" />
+                <StackPanel VerticalAlignment="Center">
+                  <TextBlock Classes="dayNumber" Text="{Binding Number}" />
+                  <TextBlock Classes="daySub" Classes.strong="{Binding IsSubStrong}" Text="{Binding Sub}"
+                             IsVisible="{Binding ShowsSub}" />
+                  <!-- Calendar's Year mode: up to three 4 px dots in calendar colors (docs/EVENTS.md §2.3). -->
+                  <c:EventDots DotColors="{Binding EventColors}" DotSize="4" Margin="0,2,0,0" HorizontalAlignment="Center"
+                               IsVisible="{Binding ShowsEventRow}" />
+                </StackPanel>
+              </Panel>
+            </Button>
+          </Panel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </StackPanel>
+</UserControl>

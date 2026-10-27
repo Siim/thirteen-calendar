@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Every user-visible sentence of the app. Ported from apple/Shared/Support/Phrasing.swift and the
+    Apple screens; ui/Phrasing.kt assembles them with the engine's names and formatted dates.
+    Copy rule (design/DECISIONS.md): no em or en dash characters anywhere. &#160; is a no-break
+    space, used where the Apple app keeps words together.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Thirteen</string>
+
+    <!-- Sections -->
+    <string name="section_today">Today</string>
+    <string name="section_convert">Convert</string>
+    <string name="section_compare">Compare</string>
+    <string name="section_history">History</string>
+    <string name="settings_title">Settings</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_back">Back</string>
+    <string name="action_close">Close</string>
+    <string name="action_today">Today</string>
+    <string name="state_today">Today</string>
+    <string name="state_selected">Selected</string>
+
+    <!-- System switcher -->
+    <string name="system_switcher_label">Calendar system</string>
+    <string name="system_byline">%1$s, %2$s</string>
+
+    <!-- Phrasing: days, countdown, shifts -->
+    <plurals name="days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+    <string name="countdown_today">Today is %1$s</string>
+    <string name="countdown_tomorrow">%1$s is tomorrow</string>
+    <string name="countdown_until">%1$s until %2$s</string>
+    <string name="shift_in_step">in step</string>
+    <string name="amount_ahead">%1$s ahead</string>
+    <string name="amount_behind">%1$s behind</string>
+    <string name="drift_amount_none">none</string>
+    <string name="drift_amount_no_match">no match</string>
+
+    <!-- Phrasing: weekday shift (SPEC §3 weekdayShift) -->
+    <string name="weekday_shift_outside">%1$s sits outside the week, so it has no weekday. The real week carries on: it is a %2$s.</string>
+    <string name="this_day">This day</string>
+    <string name="weekday_shift_same">%1$s on both calendars: the fixed 13-month week is in step with the real week.</string>
+    <!-- %3$s is "3 days ahead" or "2 days behind": "ahead of" but "behind" (no "of"), as the Windows port reads. -->
+    <string name="weekday_shift_ahead">Fixed %1$s, real %2$s: the 13-month week runs %3$s of the real one.</string>
+    <string name="weekday_shift_behind">Fixed %1$s, real %2$s: the 13-month week runs %3$s the real one.</string>
+    <string name="weekday_no_weekday">No weekday</string>
+    <string name="weekday_strips_a11y">%1$s: %2$s. Gregorian %3$s.</string>
+
+    <!-- Phrasing: label drift (SPEC §3 labelDrift) -->
+    <string name="drift_intercalary">%1$s belongs to no month, so it has no Gregorian label to compare.</string>
+    <string name="drift_positivist">%1$s has no Gregorian namesake: Positivist months honour people, so their labels never collide.</string>
+    <string name="drift_no_namesake">%1$s has no Gregorian namesake, so “%2$s” only exists in the 13-month calendar.</string>
+    <string name="drift_same">Same label on both calendars: Gregorian %1$s is this very day.</string>
+    <string name="drift_behind">The 13-month label runs %1$s behind: Gregorian %2$s %3$s.</string>
+    <string name="drift_ahead">The 13-month label runs %1$s ahead: Gregorian %2$s %3$s.</string>
+    <string name="drift_tail_ago">was %1$s ago, a %2$s</string>
+    <string name="drift_tail_earlier">is %1$s earlier, a %2$s</string>
+    <string name="drift_tail_away">is still %1$s away, a %2$s</string>
+    <string name="drift_tail_later">is %1$s later, a %2$s</string>
+
+    <!-- Phrasing: both dates (TalkBack) -->
+    <string name="both_dates">%1$s. Gregorian %2$s</string>
+    <string name="both_dates_gregorian_first">%1$s. %2$s %3$s</string>
+    <string name="long_no_weekday">%1$s, no weekday</string>
+    <string name="day_of_year">Day %1$d of %2$d</string>
+    <string name="percent">%1$s%%</string>
+    <string name="gregorian_year_note">Gregorian %1$s</string>
+
+    <!-- Date plate -->
+    <string name="gregorian">Gregorian</string>
+    <string name="plate_eyebrow_month">%1$s&#160;· Month&#160;%2$d&#160;of&#160;13</string>
+    <string name="plate_eyebrow_intercalary">No weekday&#160;· after %1$s&#160;28</string>
+    <string name="plate_eyebrow_gregorian">%1$s&#160;· Gregorian</string>
+    <string name="plate_no_weekday">%1$s (no weekday)</string>
+    <string name="plate_a11y_gregorian_primary">Gregorian %1$s. %2$s: %3$s</string>
+
+    <!-- Year progress -->
+    <string name="year_progress">Year progress</string>
+    <string name="year_progress_done">%1$s of the year done</string>
+    <string name="year_progress_value">%1$s, %2$s, %3$s</string>
+    <string name="year_progress_month">month %1$d of 13, %2$s</string>
+
+    <!-- Today -->
+    <string name="today_against_gregorian">Against the Gregorian calendar</string>
+    <string name="label_drift">Label drift</string>
+    <string name="full_comparison">Full comparison</string>
+    <string name="today_month_note">Every month starts on a %1$s and has exactly four weeks. Small numbers are the Gregorian dates; a bar marks where a Gregorian month begins.</string>
+    <string name="today_outside_grid">Outside the grid</string>
+    <string name="today_outside_grid_subtitle">Today belongs to no month and no week.</string>
+    <string name="today_gregorian_month_title">Gregorian %1$s %2$s</string>
+    <string name="today_gregorian_month_span">%1$s %2$s to %3$s</string>
+    <string name="today_gregorian_month_note" tools:ignore="PluralsCandidate">%1$s has %2$d days and starts on a %3$s, so it spans %4$d rows; next month has a different shape again. Small numbers are the %5$s dates; a bar marks where %6$s %5$s month begins.</string>
+    <string name="article_a">a</string>
+    <string name="article_an">an</string>
+    <string name="gregorian_span">Gregorian %1$s to %2$s</string>
+    <string name="month_title">%1$s %2$s</string>
+
+    <!-- Grids -->
+    <string name="cell_gregorian_month_begins">%1$s. Gregorian %2$s begins</string>
+    <string name="cell_thirteen_month_begins">%1$s. %2$s %3$s begins</string>
+    <string name="intercalary_after">No weekday&#160;· after %1$s&#160;28</string>
+    <string name="intercalary_gregorian">Gregorian %1$s</string>
+    <string name="intercalary_a11y">%1$s. %2$s</string>
+
+    <!-- Year -->
+    <string name="year_structure">13&#160;×&#160;28&#160;+ %1$s</string>
+    <string name="year_structure_join">"&#160;+ "</string>
+    <string name="year_legend_overlay">Small numbers are Gregorian dates; a bar marks the first of a Gregorian month. Tap a day to compare.</string>
+    <string name="year_legend_plain">A bar marks the first of a Gregorian month. Tap a day to compare.</string>
+    <string name="gregorian_dates">Gregorian dates</string>
+    <string name="month_of_13">Month %1$d of 13</string>
+    <string name="current_month">Current month</string>
+    <string name="leap_year_days">Leap year&#160;· 366&#160;days</string>
+    <string name="common_year_days">365&#160;days</string>
+    <string name="caption_join">"&#160;· "</string>
+    <string name="previous_year">Previous year</string>
+    <string name="next_year">Next year</string>
+    <string name="year_header_a11y">%1$s, %2$s</string>
+    <string name="year_placeholder_title">Pick a day</string>
+    <string name="year_placeholder_text">Tap any day of the year to compare it with the Gregorian calendar. The comparison opens here, next to the grid.</string>
+
+    <!-- Keyboard shortcuts (the system's shortcuts list, Meta+/): the Apple app's Go menu -->
+    <string name="shortcuts_go">Go</string>
+    <string name="shortcuts_sections">Sections</string>
+    <string name="shortcuts_day">Day comparison</string>
+    <string name="shortcut_today">Go to today</string>
+
+    <!-- Day detail and comparison facts -->
+    <string name="previous_day">Previous day</string>
+    <string name="next_day">Next day</string>
+    <string name="open_in_converter">Open in Converter</string>
+    <string name="fact_weekday">Weekday</string>
+    <string name="fact_month_length">Month length</string>
+    <string name="month_length_value">%1$d vs %2$d</string>
+    <string name="month_length_value_no_month">%1$d vs no month</string>
+    <string name="month_length_text_month" tools:ignore="PluralsCandidate,Typos">Gregorian %1$s has %2$d days; %3$s %4$s has 28, like every 13-month month: exactly four weeks.</string>
+    <string name="month_length_text_intercalary" tools:ignore="PluralsCandidate">Gregorian %1$s has %2$d days; %3$s belongs to no month at all.</string>
+    <string name="fact_day_of_year">Day of year</string>
+    <string name="day_of_year_value">%1$d of %2$d</string>
+    <string name="day_of_year_text">%1$s done and %2$d to go in %3$s. Both calendars count from 1 January.</string>
+    <string name="leap_year_long">a leap year of 366 days</string>
+    <string name="common_year_long">a common year of 365 days</string>
+    <string name="fact_year_progress">Year progress</string>
+    <string name="year_day_today">today</string>
+    <string name="year_day_in">in %1$s</string>
+    <string name="fact_numeric">Numeric</string>
+    <string name="iso_8601">ISO 8601</string>
+    <string name="other_system_weekday">%1$s, a %2$s</string>
+    <string name="other_system_no_weekday">%1$s, no weekday</string>
+
+    <!-- Convert -->
+    <string name="direction_from_gregorian">Gregorian → %1$s</string>
+    <string name="direction_from_thirteen">%1$s → Gregorian</string>
+    <string name="swap">Swap</string>
+    <string name="swap_hint">Swap input and result</string>
+    <string name="gregorian_date">Gregorian date</string>
+    <string name="thirteen_date">%1$s date</string>
+    <string name="field_year">Year</string>
+    <string name="field_month">Month</string>
+    <string name="field_day">Day</string>
+    <string name="result">Result</string>
+    <string name="show_in_year">Show in Year</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="iso_date_a11y">ISO date %1$s</string>
+    <string name="convert_year_value">%1$s year %2$s</string>
+    <string name="lookup_title">Same label, other calendar</string>
+    <string name="lookup_subtitle">The same words can name different days.</string>
+    <string name="lookup_heading_system">“%1$s” in %2$s</string>
+    <string name="lookup_heading_gregorian">“%1$s” in Gregorian</string>
+    <string name="lookup_falls_on">%1$s %2$s falls on Gregorian %3$s.</string>
+    <string name="lookup_gregorian_is">Gregorian %1$s is %2$s %3$s.</string>
+    <string name="lookup_no_gregorian_month">No Gregorian month is called %1$s, so this label has no Gregorian reading.</string>
+    <string name="lookup_no_positivist">No Positivist month carries a Gregorian name.</string>
+    <string name="lookup_no_label">%1$s months have 28 days, so there is no %1$s “%2$s”.</string>
+    <string name="go_to_gregorian">Go to Gregorian %1$s</string>
+    <string name="notable_title">Notable days in %1$s</string>
+    <string name="notable_gregorian">Gregorian %1$s</string>
+    <string name="notable_thirteen">%1$s %2$s</string>
+    <string name="notable_a11y">%1$s: Gregorian %2$s, %3$s %4$s</string>
+
+    <!-- Compare -->
+    <string name="compare_subtitle">12&#160;vs&#160;13</string>
+    <string name="month_boundaries">Month boundaries</string>
+    <string name="month_boundaries_subtitle">Both calendars start on 1 January and share every day; only the month lines differ.</string>
+    <string name="ribbon_gregorian_caption">12 · GREGORIAN</string>
+    <string name="ribbon_thirteen_caption">13 · %1$s</string>
+    <string name="ribbon_a11y">Month boundaries, %1$s. 12 Gregorian months of 28 to 31 days above 13 %2$s months of 28 days.</string>
+    <string name="ribbon_gregorian_span">Gregorian %1$s: %2$s, %3$s to %4$s in %5$s.</string>
+    <string name="ribbon_thirteen_span">%1$s %2$s: 28 days, Gregorian %3$s to %4$s.</string>
+    <string name="ribbon_intercalary_span">%1$s: Gregorian %2$s, outside any month.</string>
+    <string name="legend_gregorian_month">Gregorian month</string>
+    <string name="legend_thirteen_month">%1$s month</string>
+    <string name="legend_intercalary">Intercalary day</string>
+    <string name="legend_today">Today</string>
+    <string name="month_lengths">Month lengths</string>
+    <string name="month_lengths_subtitle">Both on one scale from zero: four weeks, plus any days beyond them.</string>
+    <string name="legend_four_weeks">Four weeks (28 days)</string>
+    <string name="legend_extra_days">Days beyond four weeks</string>
+    <string name="chart_gregorian_title">Gregorian · 12 months of 28 to 31 days</string>
+    <string name="chart_thirteen_title">%1$s · 13 months of exactly 28</string>
+    <string name="chart_readout">%1$s: %2$s</string>
+    <string name="friday13">Friday the 13th</string>
+    <string name="friday13_subtitle">How often the 13th of a month is a Friday.</string>
+    <string name="friday13_gregorian">Gregorian: %1$s</string>
+    <string name="friday13_never">%1$s: never, since every 13th is a %2$s</string>
+    <string name="friday13_every">%1$s: every month, every year</string>
+    <string name="quarters">Quarters</string>
+    <string name="quarters_subtitle">Days per quarter; 13-month quarters are 3¼ months each.</string>
+    <string name="quarters_plus">Plus %1$s outside the 13-month quarters.</string>
+    <string name="quarter_a11y" tools:ignore="PluralsCandidate">Quarter %1$d: %2$d days</string>
+    <string name="month_shapes">Month shapes</string>
+    <string name="month_shapes_subtitle">A month’s shape is its first weekday and length.</string>
+    <string name="shapes_gregorian">distinct Gregorian shapes this year</string>
+    <string name="shapes_thirteen">13-month shape, forever</string>
+    <string name="shapes_line">Every %1$s month: four full weeks, starting %2$s.</string>
+    <string name="weekday_drift">Weekday drift</string>
+    <string name="weekday_drift_subtitle">The weekday of 1 January, year by year.</string>
+    <string name="weekday_drift_greg">Greg</string>
+    <string name="weekday_drift_text">Gregorian years start one weekday later each year (two after a leap year). Every %1$s year starts on a %2$s.</string>
+    <string name="side_by_side">Side by side</string>
+    <string name="row_months">Months</string>
+    <string name="row_weeks">Weeks</string>
+    <string name="row_outside_week">Outside the week</string>
+    <string name="row_leap_day">Leap day</string>
+    <string name="row_year_number">Year number</string>
+    <string name="gregorian_months_value">12, of 28 to 31 days</string>
+    <string name="gregorian_weeks_value">Run across months; dates drift by weekday every year</string>
+    <string name="gregorian_leap_value">29 February</string>
+    <string name="gregorian_year_value">Anno Domini</string>
+    <string name="thirteen_months_value">13 × 28 days: %1$s</string>
+    <string name="thirteen_weeks_value">Every month starts on %1$s; dates keep their weekday forever</string>
+    <string name="leap_end_of_year">%1$s, at the end of leap years</string>
+    <string name="leap_after_month">%1$s, after %2$s 28</string>
+    <string name="none">None</string>
+    <string name="and_join">%1$s and %2$s</string>
+    <string name="year_number_gregorian">Gregorian year</string>
+    <string name="year_number_offset">Gregorian year minus %1$d (year 1 = %2$d)</string>
+    <string name="history_button">History of the three calendars</string>
+
+    <!-- History -->
+    <string name="history_intro">Three answers to one question: how to divide a solar year of 365¼ days into months and weeks.</string>
+    <string name="timeline">Timeline</string>
+    <string name="the_calendars">The calendars</string>
+    <string name="story_byline">%1$s · %2$s</string>
+    <string name="timeline_a11y">%1$s, %2$s: %3$s</string>
+
+    <!-- Settings -->
+    <string name="settings_theme">Theme</string>
+    <string name="theme_summary">%1$s: %2$s</string>
+    <string name="theme_swatch_a11y">%1$s. %2$s</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="appearance_system">System</string>
+    <string name="appearance_light">Light</string>
+    <string name="appearance_dark">Dark</string>
+    <!-- The same notes as the Apple app (AppearanceSetting.note) and the web (ThemeToggle). -->
+    <string name="settings_appearance_footer">System follows the device’s light or dark setting. Dark themes are always dark.</string>
+    <!-- While an always-dark theme is chosen: its name, then the adaptive group's name as it reads mid-sentence ("light and dark"). -->
+    <string name="settings_appearance_footer_dark_theme">%1$s is always dark. Pick a %2$s theme to use Appearance again.</string>
+    <string name="settings_calendar_system">Calendar system</string>
+    <string name="settings_calendar_system_footer">Both are 13 × 28-day calendars. The choice applies to every screen.</string>
+    <string name="settings_year_grid">Year grid</string>
+    <string name="settings_overlay">Gregorian dates in Year grids</string>
+    <string name="settings_overlay_summary">Show the Gregorian date in every day of the Year screen.</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version %1$s (build %2$d)</string>
+    <string name="settings_offline">Works offline: no account, no tracking, no network access.</string>
+    <string name="settings_font_license">Font license</string>
+    <string name="settings_font_license_summary">Geist and Geist Mono, SIL Open Font License 1.1</string>
+</resources>

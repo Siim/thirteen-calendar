@@ -1,0 +1,7 @@
+# actionlint configuration (https://github.com/rhysd/actionlint/blob/main/docs/config.md).
+self-hosted-runner:
+  # Not self-hosted: "xcode-27" is GitHub's hosted macOS 27 image with Xcode 27 (a public preview,
+  # https://github.com/actions/runner-images), used by the apple-kit job in workflows/ci.yml.
+  # actionlint 1.7.12 does not list it yet. Remove this entry when the job moves to a macos-27 label.
+  labels:
+    - xcode-27

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Trim warnings of the Windows SDK projection (docs/EVENTS.md §6.4, task W3), passed to ILLink with
+  link-attributes by Thirteen.Desktop.csproj for the Windows target only.
+
+  What warns: publishing the Windows target trimmed (TrimMode=full, warnings as errors) reports 35 IL2081
+  warnings, all inside the projection that ships with the .NET SDK (Microsoft.Windows.SDK.NET.Ref
+  10.0.19041.57, CsWinRT 2.x): WinRT.Runtime and Microsoft.Windows.SDK.NET. Every one is in a static
+  constructor's "fallback" local function of a generic ABI marshaler (ABI.System.Collections.Generic.
+  IReadOnlyList<T>, IDictionary<K,V>, KeyValuePair<K,V>, ABI.Windows.Foundation.IAsyncOperation<T>,
+  IObservableMap<K,V>, ...), which builds the marshaler of a generic WinRT interface at run time with
+  Activator.CreateInstance when no compile-time marshaler was generated for that instantiation. They are
+  reached by the projection's own module initializer as soon as the app uses any WinRT type, so they
+  appear with the toast code alone (and also came from CommunityToolkit.Mvvm's Windows build, which
+  carries a CsWinRT vtable lookup).
+
+  Why suppressing is safe for Thirteen: the only WinRT calls are the toast scheduler's (ToastPlatform.cs):
+  ToastNotificationManager.CreateToastNotifier, XmlDocument.LoadXml, ScheduledToastNotification,
+  ToastNotifier.AddToSchedule / RemoveFromSchedule (no generics), and
+  ToastNotifier.GetScheduledToastNotifications, whose IReadOnlyList<ScheduledToastNotification> is
+  marshaled by the helper the projection generates for its own signatures, not by a fallback; and the
+  text size (TextScaling.cs): new UISettings() and its TextScaleFactor, a double. No Thirteen object
+  crosses into WinRT. Every scheduler call is inside try/catch, so even a fallback that
+  failed at run time would turn the scheduler off for the session (as a missing app id does), never
+  crash the app. The suppression is limited to IL2081 in these two assemblies; any other trim warning,
+  and any warning in Thirteen's own code or another package, still fails the publish. The VM check
+  (Thirteen.exe dash dash clear-alerts on the trimmed build, windows/README.md) exercises that call.
+  Remove this file when the SDK's projection stops reporting them (CsWinRT 3 is trim-clean).
+-->
+<linker>
+  <assembly fullname="WinRT.Runtime">
+    <attribute fullname="System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute">
+      <argument>Trimming</argument>
+      <argument>IL2081</argument>
+      <property name="Scope">module</property>
+      <property name="Justification">CsWinRT 2.x generic ABI fallbacks; Thirteen marshals no generic WinRT interface without a generated helper (ILLink.WindowsSdk.xml).</property>
+    </attribute>
+  </assembly>
+  <assembly fullname="Microsoft.Windows.SDK.NET">
+    <attribute fullname="System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute">
+      <argument>Trimming</argument>
+      <argument>IL2081</argument>
+      <property name="Scope">module</property>
+      <property name="Justification">CsWinRT 2.x generic ABI fallbacks; Thirteen marshals no generic WinRT interface without a generated helper (ILLink.WindowsSdk.xml).</property>
+    </attribute>
+  </assembly>
+</linker>

@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "description": "The Outlook-style choir series of cases/outlook-publish.ics (FLE Standard Time, UNTIL=20261116T170000Z at the last occurrence's start, November 16 at 19:00 in Tallinn) moved to 19:30: retimeExceptions lists its UNTIL, which becomes 20261116T215959Z (the end of November 16 there, so November 16 stays); every other byte of the rule and of the other groups stays as read. Then toggled to all-day (UNTIL=20261116, EXDATE;VALUE=DATE) and back to timed (a UTC end of day again).",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "Move to 19:30, toggle to all-day, back to timed",
+      "calendarId": "outlook-publish",
+      "start": {"file":"cases/outlook-publish.ics"},
+      "steps": [
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"set","uid":"040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9","recurrenceId":null,"fields":{"start":{"kind":"zoned","value":"2026-10-19T19:30","tzid":"FLE Standard Time"},"end":{"kind":"zoned","value":"2026-10-19T21:00","tzid":"FLE Standard Time"},"exdates":[{"kind":"zoned","value":"2026-11-02T19:30","tzid":"FLE Standard Time"}],"rdates":[],"sequence":1,"lastModified":{"kind":"utc","value":"2026-10-19T06:41"}}},
+            {"op":"untils","uid":"040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9","untils":[{"rule":"rrule","index":0,"endDate":"2026-11-16"}]}
+          ],
+          "expected": "edits/retime-until.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-10-01T00:00","to":"2027-01-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-10-19T19:30","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":false,"start":"2026-10-19T19:30","end":"2026-10-19T21:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-10-26T19:30","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":false,"start":"2026-10-26T19:30","end":"2026-10-26T21:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-11-09T19:30","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":false,"start":"2026-11-09T19:30","end":"2026-11-09T21:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-11-16T19:30","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":false,"start":"2026-11-16T19:30","end":"2026-11-16T21:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000F5FEF2D3411C6F9EE58779471EC2C3AD38A95A4F6C94689D82BAB67E|2026-11-18T14:00","calendarId":"outlook-publish","title":"Budget review","allDay":false,"start":"2026-11-18T14:00","end":"2026-11-18T15:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E0080000000028F5F9DAFEBEE7561273BD2E4C2C4E7DC2F527CEF4057601F40C233F|2026-12-24","calendarId":"outlook-publish","title":"Christmas Eve","allDay":true,"start":"2026-12-24T00:00","end":"2026-12-24T24:00"}
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"set","uid":"040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9","recurrenceId":null,"fields":{"start":{"kind":"date","date":"2026-10-19"},"end":{"kind":"date","date":"2026-10-20"},"exdates":[{"kind":"date","date":"2026-11-02"}],"rdates":[],"sequence":2,"lastModified":{"kind":"utc","value":"2026-10-19T06:41"}}},
+            {"op":"untils","uid":"040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9","untils":[{"rule":"rrule","index":0,"endDate":"2026-11-16"}]}
+          ],
+          "expected": "edits/retime-until-all-day.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-10-01T00:00","to":"2027-01-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-10-19","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":true,"start":"2026-10-19T00:00","end":"2026-10-19T24:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-10-26","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":true,"start":"2026-10-26T00:00","end":"2026-10-26T24:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-11-09","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":true,"start":"2026-11-09T00:00","end":"2026-11-09T24:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-11-16","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":true,"start":"2026-11-16T00:00","end":"2026-11-16T24:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000F5FEF2D3411C6F9EE58779471EC2C3AD38A95A4F6C94689D82BAB67E|2026-11-18T14:00","calendarId":"outlook-publish","title":"Budget review","allDay":false,"start":"2026-11-18T14:00","end":"2026-11-18T15:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E0080000000028F5F9DAFEBEE7561273BD2E4C2C4E7DC2F527CEF4057601F40C233F|2026-12-24","calendarId":"outlook-publish","title":"Christmas Eve","allDay":true,"start":"2026-12-24T00:00","end":"2026-12-24T24:00"}
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "edit",
+          "changes": [
+            {"op":"set","uid":"040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9","recurrenceId":null,"fields":{"start":{"kind":"zoned","value":"2026-10-19T19:30","tzid":"FLE Standard Time"},"end":{"kind":"zoned","value":"2026-10-19T21:00","tzid":"FLE Standard Time"},"exdates":[{"kind":"zoned","value":"2026-11-02T19:30","tzid":"FLE Standard Time"}],"rdates":[],"sequence":3,"lastModified":{"kind":"utc","value":"2026-10-19T06:41"}}},
+            {"op":"untils","uid":"040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9","untils":[{"rule":"rrule","index":0,"endDate":"2026-11-16"}]}
+          ],
+          "expected": "edits/retime-until-timed.ics",
+          "expansions": [
+            {
+              "deviceZone": "Europe/Tallinn",
+              "window": {"from":"2026-10-01T00:00","to":"2027-01-01T00:00"},
+              "warnings": [],
+              "occurrences": [
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-10-19T19:30","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":false,"start":"2026-10-19T19:30","end":"2026-10-19T21:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-10-26T19:30","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":false,"start":"2026-10-26T19:30","end":"2026-10-26T21:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-11-09T19:30","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":false,"start":"2026-11-09T19:30","end":"2026-11-09T21:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000AB5684E6FDA32FAC8D8F077F189AA479541479E31D34E218DD772EF9|2026-11-16T19:30","calendarId":"outlook-publish","title":"Choir rehearsal","allDay":false,"start":"2026-11-16T19:30","end":"2026-11-16T21:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E00800000000F5FEF2D3411C6F9EE58779471EC2C3AD38A95A4F6C94689D82BAB67E|2026-11-18T14:00","calendarId":"outlook-publish","title":"Budget review","allDay":false,"start":"2026-11-18T14:00","end":"2026-11-18T15:00"},
+                {"key":"outlook-publish/040000008200E00074C5B7101A82E0080000000028F5F9DAFEBEE7561273BD2E4C2C4E7DC2F527CEF4057601F40C233F|2026-12-24","calendarId":"outlook-publish","title":"Christmas Eve","allDay":true,"start":"2026-12-24T00:00","end":"2026-12-24T24:00"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

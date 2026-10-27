@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Events copy of task D7 (docs/EVENTS.md §6.3): Today's Up next, the day sheet's Events section,
+    the Settings group "Calendar", the Calendars list and the "+" fallback without calendar access.
+    §2.19 verbatim, with the catalogue ids (dots become underscores). Strings D4 already declared
+    (today_now, today_seeEvents, calendar_newEvent, calendar_day_empty, the access_* cards and the
+    calendars_* rows) are in strings_calendar.xml. Copy rule (design/DECISIONS.md): no em or en
+    dash characters anywhere.
+-->
+<resources>
+    <!-- Today: Up next (§2.8) -->
+    <string name="today_upNext">Up next</string>
+    <string name="today_tomorrow">Tomorrow</string>
+    <string name="today_showAll">Show all in Calendar</string>
+    <plurals name="today_moreNext7">
+        <item quantity="one">%1$d more in the next 7 days</item>
+        <item quantity="other">%1$d more in the next 7 days</item>
+    </plurals>
+    <string name="today_emptyToday">Nothing else today.</string>
+    <string name="today_emptyWeek">No events in the next 7 days.</string>
+
+    <!--
+        The day sheet's Events section (§2.9). The heading names the section as §2.9 does (the
+        catalogue has no id for it; the Apple app's section says the same). "Open in Calendar" is
+        event.openInCalendar's text, declared under its own name here because it opens Thirteen's
+        Day mode, not the calendar app (event_openInCalendar_android).
+    -->
+    <string name="daySheet_events">Events</string>
+    <string name="daySheet_openInCalendar">Open in Calendar</string>
+
+    <!-- Settings, group "Calendar" (§2.18) -->
+    <string name="settings_group">Calendar</string>
+    <string name="settings_showEvents">Show my events</string>
+    <string name="settings_showEvents_footer">Shows the events from your calendars in Thirteen. When off, Thirteen never asks for calendar access.</string>
+    <string name="settings_access">Calendar access</string>
+    <!-- settings.access.values, the Android forms: Full access | Off | Read only | Not set up -->
+    <string name="settings_access_full">Full access</string>
+    <string name="settings_access_off">Off</string>
+    <string name="settings_access_readOnly">Read only</string>
+    <string name="settings_access_notSetUp">Not set up</string>
+    <string name="settings_defaultCalendar">Default calendar</string>
+    <string name="settings_defaultCalendar_footer">New events go to %1$s.</string>
+    <string name="settings_yearDots">Show events in Year view</string>
+    <!-- editor.cancel's text, for the default calendar picker and the device calendar dialog. -->
+    <string name="settings_cancel">Cancel</string>
+
+    <!--
+        The Calendars list (§2.15): the group of this device's own (LOCAL) calendars, named as
+        §2.15 names it ("On this device"; the catalogue has no id for it).
+    -->
+    <string name="calendars_group_device">On this device</string>
+
+    <!-- "+" while calendar access is missing (§2.16) -->
+    <string name="access_insertFallback">Add in your calendar app</string>
+    <string name="access_insertFallback_none">No calendar app can add this event.</string>
+</resources>

@@ -1,0 +1,99 @@
+/*
+ * Popover (design/events/mockups.html, frames A2 and K1): a raised card with a
+ * hairline and the theme's shadow, optionally with a pointer towards its anchor.
+ * The element is in the top layer (`popover="manual"`); the UA styles of
+ * [popover] (inset 0, margin auto, Canvas colours) are reset here, and the
+ * script sets `left`, `top`, `data-side` and `--popover-arrow`.
+ */
+
+.popover {
+  --popover-radius: 14px;
+  position: fixed;
+  inset: auto;
+  z-index: 50; /* only without the Popover API, where it is not in the top layer */
+  box-sizing: border-box;
+  max-width: calc(100vw - 16px);
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--popover-radius);
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  font: inherit;
+  box-shadow: var(--t-shadow-2), var(--t-shadow-1);
+}
+
+.popover:focus {
+  outline: none;
+}
+
+.popover:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+/* The content scrolls; the box itself stays unclipped so the arrow can stick out. */
+.content {
+  max-height: calc(100dvh - 16px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-radius: inherit;
+}
+
+/* The pointer: a square turned 45°, drawn half outside the edge that faces the anchor. */
+.arrow::before {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: var(--t-hairline) solid var(--t-rule);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  background: var(--t-paper-raised);
+  pointer-events: none;
+}
+
+.arrow[data-side='right']::before {
+  left: -8px;
+  top: calc(var(--popover-arrow, 34px) - 7px);
+  transform: rotate(-45deg);
+}
+
+.arrow[data-side='left']::before {
+  right: -8px;
+  top: calc(var(--popover-arrow, 34px) - 7px);
+  transform: rotate(135deg);
+}
+
+.arrow[data-side='bottom']::before {
+  top: -8px;
+  left: calc(var(--popover-arrow, 34px) - 7px);
+  transform: rotate(45deg);
+}
+
+.arrow[data-side='top']::before {
+  bottom: -8px;
+  left: calc(var(--popover-arrow, 34px) - 7px);
+  transform: rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .popover {
+    animation: popover-in var(--t-dur-1) var(--t-ease-out);
+  }
+}
+
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@media (forced-colors: active) {
+  .popover,
+  .arrow::before {
+    border-color: CanvasText;
+  }
+}

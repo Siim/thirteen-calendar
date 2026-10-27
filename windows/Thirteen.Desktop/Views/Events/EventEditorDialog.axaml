@@ -1,0 +1,229 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+        xmlns:v="using:Thirteen.Desktop.Views.Events"
+        x:Class="Thirteen.Desktop.Views.Events.EventEditorDialog"
+        x:DataType="ev:EventEditorViewModel"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding Title}"
+        Width="560">
+  <!-- The event editor (docs/EVENTS.md §2.11, board I1): a 560 px modal dialog with the rows of Apple Calendar's editor
+       in its order, "Delete event" on the left of the footer, "Ctrl+Enter saves", Cancel and Add / Save. Errors sit
+       under their field and are announced; notices sit under the row they explain. At 150 % text and above the
+       labels go above their fields (code-behind). -->
+  <DockPanel>
+    <!-- Header: the title, the dialog's one title (the title bar has no text and its close button is the one close
+         control; Escape, the close button and Alt+F4 ask before discarding). -->
+    <Border DockPanel.Dock="Top" Classes="editorHeader">
+      <TextBlock Name="Heading" Classes="dialogTitle" FontSize="18" VerticalAlignment="Center" Text="{Binding Title}" />
+    </Border>
+
+    <!-- Footer. -->
+    <Border DockPanel.Dock="Bottom" Classes="editorFooter">
+      <StackPanel Spacing="10">
+        <!-- A save that failed: the reason line and the technical code. -->
+        <Border Name="SaveError" Classes="banner" IsVisible="{Binding HasSaveError}">
+          <StackPanel Spacing="2">
+            <TextBlock FontWeight="SemiBold" Text="{Binding SaveErrorTitle}" />
+            <TextBlock TextWrapping="Wrap" Text="{Binding SaveErrorReason}" />
+            <TextBlock Classes="saveErrorCode" Text="{Binding SaveErrorCode}" />
+          </StackPanel>
+        </Border>
+        <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="8">
+          <Button Name="DeleteButton" Classes="destructive" IsVisible="{Binding ShowsDelete}" Content="{Binding DeleteText}"
+                  Command="{Binding DeleteCommand}" AutomationProperties.Name="{Binding DeleteText}" />
+          <TextBlock Grid.Column="2" Name="SaveHint" Classes="hint" Text="{Binding SaveHint}" />
+          <Button Grid.Column="3" Name="CancelButton" MinWidth="80" HorizontalContentAlignment="Center" Content="{Binding CancelText}"
+                  Command="{Binding CancelCommand}" AutomationProperties.Name="{Binding CancelText}" />
+          <Button Grid.Column="4" Name="SaveButton" Classes="accent" MinWidth="80" HorizontalContentAlignment="Center"
+                  Content="{Binding PrimaryText}" Command="{Binding SaveCommand}" AutomationProperties.Name="{Binding PrimaryText}"
+                  AutomationProperties.AcceleratorKey="Ctrl+Enter" />
+        </Grid>
+      </StackPanel>
+    </Border>
+
+    <ScrollViewer Name="Scroller" MaxHeight="660" HorizontalScrollBarVisibility="Disabled">
+      <StackPanel Name="Rows" Margin="20,16,24,16" Spacing="10">
+        <!-- The polite announcements of the editor (errors on Save, notices as they appear). -->
+        <TextBlock Name="LiveRegion" Opacity="0" Height="1" Margin="0,-10,0,0" Text="{Binding Announcement}"
+                   AutomationProperties.LiveSetting="Polite" AutomationProperties.Name="{Binding Announcement}" />
+
+        <!-- Changed both here and elsewhere. -->
+        <Border Name="ChangedBanner" Classes="banner" IsVisible="{Binding ChangedElsewhere}">
+          <Grid ColumnDefinitions="Auto,*">
+            <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xE946;" />
+            <TextBlock Grid.Column="1" FontSize="13" TextWrapping="Wrap" Text="{Binding ChangedElsewhereText}" />
+          </Grid>
+        </Border>
+
+        <!-- 1 Title -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" Text="{Binding TitleLabel}" />
+          <TextBox Grid.Column="1" Name="TitleBox" Text="{Binding EventTitle, Mode=TwoWay}" Watermark="{Binding TitleLabel}"
+                   AutomationProperties.Name="{Binding TitleLabel}" />
+        </Grid>
+        <!-- 2 Location -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" Text="{Binding LocationLabel}" />
+          <TextBox Grid.Column="1" Name="LocationBox" Text="{Binding Location, Mode=TwoWay}" Watermark="{Binding LocationLabel}"
+                   AutomationProperties.Name="{Binding LocationLabel}" />
+        </Grid>
+        <!-- An imported event with invitees: changes stay here (§2.11 group 1, under Title and Location). -->
+        <TextBlock Name="InviteesLine" Classes="notice" Margin="112,-4,0,0" IsVisible="{Binding HasInviteesFooter}" Text="{Binding InviteesFooter}" />
+        <!-- 3 All-day -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" Text="{Binding AllDayLabel}" />
+          <CheckBox Grid.Column="1" Name="AllDayBox" IsChecked="{Binding AllDay, Mode=TwoWay}" AutomationProperties.Name="{Binding AllDayLabel}" />
+        </Grid>
+        <!-- 4 Starts -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" VerticalAlignment="Top" Margin="0,7,14,0" Text="{Binding StartsLabel}" />
+          <StackPanel Grid.Column="1" Spacing="4">
+            <WrapPanel Name="StartLine" Orientation="Horizontal">
+              <v:ThirteenDateField Name="StartDate" Margin="0,0,8,4" DataContext="{Binding StartField}" />
+              <TimePicker Name="StartTimeBox" Margin="0,0,0,4" MinWidth="0" Width="150" IsVisible="{Binding ShowsTimes}" SelectedTime="{Binding StartTime, Mode=TwoWay}"
+                          MinuteIncrement="{Binding MinuteIncrement}" ClockIdentifier="{Binding ClockIdentifier}"
+                          AutomationProperties.Name="{Binding StartTimeLabel}" />
+            </WrapPanel>
+            <TextBlock Classes="caption" Text="{Binding StartField.Caption}" />
+            <Grid Name="StartErrorLine" Classes="fieldErrorLine" ColumnDefinitions="Auto,*" IsVisible="{Binding HasStartError}">
+              <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" AutomationProperties.AccessibilityView="Raw" />
+              <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding StartError}" />
+            </Grid>
+            <TextBlock Name="ExceptionsNoticeLine" Classes="notice" IsVisible="{Binding HasExceptionsNotice}" Text="{Binding ExceptionsNotice}" />
+          </StackPanel>
+        </Grid>
+        <!-- 5 Ends -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" VerticalAlignment="Top" Margin="0,7,14,0" Text="{Binding EndsLabel}" />
+          <StackPanel Grid.Column="1" Spacing="4">
+            <WrapPanel Name="EndLine" Orientation="Horizontal">
+              <v:ThirteenDateField Name="EndDate" Margin="0,0,8,4" DataContext="{Binding EndField}" />
+              <TimePicker Name="EndTimeBox" Margin="0,0,0,4" MinWidth="0" Width="150" IsVisible="{Binding ShowsTimes}" SelectedTime="{Binding EndTime, Mode=TwoWay}"
+                          MinuteIncrement="{Binding MinuteIncrement}" ClockIdentifier="{Binding ClockIdentifier}"
+                          AutomationProperties.Name="{Binding EndTimeLabel}" />
+            </WrapPanel>
+            <TextBlock Classes="caption" Text="{Binding EndField.Caption}" />
+            <Grid Name="EndErrorLine" Classes="fieldErrorLine" ColumnDefinitions="Auto,*" IsVisible="{Binding HasEndError}">
+              <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" AutomationProperties.AccessibilityView="Raw" />
+              <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding EndError}" />
+            </Grid>
+            <TextBlock Name="ZoneNoteLine" Classes="notice" IsVisible="{Binding HasZoneNote}" Text="{Binding ZoneNote}" />
+          </StackPanel>
+        </Grid>
+        <!-- 6 Repeat (and its notices) -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" VerticalAlignment="Top" Margin="0,7,14,0" Text="{Binding RepeatLabel}" />
+          <StackPanel Grid.Column="1" Spacing="4">
+            <Button Name="RepeatButton" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Command="{Binding RepeatCommand}"
+                    IsEnabled="{Binding CanEditRepeat}" AutomationProperties.Name="{Binding RepeatName}">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock TextWrapping="Wrap" Text="{Binding RepeatText}" />
+                <TextBlock Grid.Column="1" Classes="icon" FontSize="10" Margin="8,0,0,0" VerticalAlignment="Center" Text="&#xE70D;" />
+              </Grid>
+            </Button>
+            <TextBlock Name="InstanceOnlyLine" Classes="notice" IsVisible="{Binding HasRepeatInstanceOnly}" Text="{Binding RepeatInstanceOnly}" />
+            <TextBlock Name="RepeatNoticeLine" Classes="notice" IsVisible="{Binding HasRepeatNotice}" Text="{Binding RepeatNotice}" />
+            <TextBlock Name="LaterNoticeLine" Classes="notice" IsVisible="{Binding HasLaterNotice}" Text="{Binding LaterNotice}" />
+          </StackPanel>
+        </Grid>
+        <!-- 6a End repeat -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsEndRepeat}">
+          <TextBlock Classes="rowLabel" VerticalAlignment="Top" Margin="0,7,14,0" Text="{Binding EndRepeatLabel}" />
+          <StackPanel Grid.Column="1" Spacing="4">
+            <WrapPanel Orientation="Horizontal">
+              <ComboBox Name="EndRepeatKindBox" Margin="0,0,8,4" MinWidth="110" ItemsSource="{Binding EndRepeatOptions}"
+                        SelectedIndex="{Binding EndRepeatKind, Mode=TwoWay}" AutomationProperties.Name="{Binding EndRepeatLabel}" />
+              <Panel Margin="0,0,8,4" IsVisible="{Binding EndRepeatOnDate}">
+                <v:ThirteenDateField Name="EndRepeatDate" DataContext="{Binding EndRepeatField}" />
+              </Panel>
+              <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,0,0,4" IsVisible="{Binding EndRepeatAfter}">
+                <NumericUpDown Name="EndRepeatCountBox" Width="120" Minimum="1" Maximum="999" Increment="1" FormatString="0"
+                               Value="{Binding EndRepeatCount, Mode=TwoWay}" AutomationProperties.Name="{Binding EndRepeatLabel}"
+                               AutomationProperties.HelpText="{Binding EndRepeatError}" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding EndRepeatTimesText}" />
+              </StackPanel>
+            </WrapPanel>
+            <TextBlock Classes="caption" IsVisible="{Binding EndRepeatOnDate}" Text="{Binding EndRepeatField.Caption}" />
+            <Grid Name="EndRepeatErrorLine" Classes="fieldErrorLine" ColumnDefinitions="Auto,*" IsVisible="{Binding HasEndRepeatError}">
+              <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" AutomationProperties.AccessibilityView="Raw" />
+              <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding EndRepeatError}" />
+            </Grid>
+          </StackPanel>
+        </Grid>
+        <!-- 7 Calendar -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" VerticalAlignment="Top" Margin="0,7,14,0" Text="{Binding CalendarLabel}" />
+          <StackPanel Grid.Column="1" Spacing="4">
+            <ComboBox Name="CalendarBox" MinWidth="180" ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar, Mode=TwoWay}"
+                      AutomationProperties.Name="{Binding CalendarLabel}" AutomationProperties.HelpText="{Binding CalendarError}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="ev:CalendarOption">
+                  <StackPanel Orientation="Horizontal" Spacing="8" AutomationProperties.Name="{Binding Name}">
+                    <Ellipse Width="9" Height="9" VerticalAlignment="Center" Fill="{Binding Brush}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                  </StackPanel>
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Grid Name="CalendarErrorLine" Classes="fieldErrorLine" ColumnDefinitions="Auto,*" IsVisible="{Binding HasCalendarError}">
+              <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" AutomationProperties.AccessibilityView="Raw" />
+              <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding CalendarError}" />
+            </Grid>
+          </StackPanel>
+        </Grid>
+        <!-- 8 Alert -->
+        <Grid Classes="row" ColumnDefinitions="112,*">
+          <TextBlock Classes="rowLabel" VerticalAlignment="Top" Margin="0,7,14,0" Text="{Binding AlertLabel}" />
+          <StackPanel Grid.Column="1" Spacing="4">
+            <ComboBox Name="AlertBox" MinWidth="180" ItemsSource="{Binding AlertOptions}" SelectedItem="{Binding SelectedAlert, Mode=TwoWay}"
+                      AutomationProperties.Name="{Binding AlertLabel}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="ev:AlertOption">
+                  <TextBlock Text="{Binding Label}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Name="AlertNoticeLine" Classes="notice" IsVisible="{Binding HasAlertNotice}" Text="{Binding AlertNotice}" />
+          </StackPanel>
+        </Grid>
+        <!-- 9 Second alert -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsSecondAlert}">
+          <TextBlock Classes="rowLabel" Text="{Binding SecondAlertLabel}" />
+          <ComboBox Grid.Column="1" Name="SecondAlertBox" MinWidth="180" ItemsSource="{Binding SecondAlertOptions}"
+                    SelectedItem="{Binding SelectedSecondAlert, Mode=TwoWay}" AutomationProperties.Name="{Binding SecondAlertLabel}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate x:DataType="ev:AlertOption">
+                <TextBlock Text="{Binding Label}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </Grid>
+        <!-- 10 Show as -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsShowAs}">
+          <TextBlock Classes="rowLabel" Text="{Binding ShowAsLabel}" />
+          <ComboBox Grid.Column="1" Name="ShowAsBox" MinWidth="120" ItemsSource="{Binding ShowAsOptions}"
+                    SelectedIndex="{Binding ShowAsIndex, Mode=TwoWay}" AutomationProperties.Name="{Binding ShowAsLabel}" />
+        </Grid>
+        <!-- 11 URL -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" VerticalAlignment="Top" Margin="0,7,14,0" Text="{Binding UrlLabel}" />
+          <StackPanel Grid.Column="1" Spacing="4">
+            <TextBox Name="UrlBox" Text="{Binding Url, Mode=TwoWay}" Watermark="{Binding UrlLabel}"
+                     AutomationProperties.Name="{Binding UrlLabel}" AutomationProperties.HelpText="{Binding UrlError}" />
+            <Grid Name="UrlErrorLine" Classes="fieldErrorLine" ColumnDefinitions="Auto,*" IsVisible="{Binding HasUrlError}">
+              <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" AutomationProperties.AccessibilityView="Raw" />
+              <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding UrlError}" />
+            </Grid>
+          </StackPanel>
+        </Grid>
+        <!-- 12 Notes -->
+        <Grid Classes="row" ColumnDefinitions="112,*" IsVisible="{Binding ShowsAllFields}">
+          <TextBlock Classes="rowLabel" VerticalAlignment="Top" Margin="0,7,14,0" Text="{Binding NotesLabel}" />
+          <TextBox Grid.Column="1" Name="NotesBox" Text="{Binding Notes, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="64"
+                   AutomationProperties.Name="{Binding NotesLabel}" />
+        </Grid>
+      </StackPanel>
+    </ScrollViewer>
+  </DockPanel>
+</Window>

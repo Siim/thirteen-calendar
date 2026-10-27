@@ -1,0 +1,131 @@
+/* Small typeset pieces: kickers, section heads, stats, ordinals, rules. */
+
+.kicker {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  line-height: 1.4;
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.kickerAccent {
+  color: var(--t-accent-text);
+}
+
+.kickerMark {
+  flex: none;
+  color: var(--t-accent-text);
+  white-space: nowrap;
+}
+
+.section {
+  display: grid;
+  gap: var(--t-space-3);
+  padding-top: var(--t-space-4);
+  border-top: 2px solid var(--t-rule-strong);
+}
+
+.sectionTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--t-space-4);
+  flex-wrap: wrap;
+}
+
+.sectionNumeral {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-accent-text);
+}
+
+.sectionTitle {
+  font-size: var(--t-text-2xl);
+  font-weight: var(--t-weight-title);
+  line-height: 1.08;
+  letter-spacing: var(--t-tracking-display);
+}
+
+/* The qualifying half of a title, in the same face: lighter and quieter. */
+.sectionTitle em {
+  font-style: normal;
+  font-weight: var(--t-weight-text);
+  color: var(--t-ink-2);
+}
+
+.sectionLede {
+  max-width: var(--t-measure);
+  color: var(--t-ink-2);
+  font-size: var(--t-text-md);
+}
+
+.stat {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+  min-width: 0;
+}
+
+.statValue {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-2xl);
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: var(--t-tracking-numeral);
+}
+
+.statAccent .statValue {
+  color: var(--t-accent-text);
+}
+
+.statLabel {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.statNote {
+  margin-top: 0.15rem;
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+  line-height: var(--t-leading-snug);
+}
+
+.ordinal {
+  font-variant-numeric: tabular-nums;
+}
+
+.ordinalSuffix {
+  font-size: 0.55em;
+  vertical-align: 0.65em;
+  margin-left: 0.04em;
+  letter-spacing: 0.02em;
+  font-variant-caps: normal;
+}
+
+.rule {
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: var(--t-hairline) solid var(--t-rule);
+}
+
+.ruleStrong {
+  border-top-color: var(--t-rule-strong);
+}
+
+.ruleDouble {
+  border-top: 2px solid var(--t-rule-strong);
+}

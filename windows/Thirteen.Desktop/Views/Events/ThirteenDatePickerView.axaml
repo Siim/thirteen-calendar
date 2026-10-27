@@ -1,0 +1,168 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ev="using:Thirteen.Desktop.ViewModels.Events"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             x:Class="Thirteen.Desktop.Views.Events.ThirteenDatePickerView"
+             x:DataType="ev:ThirteenDatePickerViewModel"
+             Width="330">
+  <!-- The 13-month date picker (docs/EVENTS.md §2.12, board C2): the IFC and Gregorian tabs, the year stepper, the slot
+       strip, the 4 x 7 grid with the Gregorian day under each 13-month day (a list of days at 150 % text), an
+       intercalary day's badge, the announced caption, the other calendar's footer and Done. -->
+  <DockPanel>
+    <Border DockPanel.Dock="Top" Classes="segmented" Margin="0,0,0,10" HorizontalAlignment="Stretch">
+      <UniformGrid Columns="2">
+        <RadioButton Name="ThirteenTab" Classes="segment" GroupName="PickerTab" HorizontalAlignment="Stretch"
+                     IsChecked="{Binding IsThirteenTab, Mode=TwoWay}" Content="{Binding ThirteenTabTitle}"
+                     AutomationProperties.Name="{Binding ThirteenTabTitle}" />
+        <RadioButton Name="GregorianTab" Classes="segment" GroupName="PickerTab" HorizontalAlignment="Stretch"
+                     IsChecked="{Binding IsGregorianTab, Mode=TwoWay}" Content="{Binding GregorianTabTitle}"
+                     AutomationProperties.Name="{Binding GregorianTabTitle}" />
+      </UniformGrid>
+    </Border>
+
+    <!-- Footer: the other calendar's date and Done, pinned at the bottom. -->
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,Auto" Margin="0,10,0,0">
+      <TextBlock Name="Footer" Classes="caption" VerticalAlignment="Center" Text="{Binding Footer}" />
+      <Button Grid.Column="1" Name="DoneButton" Classes="accent" MinWidth="72" HorizontalContentAlignment="Center"
+              Content="{Binding DoneText}" Command="{Binding DoneCommand}" AutomationProperties.Name="{Binding DoneText}" />
+    </Grid>
+
+    <Panel>
+      <!-- The 13-month tab. -->
+      <StackPanel Name="ThirteenPanel" Spacing="8" IsVisible="{Binding IsThirteenTab}">
+        <Grid ColumnDefinitions="Auto,*,Auto">
+          <Button Name="PreviousYear" Classes="subtle" Padding="8,4" Command="{Binding PreviousYearCommand}"
+                  AutomationProperties.Name="{Binding PreviousYearLabel}" ToolTip.Tip="{Binding PreviousYearLabel}" IsTabStop="False">
+            <TextBlock Classes="icon" FontSize="11" Text="&#xE76B;" />
+          </Button>
+          <!-- One adjustable control named "Year" (a spinner with the RangeValue pattern, value 2026, or 238 in the
+               Positivist calendar with "238, Gregorian 2026" as its help text): Up and Down (or Page Up / Page Down) step it. -->
+          <c:YearStepper Grid.Column="1" Name="YearStepper" HorizontalAlignment="Center" Padding="8,2" CornerRadius="4"
+                         Value="{Binding YearValue}" Minimum="{Binding MinimumYearValue}" Maximum="{Binding MaximumYearValue}"
+                         AutomationProperties.Name="{Binding YearLabel}" AutomationProperties.HelpText="{Binding YearValueText}"
+                         AutomationProperties.ItemStatus="{Binding YearValueText}">
+            <TextBlock FontSize="20" FontWeight="SemiBold" Text="{Binding YearText}" />
+          </c:YearStepper>
+          <Button Grid.Column="2" Name="NextYear" Classes="subtle" Padding="8,4" Command="{Binding NextYearCommand}"
+                  AutomationProperties.Name="{Binding NextYearLabel}" ToolTip.Tip="{Binding NextYearLabel}" IsTabStop="False">
+            <TextBlock Classes="icon" FontSize="11" Text="&#xE76C;" />
+          </Button>
+        </Grid>
+
+        <ScrollViewer Name="SlotScroller" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+          <ListBox Name="Slots" Classes="slots" ItemsSource="{Binding Slots}" SelectedItem="{Binding SelectedSlot, Mode=TwoWay}"
+                   AutomationProperties.Name="{Binding Field.Label}">
+            <ListBox.Styles>
+              <Style Selector="ListBoxItem" x:DataType="ev:PickerSlot">
+                <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+                <Setter Property="AutomationProperties.Name" Value="{Binding Name}" />
+              </Style>
+            </ListBox.Styles>
+            <ListBox.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Name="SlotPanel" Orientation="Horizontal" />
+              </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+              <DataTemplate x:DataType="ev:PickerSlot">
+                <TextBlock Text="{Binding Short}" ToolTip.Tip="{Binding Name}" />
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </ScrollViewer>
+
+        <!-- The month grid (normal text sizes). -->
+        <StackPanel Name="GridPanel" Spacing="2">
+          <ItemsControl Name="Columns" ItemsSource="{Binding Columns}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <UniformGrid Columns="7" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="ev:PickerColumn">
+                <StackPanel HorizontalAlignment="Center" AutomationProperties.Name="{Binding Name}">
+                  <TextBlock FontSize="10.5" FontWeight="SemiBold" HorizontalAlignment="Center" Text="{Binding Thirteen}" />
+                  <TextBlock Classes="pickerGregorian" Text="{Binding Gregorian}" />
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <ListBox Name="Days" Classes="days" ItemsSource="{Binding Days}" SelectedItem="{Binding SelectedDay, Mode=TwoWay}">
+            <ListBox.Styles>
+              <Style Selector="ListBoxItem" x:DataType="ev:PickerDay">
+                <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+                <Setter Property="AutomationProperties.Name" Value="{Binding Name}" />
+                <Setter Property="AutomationProperties.ItemStatus" Value="{Binding Status}" />
+              </Style>
+            </ListBox.Styles>
+            <ListBox.ItemsPanel>
+              <ItemsPanelTemplate>
+                <UniformGrid Columns="7" />
+              </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+              <DataTemplate x:DataType="ev:PickerDay">
+                <Border Classes="pickerCell" Classes.today="{Binding IsToday}" Padding="0,3" MinWidth="36" BorderThickness="0,0,0,2">
+                  <StackPanel>
+                    <TextBlock Classes="pickerDay" Text="{Binding Day}" />
+                    <TextBlock Classes="pickerGregorian" Text="{Binding GregorianDay}" />
+                  </StackPanel>
+                </Border>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </StackPanel>
+
+        <!-- The list of days at 150 % text and above (§2.12 "Accessibility text sizes"). -->
+        <ListBox Name="DayList" IsVisible="False" MaxHeight="420" ItemsSource="{Binding Days}" SelectedItem="{Binding SelectedDay, Mode=TwoWay}">
+          <ListBox.Styles>
+            <Style Selector="ListBoxItem" x:DataType="ev:PickerDay">
+              <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+              <Setter Property="AutomationProperties.Name" Value="{Binding Name}" />
+              <Setter Property="AutomationProperties.ItemStatus" Value="{Binding Status}" />
+            </Style>
+          </ListBox.Styles>
+          <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="ev:PickerDay">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock FontSize="14" FontWeight="SemiBold" Text="{Binding Heading}" />
+                  <TextBlock Classes="caption" Text="{Binding GregorianLine}" />
+                </StackPanel>
+                <TextBlock Grid.Column="1" Classes="icon" VerticalAlignment="Center" Text="&#xE73E;" IsVisible="{Binding IsSelected}" />
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- An intercalary day: its badge instead of the grid. -->
+        <Border Name="Badge" Classes="badge" IsVisible="{Binding IsIntercalary}" Focusable="True"
+                AutomationProperties.Name="{Binding BadgeTitle}" AutomationProperties.HelpText="{Binding BadgeDetail}">
+          <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+            <Border Background="{DynamicResource ThAccent}" CornerRadius="4" Padding="6,3" VerticalAlignment="Top">
+              <TextBlock FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource ThOnAccent}" Text="{Binding BadgeCode}" />
+            </Border>
+            <StackPanel Grid.Column="1" Spacing="2">
+              <TextBlock FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" Text="{Binding BadgeTitle}" />
+              <TextBlock Classes="caption" Text="{Binding BadgeDetail}" />
+            </StackPanel>
+          </Grid>
+        </Border>
+
+        <!-- The caption of a fallback or a leap-year step, announced. -->
+        <Border Name="CaptionBox" Classes="pickerCaption" IsVisible="{Binding HasCaption}">
+          <Grid ColumnDefinitions="Auto,*">
+            <TextBlock Classes="icon statusIcon" FontSize="12" Text="&#xE946;" />
+            <TextBlock Grid.Column="1" Name="CaptionText" FontSize="12.5" TextWrapping="Wrap" Text="{Binding Caption}"
+                       AutomationProperties.LiveSetting="Polite" />
+          </Grid>
+        </Border>
+      </StackPanel>
+
+      <!-- The Gregorian tab: the platform's calendar control. -->
+      <Calendar Name="GregorianCalendar" IsVisible="{Binding IsGregorianTab}" HorizontalAlignment="Center"
+                SelectedDate="{Binding GregorianSelection, Mode=TwoWay}" DisplayDateStart="{Binding GregorianStart}" />
+    </Panel>
+  </DockPanel>
+</UserControl>

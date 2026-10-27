@@ -1,0 +1,139 @@
+.group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: var(--t-space-2);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.track {
+  display: inline-flex;
+  align-items: stretch;
+  padding: 2px;
+  gap: 2px;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: var(--t-radius-2);
+  background: var(--t-paper-raised);
+}
+
+.option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  min-height: 2.125rem;
+  min-width: 2.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--t-radius-1);
+  color: var(--t-ink-2);
+  font-size: 0.8125rem;
+  font-weight: var(--t-weight-medium);
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--t-dur-1) var(--t-ease-out),
+    color var(--t-dur-1) var(--t-ease-out);
+}
+
+.option:hover {
+  color: var(--t-ink);
+  background: var(--t-accent-soft);
+}
+
+/* Disabled (fieldset disabled): the choice stays visible but recedes, and nothing reacts. */
+.group:disabled .track {
+  border-color: var(--t-rule);
+}
+
+.group:disabled .option {
+  color: var(--t-ink-3);
+  cursor: not-allowed;
+}
+
+.group:disabled .option:hover {
+  color: var(--t-ink-3);
+  background: transparent;
+}
+
+.group:disabled .option:has(.input:checked) {
+  background: var(--t-rule);
+  color: var(--t-ink-2);
+}
+
+.group:disabled .input {
+  cursor: not-allowed;
+}
+
+.note {
+  max-width: 22rem;
+  margin-top: var(--t-space-2);
+  font-size: var(--t-text-xs);
+  line-height: var(--t-leading-snug);
+  color: var(--t-ink-2);
+}
+
+.option:has(.input:checked) {
+  background: var(--t-ink);
+  color: var(--t-paper);
+}
+
+.option:has(.input:focus-visible) {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.iconOnly {
+  padding-inline: 0.45rem;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sm .option {
+  min-height: 1.875rem;
+  padding: 0.2rem 0.6rem;
+}
+
+.sm .iconOnly {
+  padding-inline: 0.35rem;
+}
+
+/* Touch: at least 44px targets. */
+@media (pointer: coarse), (max-width: 40rem) {
+  .option,
+  .sm .option {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .group:disabled .option,
+  .group:disabled .option:has(.input:checked) {
+    color: GrayText;
+  }
+
+  .group:disabled .option:has(.input:checked) {
+    outline: 1px solid GrayText;
+    outline-offset: -1px;
+  }
+}

@@ -1,0 +1,221 @@
+/* Event rows and List mode (docs/EVENTS.md §2.4 day list, §2.7, §2.8; boards A1, J2, K1). */
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rows > li + li .row {
+  border-top: var(--t-hairline) solid var(--t-rule-soft);
+}
+
+.row {
+  display: grid;
+  /* Time column sized for "12:30 PM" at the current text size (§2.7). */
+  grid-template-columns: 8.5ch minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 0;
+  background: none;
+  color: var(--t-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .row:hover {
+    background: var(--t-accent-soft);
+  }
+}
+
+.selected {
+  background: var(--t-accent-wash);
+}
+
+.tentative {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--t-ink) 8%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+}
+
+.time {
+  padding-top: 0.12rem;
+  font-family: var(--t-font-mono);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  color: var(--t-ink-2);
+  white-space: nowrap;
+}
+
+.body {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.titleLine {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  min-width: 0;
+}
+
+.dot {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--cal);
+  box-shadow: 0 0 0 1px var(--t-rule);
+}
+
+.title {
+  min-width: 0;
+  font-size: 0.9375rem;
+  font-weight: var(--t-weight-title);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.canceled {
+  color: var(--t-ink-2);
+  text-decoration: line-through;
+}
+
+.nowPlate {
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.tag {
+  padding: 0.1rem 0.3rem;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: 3px;
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  font-weight: var(--t-weight-title);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.detail {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--t-ink-2);
+  overflow-wrap: anywhere;
+}
+
+/* ---- Day headings ------------------------------------------------------------ */
+
+.dayHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 0.75rem 0.5rem;
+  border-bottom: var(--t-hairline) solid var(--t-rule-soft);
+}
+
+.dayTitle {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  font: inherit;
+}
+
+.dayName {
+  font-size: 1.0625rem;
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-title);
+  line-height: 1.15;
+}
+
+.dayGreg {
+  font-family: var(--t-font-mono);
+  font-size: 0.75rem;
+  font-weight: var(--t-weight-text);
+  color: var(--t-ink-3);
+}
+
+.dayActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ---- List mode --------------------------------------------------------------- */
+
+.list {
+  display: grid;
+}
+
+.month {
+  display: block;
+}
+
+.monthHead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border-top: var(--t-hairline) solid var(--t-rule);
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+  background: var(--t-paper-sunk);
+  font-size: 0.875rem;
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-title);
+}
+
+.day {
+  scroll-margin-top: 2.5rem;
+}
+
+
+@media (forced-colors: active) {
+  .dot {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .nowPlate {
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+
+  .selected {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+
+  .tentative {
+    background-image: none;
+    outline: 1px dashed CanvasText;
+    outline-offset: -3px;
+  }
+}

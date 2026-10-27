@@ -1,0 +1,155 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Events surfaces (docs/EVENTS.md §2.15 to §2.17; boards D2, L1, L2): the Calendars pane, the color pickers,
+       the inline errors and the spinners of the Subscribe dialog and the subscription rows. -->
+
+  <!-- ===== Calendars pane ===== -->
+  <Style Selector="Border.calendarsPane">
+    <Setter Property="Background" Value="{DynamicResource ThPaperSunk}" />
+  </Style>
+  <!-- A banner (offline): a tinted strip with an icon. -->
+  <Style Selector="Border.banner">
+    <Setter Property="Background" Value="{DynamicResource ThWell}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="10,8" />
+  </Style>
+  <!-- A group header: the chevron and the title fill the row; "Hide all" / "Show all" sits at its end. -->
+  <Style Selector="Button.groupHeader">
+    <Setter Property="Padding" Value="6,6" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+  </Style>
+  <Style Selector="TextBlock.groupTitle">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+  </Style>
+  <!-- A calendar row's color swatch: a round button that opens the color picker. -->
+  <!-- A 20 px color circle in a 32 x 32 px target (§2.20). -->
+  <Style Selector="Button.swatch">
+    <Setter Property="Width" Value="32" />
+    <Setter Property="Height" Value="32" />
+    <Setter Property="MinWidth" Value="32" />
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="CornerRadius" Value="16" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="Button.swatch:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{Binding $parent[Button].Background}" />
+    <Setter Property="Opacity" Value="0.85" />
+  </Style>
+  <Style Selector="Button.swatch:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{Binding $parent[Button].Background}" />
+    <Setter Property="Opacity" Value="0.7" />
+  </Style>
+  <!-- "Read only" tag. -->
+  <Style Selector="Border.tag">
+    <Setter Property="Background" Value="{DynamicResource ThWell}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Padding" Value="6,1" />
+  </Style>
+  <!-- Status lines under a row's name: plain (ink 3), warning (icon in accent text), error (accent text). -->
+  <Style Selector="TextBlock.status">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+  </Style>
+  <Style Selector="TextBlock.status.error">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+  <Style Selector="TextBlock.statusIcon">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Margin" Value="0,2,6,0" />
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+
+  <!-- ===== Spinner ("Updating", "Checking the link") ===== -->
+  <Style Selector="TextBlock.spinner">
+    <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+    <Setter Property="RenderTransform" Value="rotate(0deg)" />
+    <Style.Animations>
+      <Animation Duration="0:0:1" IterationCount="Infinite">
+        <KeyFrame Cue="0%">
+          <Setter Property="RotateTransform.Angle" Value="0" />
+        </KeyFrame>
+        <KeyFrame Cue="100%">
+          <Setter Property="RotateTransform.Angle" Value="360" />
+        </KeyFrame>
+      </Animation>
+    </Style.Animations>
+  </Style>
+
+  <!-- ===== Color pickers (Subscribe, New calendar, Calendar settings, a row's swatch) ===== -->
+  <Style Selector="ListBox.colors">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="ListBox.colors ListBoxItem">
+    <Setter Property="Padding" Value="3" />
+    <Setter Property="Margin" Value="0,0,4,4" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="CornerRadius" Value="14" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border AdornerLayer.IsClipEnabled="False" Margin="-2" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}" />
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="ListBox.colors ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+  </Style>
+  <Style Selector="ListBox.colors ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="ListBox.colors ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+  </Style>
+  <Style Selector="ListBox.colors ListBoxItem Border.ring">
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+  <Style Selector="ListBox.colors ListBoxItem:selected Border.ring">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThInk}" />
+  </Style>
+
+  <!-- ===== Dialogs ===== -->
+  <Style Selector="Window.eventDialog">
+    <Setter Property="Background" Value="{DynamicResource ThPaperRaised}" />
+    <Setter Property="CanResize" Value="False" />
+    <!-- A modal dialog: Windows shows only its close button (no minimize, no greyed maximize). -->
+    <Setter Property="CanMinimize" Value="False" />
+    <Setter Property="CanMaximize" Value="False" />
+    <Setter Property="ShowInTaskbar" Value="False" />
+    <Setter Property="SizeToContent" Value="Height" />
+    <Setter Property="WindowStartupLocation" Value="CenterOwner" />
+  </Style>
+  <Style Selector="TextBlock.dialogTitle">
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="TextBlock.fieldLabel">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="TextBlock.fieldError">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+</Styles>

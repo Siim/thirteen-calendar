@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Events copy for the Calendar section (task D4): docs/EVENTS.md §2.19, verbatim, with the
+    catalogue ids (dots become underscores). Kept apart from strings.xml so the events tasks that
+    work in parallel each add their own file (strings_events_<area>.xml) instead of editing one.
+    Copy rule (design/DECISIONS.md): no em or en dash characters anywhere. A string that starts
+    with ", " is quoted so the leading space survives.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Navigation and modes (§2.1) -->
+    <string name="nav_calendar">Calendar</string>
+    <string name="calendar_mode_day">Day</string>
+    <string name="calendar_mode_week">Week</string>
+    <string name="calendar_mode_month">Month</string>
+    <string name="calendar_mode_year">Year</string>
+    <string name="calendar_mode_list">List</string>
+    <string name="calendar_today">Today</string>
+    <string name="calendar_calendars">Calendars</string>
+    <!-- Accessible name of the overflow menu button (Material's own words). -->
+    <string name="calendar_more_options">More options</string>
+    <string name="calendar_newEvent">New event</string>
+    <string name="calendar_previous_month">Previous month</string>
+    <string name="calendar_previous_week">Previous week</string>
+    <string name="calendar_previous_day">Previous day</string>
+    <string name="calendar_next_month">Next month</string>
+    <string name="calendar_next_week">Next week</string>
+    <string name="calendar_next_day">Next day</string>
+    <string name="calendar_announce_page">%1$s. %2$s.</string>
+    <!-- A page without a subtitle (Year in IFC, List) announces its title alone. -->
+    <string name="calendar_announce_title">%1$s.</string>
+    <string name="calendar_title_week">%1$s %2$s, week %3$d</string>
+    <string name="calendar_subtitle_range">Gregorian %1$s to %2$s</string>
+    <string name="calendar_subtitle_day">Gregorian %1$s</string>
+    <string name="calendar_weekday_a11y">%1$s. Gregorian %2$s</string>
+    <!-- §2.19 writes it as one string; "+3 more" reads the same for every count in English. -->
+    <string name="calendar_more" tools:ignore="PluralsCandidate">+%1$d more</string>
+    <!-- The compact titles density says "+N" in the cell (§2.4). -->
+    <string name="calendar_more_short">+%1$d</string>
+    <plurals name="calendar_more_a11y">
+        <item quantity="one">%1$d more event on %2$s</item>
+        <item quantity="other">%1$d more events on %2$s</item>
+    </plurals>
+    <string name="calendar_list_title">Upcoming</string>
+    <string name="calendar_list_empty">No upcoming events.</string>
+    <string name="calendar_day_empty">No events.</string>
+    <string name="calendar_emptyRun">No events, %1$s to %2$s</string>
+    <string name="calendar_allHidden">All calendars are hidden.</string>
+    <string name="calendar_allHidden_button">Show calendars</string>
+    <string name="calendar_loadFailed">Couldn’t load events.</string>
+    <string name="calendar_tryAgain">Try again</string>
+    <string name="calendar_dayOfDays">Day %1$d of %2$d</string>
+    <string name="calendar_until">until %1$s</string>
+    <string name="calendar_menu_openDay">Open day</string>
+    <string name="calendar_menu_dayDetails">Day details</string>
+    <!-- TalkBack custom action on a Month day cell for each of its events (§2.20 Grouping). -->
+    <string name="calendar_action_open">Open %1$s</string>
+
+    <!-- Accessible names (§2.20); parts joined exactly as written -->
+    <string name="calendar_cell_a11y">%1$s. Gregorian %2$s.</string>
+    <plurals name="calendar_cell_events_a11y">
+        <item quantity="one">%1$d event.</item>
+        <item quantity="other">%1$d events.</item>
+    </plurals>
+    <string name="calendar_gregorianMonthBegins_a11y">Gregorian %1$s begins.</string>
+    <string name="calendar_band_a11y">%1$s, no weekday. Gregorian %2$s.</string>
+    <string name="calendar_item_a11y">%1$s, %2$s, %3$s</string>
+    <string name="calendar_bar_a11y">%1$s, all day, from Gregorian %2$s to %3$s, %4$s</string>
+    <string name="calendar_bar_oneDay_a11y">%1$s, all day, %2$s</string>
+    <string name="calendar_row_a11y">%1$s, %2$s, %3$s, %4$s</string>
+    <!-- calendar.row.a11y with ", {location}" omitted (an event without a location). -->
+    <string name="calendar_row_a11y_noLocation">%1$s, %2$s, %3$s</string>
+    <string name="calendar_flag_repeats">", repeats"</string>
+    <string name="calendar_flag_tentative">", tentative"</string>
+    <string name="calendar_flag_canceled">", canceled"</string>
+    <string name="calendar_flag_invitation">", invitation"</string>
+    <string name="calendar_flag_readOnly">", read only"</string>
+    <string name="calendar_flag_dayOf">", day %1$d of %2$d"</string>
+    <string name="calendar_flag_continuesFrom">", continues from Gregorian %1$s"</string>
+    <string name="calendar_flag_continuesTo">", continues to Gregorian %1$s"</string>
+    <plurals name="year_cell_events">
+        <item quantity="one">%1$d event</item>
+        <item quantity="other">%1$d events</item>
+    </plurals>
+
+    <!-- Event text shared by every events screen -->
+    <string name="event_allDay">All day</string>
+    <string name="event_timeRange">%1$s to %2$s</string>
+    <string name="event_tentative">Tentative</string>
+    <string name="event_canceled">Canceled</string>
+    <string name="editor_close">Close</string>
+
+    <!-- Access cards (§2.16, Android) -->
+    <string name="access_notAsked_title">See your events in 13 months</string>
+    <string name="access_notAsked_body_android">Thirteen can show the events from the calendars on this phone, including Google and Exchange, and add the events you create. Your events stay on your phone and in your own accounts.</string>
+    <string name="access_android_show">Show my calendars</string>
+    <string name="access_android_notNow">Not now</string>
+    <string name="access_rationale_title">Thirteen needs calendar access to show your events</string>
+    <string name="access_rationale_body">Without it, Thirteen shows the calendar without your events.</string>
+    <string name="access_rationale_button">Allow access</string>
+    <string name="access_denied_title">Calendar access is off</string>
+    <string name="access_denied_body_android">To see and edit your events in Thirteen, open Settings > Permissions > Calendar and choose Allow.</string>
+    <!-- access.openSettings, Android form -->
+    <string name="access_openSettings">Open settings</string>
+    <string name="access_readOnly_banner">Thirteen can show your events but not change them.</string>
+    <string name="access_readOnly_button">Allow changes</string>
+    <string name="access_noCalendars_title">No calendars yet</string>
+    <string name="access_noCalendars_body_android">Add a Google or other account in your phone’s Settings under Accounts.</string>
+    <string name="access_noWritable_android">None of your calendars can be changed from this phone.</string>
+    <string name="today_seeEvents">See your events here</string>
+    <string name="today_now">Now</string>
+
+    <!-- Calendars list (§2.15, Android) -->
+    <string name="calendars_title">Calendars</string>
+    <string name="calendars_showAll">Show all</string>
+    <string name="calendars_hideAll">Hide all</string>
+    <string name="calendars_readOnly">Read only</string>
+    <!-- The collapsed account group and the device calendar dialog (§2.15, task D7). -->
+    <plurals name="calendars_group_collapsed">
+        <item quantity="one">%1$d calendar, %2$d shown</item>
+        <item quantity="other">%1$d calendars, %2$d shown</item>
+    </plurals>
+    <string name="calendars_footer_android">Hiding a calendar here hides it only in Thirteen.</string>
+    <string name="calendars_googleHint">Missing your Google calendars? In the Google Calendar app, open Settings > General and turn on Share Google Calendar data with other apps.</string>
+    <string name="calendars_createDevice">Create a calendar on this device</string>
+    <string name="calendars_createDevice_message">Events in this calendar stay on this phone. They aren’t synced or backed up. Some calendar apps don’t show this calendar or its alerts.</string>
+    <string name="calendars_createDevice_button">Create calendar</string>
+
+    <!-- Keyboard shortcuts list (Meta+/) -->
+    <string name="shortcuts_calendar">Calendar</string>
+    <string name="shortcut_previous_period">Previous period</string>
+    <string name="shortcut_next_period">Next period</string>
+    <string name="shortcut_new_event">New event</string>
+</resources>

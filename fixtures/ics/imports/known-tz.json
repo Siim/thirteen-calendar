@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "description": "Known zone ids are never renamed (§3.6). A calendar holding an event made in Thirteen in Europe/Tallinn (with its generated VTIMEZONE for 2026), then a Google export and an Apple export that both use Europe/Tallinn with their own, different VTIMEZONEs: nothing is renamed, every imported group is stored byte for byte (plus its baseline line), and the document keeps one Europe/Tallinn VTIMEZONE, Thirteen's, rebuilt for the years the imported events reach (2026-2027, then 2025-2027). The same imports into an empty calendar keep the Google file's VTIMEZONE.",
+  "now": "2026-10-19T06:41",
+  "scenarios": [
+    {
+      "name": "Into a calendar with a Thirteen event",
+      "calendarId": "faf295fb-8196-4207-aba6-c56ede7c0285",
+      "start": {"file":"imports/known-tz-target.ics"},
+      "steps": [
+        {
+          "kind": "import",
+          "file": "cases/google-secret.ics",
+          "result": {"added":3,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/known-tz-1.ics"
+        },
+        {
+          "kind": "import",
+          "file": "cases/icloud-export.ics",
+          "result": {"added":3,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/known-tz-2.ics"
+        }
+      ]
+    },
+    {
+      "name": "Into an empty calendar",
+      "calendarId": "0fffd4be-4047-4c02-ae8a-3ab396ce2064",
+      "start": {"new":{"calendarId":"0fffd4be-4047-4c02-ae8a-3ab396ce2064","name":"Imported","color":"#16a34a"}},
+      "steps": [
+        {
+          "kind": "import",
+          "file": "cases/google-secret.ics",
+          "result": {"added":3,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/known-tz-empty-1.ics"
+        },
+        {
+          "kind": "import",
+          "file": "cases/icloud-export.ics",
+          "result": {"added":3,"updated":0,"unchanged":0,"skipped":0},
+          "expected": "imports/known-tz-empty-2.ics"
+        }
+      ]
+    }
+  ]
+}

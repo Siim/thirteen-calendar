@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "case": "cases/rscale.ics",
+  "calendarId": "rscale",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Other calendars",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Other calendars"}
+    ],
+    "timeZones": [],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"8aa3afe6-3eb4-4cdc-ac56-a28ef0be8a40","master":{"uid":"8aa3afe6-3eb4-4cdc-ac56-a28ef0be8a40","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Yearly on 1 Tishri (Hebrew calendar)","location":"","description":"","url":"","start":{"kind":"date","date":"2025-09-23"},"end":null,"duration":null,"rrules":["FREQ=YEARLY;BYMONTHDAY=1;BYMONTH=1;RSCALE=HEBREW"],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":5},"overrides":[]},
+    {"uid":"72306e5d-4956-40cc-a19d-2cf998db7105","master":{"uid":"72306e5d-4956-40cc-a19d-2cf998db7105","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Born on February 29 (March 1 in common years)","location":"","description":"","url":"","start":{"kind":"date","date":"2024-02-29"},"end":null,"duration":null,"rrules":["FREQ=YEARLY;RSCALE=GREGORIAN;SKIP=FORWARD"],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":12},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": []
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": []
+    }
+  ]
+}

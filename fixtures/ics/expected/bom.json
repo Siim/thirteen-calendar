@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "case": "cases/bom.ics",
+  "calendarId": "bom",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Byte order mark",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Byte order mark"}
+    ],
+    "timeZones": [],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"23f3770b-6441-48d5-89c5-fd6b364972b0","master":{"uid":"23f3770b-6441-48d5-89c5-fd6b364972b0","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Saved by Notepad","location":"","description":"","url":"","start":{"kind":"date","date":"2026-10-24"},"end":null,"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":5},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"bom/23f3770b-6441-48d5-89c5-fd6b364972b0|2026-10-24","calendarId":"bom","title":"Saved by Notepad","allDay":true,"start":"2026-10-24T00:00","end":"2026-10-24T24:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"bom/23f3770b-6441-48d5-89c5-fd6b364972b0|2026-10-24","calendarId":"bom","title":"Saved by Notepad","allDay":true,"start":"2026-10-24T00:00","end":"2026-10-24T24:00"}
+      ]
+    }
+  ]
+}

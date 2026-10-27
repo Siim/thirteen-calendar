@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "case": "cases/escapes.ics",
+  "calendarId": "escapes",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Escapes, commas; semicolons",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Escapes\\, commas\\; semicolons"}
+    ],
+    "timeZones": [],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"85cdeb6f-4a35-4076-aab8-c68362cf8dfc","master":{"uid":"85cdeb6f-4a35-4076-aab8-c68362cf8dfc","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Lunch, then a walk; bring \\umbrella\\","location":"Kohvik \"Must Puudel\"; 2nd floor","description":"Line one\nLine two\nLine three, with a comma\nA backslash: \\ and a colon: here","url":"https://example.com/menu?day=fri&lang=en","start":{"kind":"utc","value":"2026-10-23T10:00"},"end":{"kind":"utc","value":"2026-10-23T11:30"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[{"name":"ATTENDEE","params":[["CN","\"Kask, Liis\""],["ROLE","REQ-PARTICIPANT"]],"value":"mailto:liis.kask@example.com"},{"name":"ATTACH","params":[["FMTTYPE","application/pdf"],["X-FILENAME","\"agenda: v2.pdf\""]],"value":"https://example.com/agenda.pdf"},{"name":"X-ALT-DESC","params":[["FMTTYPE","text/html"]],"value":"<p>Line one</p><p>Line two</p>"}],"line":5},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"escapes/85cdeb6f-4a35-4076-aab8-c68362cf8dfc|2026-10-23T10:00","calendarId":"escapes","title":"Lunch, then a walk; bring \\umbrella\\","allDay":false,"start":"2026-10-23T13:00","end":"2026-10-23T14:30"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"escapes/85cdeb6f-4a35-4076-aab8-c68362cf8dfc|2026-10-23T10:00","calendarId":"escapes","title":"Lunch, then a walk; bring \\umbrella\\","allDay":false,"start":"2026-10-23T06:00","end":"2026-10-23T07:30"}
+      ]
+    }
+  ]
+}

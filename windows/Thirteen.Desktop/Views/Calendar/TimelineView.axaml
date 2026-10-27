@@ -1,0 +1,337 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:cal="using:Thirteen.Desktop.Views.CalendarSection"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.TimelineView"
+             x:DataType="vm:TimelineModeViewModel">
+  <!-- The timeline of Week and Day (docs/EVENTS.md §2.5, §2.6; board F1): the column headers (Week), the all-day row with
+       its "all-day" label, and the timeline 00:00 to 24:00 with the hour labels, the blocks and "+{n}" blocks of each
+       column (Controls/TimelinePanel.cs), the now line under the blocks, and the drag preview. Each column body is one
+       accessibility container (a Group named calendar.column.a11y, §2.20). Keyboard (§2.21): the headers are one tab
+       stop with arrows between days; Enter or F2 goes into the day's events, arrows and Tab move among them, Enter opens
+       one, Esc goes back to the day. Pointer (§2.5): drag on empty time makes a draft of that range, drag a block to
+       move it (another day, another time, or the all-day row), Alt-drag copies, drag its bottom edge to change the end,
+       drag an all-day bar along the row or onto the timeline. -->
+  <UserControl.Styles>
+    <Style Selector="Button.timelineHead">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+      <Setter Property="BorderThickness" Value="1,0,0,0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="Padding" Value="8,6,4,6" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="VerticalContentAlignment" Value="Top" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="PART_Background" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Padding="{TemplateBinding Padding}" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+      <Setter Property="FocusAdorner">
+        <FocusAdornerTemplate>
+          <Border Margin="1" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}" />
+        </FocusAdornerTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="Button.timelineHead:pointerover">
+      <Setter Property="Background" Value="{DynamicResource ThHover}" />
+    </Style>
+    <Style Selector="Button.timelineHead.selected">
+      <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+    </Style>
+    <Style Selector="TextBlock.timelineWeekday">
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontSize" Value="10.5" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="LetterSpacing" Value="0.6" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+      <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+    <Style Selector="TextBlock.timelineDay">
+      <Setter Property="FontSize" Value="22" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="LetterSpacing" Value="-0.6" />
+      <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+    </Style>
+    <Style Selector="TextBlock.timelineGreg">
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontSize" Value="10" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+      <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+      <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+    </Style>
+    <Style Selector="Button.timelineHead.today TextBlock.timelineWeekday, Button.timelineHead.today TextBlock.timelineDay">
+      <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    </Style>
+    <Style Selector="TextBlock.allDayLabel">
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontSize" Value="9.5" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="VerticalAlignment" Value="Top" />
+      <Setter Property="Margin" Value="0,6,8,0" />
+    </Style>
+    <Style Selector="Button.timelineBlock">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="CornerRadius" Value="6" />
+      <Setter Property="MinHeight" Value="0" />
+      <Setter Property="MinWidth" Value="0" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Stretch" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        </ControlTemplate>
+      </Setter>
+      <Setter Property="FocusAdorner">
+        <FocusAdornerTemplate>
+          <Border AdornerLayer.IsClipEnabled="False" Margin="-2" CornerRadius="8" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}" />
+        </FocusAdornerTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="Button.timelineBlock.resizable">
+      <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.timelineMore">
+      <Setter Property="Background" Value="{DynamicResource ThPaperSunk}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThRuleStrong}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="6" />
+      <Setter Property="Padding" Value="4,2" />
+      <Setter Property="MinHeight" Value="0" />
+      <Setter Property="MinWidth" Value="0" />
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Top" />
+    </Style>
+    <Style Selector="Button.timelineMore:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ThAccentSoft}" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+    </Style>
+    <Style Selector="c|TimelineDayGrid">
+      <Setter Property="RuleColor" Value="{DynamicResource ThRuleColor}" />
+      <Setter Property="RuleSoftColor" Value="{DynamicResource ThRuleSoftColor}" />
+      <Setter Property="AccentColor" Value="{DynamicResource ThAccentColor}" />
+      <Setter Property="HighContrast" Value="{DynamicResource ThHighContrast}" />
+    </Style>
+    <Style Selector="c|TimelineColumnRules">
+      <Setter Property="RuleColor" Value="{DynamicResource ThRuleColor}" />
+      <Setter Property="AccentColor" Value="{DynamicResource ThAccentColor}" />
+      <Setter Property="HighContrast" Value="{DynamicResource ThHighContrast}" />
+    </Style>
+    <Style Selector="c|TimelineHours">
+      <Setter Property="InkColor" Value="{DynamicResource ThInk3Color}" />
+      <Setter Property="AccentColor" Value="{DynamicResource ThAccentTextColor}" />
+    </Style>
+    <Style Selector="c|TimelineBlockVisual">
+      <Setter Property="SurfaceColor" Value="{DynamicResource ThPaperRaisedColor}" />
+      <Setter Property="InkColor" Value="{DynamicResource ThInkColor}" />
+      <Setter Property="Ink2Color" Value="{DynamicResource ThInk2Color}" />
+      <Setter Property="AccentColor" Value="{DynamicResource ThAccentColor}" />
+      <Setter Property="HighContrast" Value="{DynamicResource ThHighContrast}" />
+    </Style>
+  </UserControl.Styles>
+
+  <UserControl.DataTemplates>
+    <!-- A timed block. Not a tab stop of its own: Enter or F2 on its day goes in (§2.21). -->
+    <DataTemplate DataType="vm:TimelineBlock">
+      <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Classes="timelineBlock" Classes.resizable="{Binding CanResize}" Focusable="True" IsTabStop="False" Command="{Binding SelectCommand}"
+              AutomationProperties.Name="{Binding AutomationName}">
+        <c:SelectableButton.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="{Binding NewEventText}" Command="{Binding NewEventCommand}" />
+            <MenuItem Header="{Binding OpenDayText}" Command="{Binding OpenDayCommand}" />
+            <MenuItem Header="{Binding DayDetailsText}" Command="{Binding DayDetailsCommand}" />
+            <Separator />
+            <MenuItem Header="{Binding DuplicateText}" Command="{Binding DuplicateCommand}" />
+            <MenuItem Header="{Binding DeleteText}" Command="{Binding DeleteCommand}" IsVisible="{Binding CanDelete}" />
+          </ContextMenu>
+        </c:SelectableButton.ContextMenu>
+        <c:TimelineBlockVisual EventColor="{Binding Color}" Title="{Binding Title}" TimeText="{Binding TimeText}" StartText="{Binding StartText}"
+                               Location="{Binding Location}" IsTentative="{Binding IsTentative}" IsCanceled="{Binding IsCanceled}"
+                               IsSelected="{Binding IsSelected}"
+                               TextSize="{Binding $parent[cal:TimelineView].((vm:TimelineModeViewModel)DataContext).BlockTextSize, FallbackValue=11}" />
+      </c:SelectableButton>
+    </DataTemplate>
+
+    <!-- "+{n}": the hidden events of a crowded cluster in a flyout titled "3 more events at 14:00" (board K2). -->
+    <DataTemplate DataType="vm:TimelineOverflow">
+      <Button Classes="timelineMore" IsTabStop="False" Content="{Binding Text}" AutomationProperties.Name="{Binding AutomationName}">
+        <Button.Flyout>
+          <Flyout Placement="RightEdgeAlignedTop">
+            <StackPanel Width="340" Spacing="2">
+              <TextBlock Classes="dayHeading" Text="{Binding Heading}" Margin="0,0,0,6" />
+              <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:CalendarRow">
+                    <cal:EventRowView />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </Flyout>
+        </Button.Flyout>
+      </Button>
+    </DataTemplate>
+
+    <!-- A bar of the all-day row. -->
+    <DataTemplate DataType="vm:AllDayBar">
+      <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Classes="eventChip" Focusable="True" IsTabStop="False" Command="{Binding SelectCommand}"
+              AutomationProperties.Name="{Binding AutomationName}">
+        <c:SelectableButton.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="{Binding NewEventText}" Command="{Binding NewEventCommand}" />
+            <MenuItem Header="{Binding OpenDayText}" Command="{Binding OpenDayCommand}" />
+            <MenuItem Header="{Binding DayDetailsText}" Command="{Binding DayDetailsCommand}" />
+            <Separator />
+            <MenuItem Header="{Binding DuplicateText}" Command="{Binding DuplicateCommand}" />
+            <MenuItem Header="{Binding DeleteText}" Command="{Binding DeleteCommand}" IsVisible="{Binding CanDelete}" />
+          </ContextMenu>
+        </c:SelectableButton.ContextMenu>
+        <c:EventChipVisual IsBar="True" EventColor="{Binding Color}" Title="{Binding Title}"
+                           ContinuesBefore="{Binding ContinuesBefore}" ContinuesAfter="{Binding ContinuesAfter}"
+                           IsTentative="{Binding IsTentative}" IsCanceled="{Binding IsCanceled}" IsSelected="{Binding IsSelected}"
+                           TextSize="{Binding $parent[cal:TimelineView].((vm:TimelineModeViewModel)DataContext).BlockTextSize, FallbackValue=11}" />
+      </c:SelectableButton>
+    </DataTemplate>
+
+    <!-- "+N more" of the all-day row: the day's all-day events in a flyout. -->
+    <DataTemplate DataType="vm:AllDayMore">
+      <Button Classes="monthMore" IsTabStop="False" Content="{Binding Text}" AutomationProperties.Name="{Binding AutomationName}">
+        <Button.Flyout>
+          <Flyout Placement="BottomEdgeAlignedLeft">
+            <StackPanel Width="340" Spacing="2">
+              <TextBlock Classes="dayHeading" Text="{Binding Heading}" />
+              <TextBlock Classes="dayCaption" Text="{Binding Caption}" Margin="0,0,0,6" />
+              <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:CalendarRow">
+                    <cal:EventRowView />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </Flyout>
+        </Button.Flyout>
+      </Button>
+    </DataTemplate>
+  </UserControl.DataTemplates>
+
+  <DockPanel>
+    <!-- The column headers (Week): weekday, day and Gregorian date; an intercalary day by its code plate and name. -->
+    <DockPanel Name="HeaderRow" DockPanel.Dock="Top" IsVisible="{Binding $parent[cal:TimelineView].ShowsHeaders}">
+      <Border DockPanel.Dock="Left" Width="{Binding LabelWidth}" />
+      <ItemsControl Name="Headers" ItemsSource="{Binding Columns}" c:DayNavigation.IsScope="True" AutomationProperties.Name="{Binding GridName}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <c:TimelineColumnsPanel Weights="{Binding $parent[cal:TimelineView].((vm:TimelineModeViewModel)DataContext).ColumnWeights}" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:TimelineColumn">
+            <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Classes="timelineHead" Classes.selected="{Binding IsSelected}" Classes.today="{Binding IsToday}"
+                    Command="{Binding SelectCommand}" AutomationProperties.Name="{Binding AutomationName}"
+                    AutomationProperties.ItemStatus="{Binding ItemStatus}">
+              <c:SelectableButton.ContextMenu>
+                <ContextMenu>
+                  <MenuItem Header="{Binding NewEventText}" Command="{Binding NewEventCommand}" />
+                  <MenuItem Header="{Binding OpenDayText}" Command="{Binding OpenDayCommand}" />
+                  <MenuItem Header="{Binding DayDetailsText}" Command="{Binding DayDetailsCommand}" />
+                </ContextMenu>
+              </c:SelectableButton.ContextMenu>
+              <StackPanel Spacing="0">
+                <!-- An intercalary column (board F2): the code plate on its own line above the name. -->
+                <Border Classes="codePlate" HorizontalAlignment="Left" Margin="0,0,0,3" IsVisible="{Binding HasCode}">
+                  <TextBlock Text="{Binding Code}" />
+                </Border>
+                <TextBlock Classes="timelineWeekday" Text="{Binding WeekdayText}" />
+                <TextBlock Classes="timelineDay" Text="{Binding DayText}" IsVisible="{Binding HasDayNumber}" />
+                <!-- The Gregorian date in the longest form that fits: "Thu, Oct 15", "Oct 15", "15". -->
+                <c:FirstFitPanel>
+                  <TextBlock Classes="timelineGreg" Text="{Binding GregorianText}" />
+                  <TextBlock Classes="timelineGreg" Text="{Binding GregorianShortText}" />
+                  <TextBlock Classes="timelineGreg" Text="{Binding GregorianDayText}" />
+                </c:FirstFitPanel>
+              </StackPanel>
+            </c:SelectableButton>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </DockPanel>
+
+    <!-- The all-day row: bars across columns in lanes, "+N more" after 3 lanes. -->
+    <Border Name="AllDayFrame" DockPanel.Dock="Top" BorderBrush="{DynamicResource ThRuleStrong}" BorderThickness="0,1,0,1">
+      <DockPanel Height="{Binding AllDayHeight}">
+        <Border DockPanel.Dock="Left" Width="{Binding LabelWidth}">
+          <TextBlock Classes="allDayLabel" Text="{Binding AllDayLabel}" AutomationProperties.AccessibilityView="Raw" />
+        </Border>
+        <Panel Name="AllDayArea" Background="Transparent">
+          <c:TimelineColumnRules Name="AllDayRules" Weights="{Binding ColumnWeights}" Hatched="{Binding ColumnHatched}" />
+          <ItemsControl Name="AllDayItems" ItemsSource="{Binding AllDay}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <c:TimelineColumnsPanel Weights="{Binding $parent[cal:TimelineView].((vm:TimelineModeViewModel)DataContext).ColumnWeights}"
+                                        LaneHeight="{Binding $parent[cal:TimelineView].((vm:TimelineModeViewModel)DataContext).LaneHeight, FallbackValue=22}" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+          </ItemsControl>
+        </Panel>
+      </DockPanel>
+    </Border>
+
+    <!-- The timeline, 00:00 to 24:00. -->
+    <ScrollViewer Name="Scroller" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+      <DockPanel>
+        <c:TimelineHours DockPanel.Dock="Left" Width="{Binding LabelWidth}" HourHeight="{Binding HourHeight}" Labels="{Binding HourLabels}"
+                         NowMinute="{Binding NowMinute}" NowText="{Binding NowText}" TextSize="{Binding HourTextSize}" />
+        <Panel Name="BodyArea">
+          <ItemsControl Name="Body" ItemsSource="{Binding Columns}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <c:TimelineColumnsPanel Weights="{Binding $parent[cal:TimelineView].((vm:TimelineModeViewModel)DataContext).ColumnWeights}" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:TimelineColumn">
+                <Panel>
+                  <c:TimelineDayGrid HourHeight="{Binding $parent[cal:TimelineView].((vm:TimelineModeViewModel)DataContext).HourHeight, FallbackValue=48}"
+                                     IsToday="{Binding IsToday}" IsIntercalary="{Binding IsIntercalary}" NowMinute="{Binding NowMinute}" />
+                  <ItemsControl ItemsSource="{Binding Elements}">
+                    <ItemsControl.ItemsPanel>
+                      <ItemsPanelTemplate>
+                        <c:TimelineDayPanel x:DataType="vm:TimelineColumn" Background="Transparent"
+                                            HourHeight="{Binding $parent[cal:TimelineView].((vm:TimelineModeViewModel)DataContext).HourHeight, FallbackValue=48}"
+                                            AutomationProperties.Name="{Binding AutomationName}" />
+                      </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                  </ItemsControl>
+                </Panel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <!-- The drag preview (board C4: accent wash, accent ring). -->
+          <Canvas Name="Overlay" IsHitTestVisible="False">
+            <c:TimelineBlockVisual Name="Ghost" IsDraft="True" IsVisible="False"
+                                   TextSize="{Binding BlockTextSize}" />
+          </Canvas>
+        </Panel>
+      </DockPanel>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

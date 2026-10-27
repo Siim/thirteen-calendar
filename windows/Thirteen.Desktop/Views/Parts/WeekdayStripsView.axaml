@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             x:Class="Thirteen.Desktop.Views.Parts.WeekdayStripsView"
+             x:DataType="vm:WeekdayShiftModel">
+  <!-- Fixed vs real weekday: the 13-month week above, the Gregorian week below, each with the day marked. -->
+  <UserControl.Styles>
+    <Style Selector="Border.chip">
+      <Setter Property="Background" Value="{DynamicResource ThWell}" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="MinHeight" Value="28" />
+      <Setter Property="Margin" Value="2,0" />
+    </Style>
+    <Style Selector="Border.chip TextBlock">
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    </Style>
+    <Style Selector="Border.chip.marked TextBlock">
+      <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector="ItemsControl.thirteen Border.chip.marked">
+      <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+    </Style>
+    <Style Selector="ItemsControl.thirteen Border.chip.marked TextBlock">
+      <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+    </Style>
+    <Style Selector="ItemsControl.gregorian Border.chip.marked">
+      <Setter Property="Background" Value="{DynamicResource ThFoil}" />
+    </Style>
+    <Style Selector="ItemsControl.gregorian Border.chip.marked TextBlock">
+      <Setter Property="Foreground" Value="{DynamicResource ThOnFoil}" />
+    </Style>
+  </UserControl.Styles>
+
+  <StackPanel Spacing="12" AutomationProperties.Name="{Binding AutomationName}">
+    <!-- The label column fits "GREGORIAN" at any text size (at least 96 px). -->
+    <Grid RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="6">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" MinWidth="96" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Classes="eyebrow accent" Text="{Binding SystemLabel}" VerticalAlignment="Center" />
+      <ItemsControl Grid.Column="1" Classes="thirteen" ItemsSource="{Binding ThirteenChips}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Rows="1" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:WeekdayChip">
+            <Border Classes="chip" Classes.marked="{Binding IsMarked}">
+              <TextBlock Text="{Binding Text}" />
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      <TextBlock Grid.Row="1" Classes="eyebrow foil" Text="GREGORIAN" VerticalAlignment="Center" />
+      <ItemsControl Grid.Row="1" Grid.Column="1" Classes="gregorian" ItemsSource="{Binding GregorianChips}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Rows="1" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:WeekdayChip">
+            <Border Classes="chip" Classes.marked="{Binding IsMarked}">
+              <TextBlock Text="{Binding Text}" />
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </Grid>
+    <TextBlock Classes="explanation" Text="{Binding Sentence}" />
+  </StackPanel>
+</UserControl>

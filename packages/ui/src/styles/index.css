@@ -1,0 +1,14 @@
+/*
+ * @thirteen/ui stylesheet entry: self-hosted fonts, design tokens, colour themes, base layer.
+ * Import once at the app root: `import '@thirteen/ui/styles.css'`.
+ *
+ * Typefaces (SIL OFL 1.1, github.com/vercel/geist-font, self-hosted via Fontsource):
+ *   - Geist (variable weight, roman and italic): display, titles and reading text
+ *   - Geist Mono (variable weight): figures, numeric codes and captions
+ */
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/geist/wght-italic.css';
+@import '@fontsource-variable/geist-mono/wght.css';
+@import './tokens.css';
+@import './themes.css';
+@import './base.css';

@@ -1,0 +1,97 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.Parts.ComparisonDetailView"
+             x:DataType="vm:ComparisonDetailModel">
+  <!-- The full comparison of one day as labelled facts with plain-language explanations. -->
+  <UserControl.Styles>
+    <Style Selector="StackPanel.fact">
+      <Setter Property="Spacing" Value="8" />
+      <Setter Property="Margin" Value="0,14" />
+    </Style>
+    <Style Selector="TextBlock.factTitle">
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+  </UserControl.Styles>
+
+  <StackPanel>
+    <StackPanel Classes="fact">
+      <TextBlock Classes="factTitle" Text="Weekday" />
+      <p:WeekdayStripsView DataContext="{Binding Weekday}" />
+    </StackPanel>
+    <Border Classes="rule" />
+
+    <StackPanel Classes="fact">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Classes="factTitle" Text="Label drift" />
+        <TextBlock Grid.Column="1" Classes="factValue" Text="{Binding DriftValue}" />
+      </Grid>
+      <TextBlock Classes="explanation" Text="{Binding DriftText}" />
+    </StackPanel>
+    <Border Classes="rule" />
+
+    <StackPanel Classes="fact">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Classes="factTitle" Text="Month length" />
+        <TextBlock Grid.Column="1" Classes="factValue" Text="{Binding MonthLengthValue}" />
+      </Grid>
+      <TextBlock Classes="explanation" Text="{Binding MonthLengthText}" />
+    </StackPanel>
+    <Border Classes="rule" />
+
+    <StackPanel Classes="fact">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Classes="factTitle" Text="Day of year" />
+        <TextBlock Grid.Column="1" Classes="factValue" Text="{Binding DayOfYearValue}" />
+      </Grid>
+      <TextBlock Classes="explanation" Text="{Binding DayOfYearText}" />
+    </StackPanel>
+    <Border Classes="rule" />
+
+    <StackPanel Classes="fact">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Classes="factTitle" Text="Year progress" />
+        <TextBlock Grid.Column="1" Classes="factValue" Text="{Binding ProgressValue}" />
+      </Grid>
+      <c:YearProgressBar Comparison="{Binding Comparison}" ShowsLabels="True"
+                         AccentColor="{DynamicResource ThAccentColor}" TrackColor="{DynamicResource ThPaperSunkColor}"
+                         LabelColor="{DynamicResource ThInk3Color}" CurrentLabelColor="{DynamicResource ThAccentTextColor}"
+                         AutomationProperties.Name="{Binding ProgressAutomationName}" />
+    </StackPanel>
+    <Border Classes="rule" />
+
+    <Grid Classes="factRow" ColumnDefinitions="*,Auto" Margin="0,14">
+      <TextBlock Classes="factTitle" Text="{Binding YearDayTitle}" />
+      <TextBlock Grid.Column="1" Classes="factValue" Text="{Binding YearDayValue}" />
+    </Grid>
+    <Border Classes="rule" />
+
+    <StackPanel Classes="fact">
+      <TextBlock Classes="factTitle" Text="Numeric" />
+      <ItemsControl ItemsSource="{Binding Codes}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:CodeChip">
+            <StackPanel Spacing="2" Margin="0,0,28,0">
+              <TextBlock Classes="eyebrow" Text="{Binding Label}" />
+              <SelectableTextBlock Classes="mono" FontSize="14" Text="{Binding Code}" />
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </StackPanel>
+    <Border Classes="rule" />
+
+    <StackPanel Classes="fact">
+      <TextBlock Classes="factTitle" Text="{Binding OtherSystemTitle}" />
+      <TextBlock Classes="body" Text="{Binding OtherSystemText}" />
+    </StackPanel>
+  </StackPanel>
+</UserControl>

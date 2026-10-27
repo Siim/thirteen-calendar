@@ -1,0 +1,149 @@
+# Thirteen: root ignore rules for every platform in this repo.
+# Per-directory files (apple/.gitignore and any added later) can only add rules.
+
+# ---------------------------------------------------------------------------
+# Secrets, credentials and signing material. Never commit these.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+*.env
+!.env.example
+*.local
+# App Store Connect API keys (AuthKey_XXXXXXXXXX.p8) and other private keys
+*.p8
+*.p12
+*.pfx
+*.pem
+*.key
+*.snk
+*.cer
+*.certSigningRequest
+*.mobileprovision
+*.provisionprofile
+# Android upload/release keystores and their property files
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+# Playwright saved login state (any package)
+**/playwright/.auth/
+
+# ---------------------------------------------------------------------------
+# JavaScript / TypeScript (pnpm workspace: packages/*, apps/*)
+# ---------------------------------------------------------------------------
+node_modules/
+.pnpm-store/
+dist/
+dist-ssr/
+*.tsbuildinfo
+.vite/
+vite.config.*.timestamp-*
+vitest.config.*.timestamp-*
+.eslintcache
+.turbo/
+coverage/
+.nyc_output/
+*.lcov
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Generic build output directories (Gradle modules, release staging, etc.)
+build/
+
+# ---------------------------------------------------------------------------
+# Apple (XcodeGen spec is apple/project.yml; the project itself is generated)
+# ---------------------------------------------------------------------------
+apple/*.xcodeproj/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+DerivedData/
+.build/
+.swiftpm/
+*.xcarchive
+*.xcarchive.zip
+*.ipa
+*.dSYM/
+*.dSYM.zip
+*.dmg
+*.pkg
+*.app.zip
+# fastlane (if ever used)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+
+# ---------------------------------------------------------------------------
+# Android (Gradle)
+# ---------------------------------------------------------------------------
+android/**/build/
+.gradle/
+.kotlin/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.hprof
+*.iml
+
+# ---------------------------------------------------------------------------
+# Windows (.NET / WinUI / MSIX)
+# ---------------------------------------------------------------------------
+windows/**/bin/
+windows/**/obj/
+windows/**/AppPackages/
+windows/**/BundleArtifacts/
+windows/**/publish/
+.vs/
+*.user
+*.suo
+*.rsuser
+*.userprefs
+*.binlog
+TestResults/
+*.exe
+*.msi
+*.msix
+*.msixbundle
+*.msixupload
+*.appx
+*.appxbundle
+*.appxupload
+Package.StoreAssociation.xml
+
+# ---------------------------------------------------------------------------
+# OS and editors
+# ---------------------------------------------------------------------------
+.DS_Store
+._*
+.AppleDouble
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*~
+
+# ---------------------------------------------------------------------------
+# Local agent and tool state
+# ---------------------------------------------------------------------------
+.claude/worktrees/
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Python bytecode (design/icon/build.py)
+__pycache__/
+*.pyc

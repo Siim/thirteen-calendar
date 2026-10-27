@@ -1,0 +1,94 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Thirteen for Windows: Avalonia (Fluent theme) desktop app over Thirteen.Core.
+    Two targets (docs/EVENTS.md §6.4): net10.0 builds and runs on macOS and Linux for development (and the
+    tests use it), with a no-op toast scheduler; net10.0-windows10.0.19041.0 is the shipped Windows build,
+    which compiles the toast scheduler and the WinRT text-scale reading (#if WINDOWS) against the Windows
+    SDK projection. The shipped builds are self-contained single-file publishes of the Windows target for
+    win-x64 and win-arm64 (../build-windows.sh passes -f net10.0-windows10.0.19041.0, which a multi-target
+    publish needs).
+  -->
+  <PropertyGroup>
+    <!-- Clears the single TargetFramework that Directory.Build.props sets for every project. -->
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
+    <!-- Lets macOS and Linux build (and publish) the Windows target: it only needs the reference packs. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Thirteen.Desktop</RootNamespace>
+    <AssemblyName>Thirteen</AssemblyName>
+    <AssemblyTitle>Thirteen</AssemblyTitle>
+    <Description>Thirteen: the 13-month calendar (International Fixed Calendar and Positivist calendar) next to the Gregorian calendar.</Description>
+    <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\Thirteen.ico</ApplicationIcon>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <!-- The Windows target: Windows 10 1809 is the installer's minimum (installer/Thirteen.iss MinVersion). -->
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <!-- Trimming the Windows SDK projection (task W3, §6.4): the trimmed publish of the Windows target reports
+       35 IL2081 warnings inside the projection's own generic marshaler fallbacks (WinRT.Runtime and
+       Microsoft.Windows.SDK.NET); ILLink.WindowsSdk.xml suppresses exactly those, with the reason. Every
+       other trim warning still fails the publish (TreatWarningsAsErrors). _ILLinkSuppressions is the
+       ILLink targets' item for link-attributes files (Microsoft.NET.ILLink.targets, PrepareForILLink). -->
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+    <_ILLinkSuppressions Include="$(MSBuildThisFileDirectory)ILLink.WindowsSdk.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ILLink.WindowsSdk.xml" />
+  </ItemGroup>
+
+  <!-- dotnet publish -r win-x64 / win-arm64: self-contained, one Thirteen.exe plus Avalonia's native
+       libraries (libSkiaSharp, libHarfBuzzSharp, av_libglesv2) next to it, so nothing is extracted to
+       %TEMP% at start-up. -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' != ''">
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>false</IncludeNativeLibrariesForSelfExtract>
+    <!-- Trimmed (about 21 MB instead of 92 MB for Thirteen.exe): every XAML binding is compiled
+         (x:DataType), settings.json uses source-generated System.Text.Json (SettingsJsonContext), and
+         nothing is created by reflection. Verified on the Windows VM (docs in README.md). -->
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
+    <EnableCompressionInSingleFile>false</EnableCompressionInSingleFile>
+    <DebugType>none</DebugType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- Keep Thirteen.Core.pdb / .xml out of the shipped folder. -->
+    <AllowedReferenceRelatedFileExtensions>.none</AllowedReferenceRelatedFileExtensions>
+    <PublishReferencesDocumentationFiles>false</PublishReferencesDocumentationFiles>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.22" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.22" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.22" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\Thirteen.ico" />
+    <None Remove="Assets\sync-icon.sh" />
+    <!-- Geist and Geist Mono (SIL OFL 1.1, vercel/geist-font), the typefaces of every platform
+         (design/DECISIONS.md); the same static files as apple/Shared/Resources/Fonts. Embedded as
+         Avalonia resources; the licence ships next to Thirteen.exe as Licenses\Geist-OFL.txt. -->
+    <AvaloniaResource Include="Assets\Fonts\*.ttf" />
+    <None Include="Assets\Fonts\OFL.txt" Link="Licenses\Geist-OFL.txt" CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <!-- The mockup data set (docs/EVENTS.md §6.7), linked from fixtures/ (never copied into this tree), for
+         FakeEventStore: the fake-events screenshot runs and the view-model tests. -->
+    <EmbeddedResource Include="..\..\fixtures\mockup\mockup-events.json" Link="Assets\mockup-events.json"
+                      LogicalName="Thirteen.Desktop.MockupEvents.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Thirteen.Core\Thirteen.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Thirteen.Desktop.Tests" />
+  </ItemGroup>
+</Project>

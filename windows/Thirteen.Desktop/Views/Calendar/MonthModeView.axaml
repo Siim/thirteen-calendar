@@ -1,0 +1,226 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:cal="using:Thirteen.Desktop.Views.CalendarSection"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.MonthModeView"
+             x:DataType="vm:MonthModeViewModel">
+  <!-- Calendar's Month mode at regular width (docs/EVENTS.md §2.4, boards A2, B2): the two-line weekday header, 4 week
+       rows of day cells with the events in lanes (Controls/MonthWeekPanel), "+N more" with the whole day in a flyout,
+       the intercalary band under week 4; at 150 % text and above, the list of the month's days with runs of empty days.
+       Keyboard (§2.21): arrows move between days, Enter or F2 goes into the focused day's events, arrows and Tab move
+       among them, Enter opens one, Esc goes back to the day. Double-click on a day's empty space: New event. Right-click:
+       the menu of §2.4. -->
+  <UserControl.Styles>
+    <!-- The day a dragged chip would drop on (task W6). -->
+    <Style Selector="Button.monthCell.dropTarget, Button.monthBand.dropTarget">
+      <Setter Property="Background" Value="{DynamicResource ThAccentSoft}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+    </Style>
+  </UserControl.Styles>
+  <UserControl.DataTemplates>
+    <!-- A day cell (drawn behind its lanes). -->
+    <DataTemplate DataType="vm:MonthDayCell">
+      <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Classes="monthCell" Classes.selected="{Binding IsSelected}" Command="{Binding SelectCommand}"
+              AutomationProperties.Name="{Binding AutomationName}" AutomationProperties.ItemStatus="{Binding ItemStatus}">
+        <c:SelectableButton.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="{Binding NewEventText}" Command="{Binding NewEventCommand}" />
+            <MenuItem Header="{Binding OpenDayText}" Command="{Binding OpenDayCommand}" />
+            <MenuItem Header="{Binding DayDetailsText}" Command="{Binding DayDetailsCommand}" />
+          </ContextMenu>
+        </c:SelectableButton.ContextMenu>
+        <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,3,6,0"
+              Height="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).DayHeaderHeight, FallbackValue=30}">
+          <Border Classes="dayNumber" Classes.today="{Binding IsToday}">
+            <TextBlock Classes="monthDay" Text="{Binding Number}" />
+          </Border>
+          <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TextBlock Classes="monthGregMonth" Text="{Binding GregorianMonthLabel}" IsVisible="{Binding HasGregorianMonthLabel}" />
+            <TextBlock Classes="monthGreg" Text="{Binding GregorianDay}" />
+          </StackPanel>
+        </Grid>
+      </c:SelectableButton>
+    </DataTemplate>
+
+    <!-- A bar or a dot item. Not a tab stop of its own: Enter or F2 on its day goes in (§2.21). -->
+    <DataTemplate DataType="vm:MonthChip">
+      <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Classes="eventChip" Classes.dot="{Binding !IsBar}" Focusable="True" IsTabStop="False" Command="{Binding SelectCommand}"
+              AutomationProperties.Name="{Binding AutomationName}">
+        <c:SelectableButton.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="{Binding NewEventText}" Command="{Binding NewEventCommand}" />
+            <MenuItem Header="{Binding OpenDayText}" Command="{Binding OpenDayCommand}" />
+            <MenuItem Header="{Binding DayDetailsText}" Command="{Binding DayDetailsCommand}" />
+            <Separator />
+            <MenuItem Header="{Binding DuplicateText}" Command="{Binding DuplicateCommand}" />
+            <MenuItem Header="{Binding DeleteText}" Command="{Binding DeleteCommand}" IsVisible="{Binding CanDelete}" />
+          </ContextMenu>
+        </c:SelectableButton.ContextMenu>
+        <c:EventChipVisual IsBar="{Binding IsBar}" EventColor="{Binding Color}" Title="{Binding Title}" Time="{Binding Time}"
+                           ContinuesBefore="{Binding ContinuesBefore}" ContinuesAfter="{Binding ContinuesAfter}"
+                           IsTentative="{Binding IsTentative}" IsCanceled="{Binding IsCanceled}" IsSelected="{Binding IsSelected}"
+                           TextSize="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).ChipTextSize, FallbackValue=11}" />
+      </c:SelectableButton>
+    </DataTemplate>
+
+    <!-- "+N more": the whole day in a flyout titled with the day. -->
+    <DataTemplate DataType="vm:MonthMore">
+      <Button Classes="monthMore" IsTabStop="False" Content="{Binding Text}" AutomationProperties.Name="{Binding AutomationName}">
+        <Button.Flyout>
+          <Flyout Placement="BottomEdgeAlignedLeft">
+            <StackPanel Width="340" Spacing="2">
+              <TextBlock Classes="dayHeading" Text="{Binding Heading}" />
+              <TextBlock Classes="dayCaption" Text="{Binding Caption}" Margin="0,0,0,6" />
+              <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:CalendarRow">
+                    <cal:EventRowView />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </Flyout>
+        </Button.Flyout>
+      </Button>
+    </DataTemplate>
+
+    <!-- The list of days (150 % text and above). -->
+    <DataTemplate DataType="vm:MonthListDay">
+      <StackPanel Spacing="2" Margin="0,0,0,4">
+        <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Classes="dayListDay" Classes.selected="{Binding IsSelected}" Command="{Binding SelectCommand}"
+                AutomationProperties.Name="{Binding AutomationName}">
+          <StackPanel>
+            <TextBlock Classes="dayHeading" Classes.today="{Binding IsToday}" Text="{Binding Heading}" />
+            <TextBlock Classes="dayCaption" Text="{Binding Caption}" />
+          </StackPanel>
+        </c:SelectableButton>
+        <ItemsControl ItemsSource="{Binding Lines}" IsVisible="{Binding HasLines}" Margin="6,0,6,0">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:CalendarRow">
+              <cal:EventRowView ShowsSubText="False" TimeWidth="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).ListTimeWidth, FallbackValue=72}" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Classes="link" Margin="16,0,16,6" HorizontalAlignment="Left" IsVisible="{Binding HasMore}" Content="{Binding MoreText}"
+                Command="{Binding OpenDayCommand}" AutomationProperties.Name="{Binding MoreName}" />
+      </StackPanel>
+    </DataTemplate>
+    <DataTemplate DataType="vm:MonthListEmptyRun">
+      <Button Classes="dayListDay" Command="{Binding OpenDayCommand}" AutomationProperties.Name="{Binding Text}">
+        <TextBlock Classes="dayCaption" FontFamily="{StaticResource ThirteenTextFont}" FontSize="15" Text="{Binding Text}" />
+      </Button>
+    </DataTemplate>
+  </UserControl.DataTemplates>
+
+  <DockPanel>
+    <!-- Every calendar hidden (§2.4 "States"): the grid without items, and the line with "Show calendars". -->
+    <Border DockPanel.Dock="Top" Classes="banner" Margin="32,0,32,10" IsVisible="{Binding ShowsAllHidden}">
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding AllHiddenText}" />
+        <Button Classes="link" VerticalAlignment="Center" Content="{Binding ShowCalendarsText}"
+                Command="{Binding Calendar.ShowHiddenCalendarsCommand}" />
+      </StackPanel>
+    </Border>
+
+    <Panel>
+      <!-- The grid. -->
+      <Grid Name="GridHost" RowDefinitions="Auto,*" Margin="32,0,32,16" IsVisible="{Binding UsesGrid}">
+        <ItemsControl Name="Header" ItemsSource="{Binding Weekdays}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <UniformGrid Columns="7" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:MonthWeekdayHeader">
+              <Border Classes="monthHead" AutomationProperties.Name="{Binding AutomationName}">
+                <StackPanel>
+                  <TextBlock Classes="monthHead1" Text="{Binding Line1}" />
+                  <TextBlock Classes="monthHead2" Text="{Binding Line2}" />
+                </StackPanel>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Border Grid.Row="1" Classes="monthGrid" BorderThickness="1,1,0,0">
+          <ScrollViewer Name="GridScroller" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Name="Days" c:DayNavigation.IsScope="True" AutomationProperties.Name="{Binding GridName}">
+              <ItemsControl Name="Rows" ItemsSource="{Binding Weeks}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:MonthWeekRow">
+                    <ItemsControl ItemsSource="{Binding Elements}"
+                                  Height="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).RowHeight, FallbackValue=132}">
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <c:MonthWeekPanel HeaderHeight="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).DayHeaderHeight, FallbackValue=30}"
+                                            LaneHeight="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).LaneHeight, FallbackValue=20}" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+
+              <!-- The intercalary day(s) after week 4 (§2.2): full-width hatched bands, with the day's events inline. -->
+              <ItemsControl Name="Bands" ItemsSource="{Binding Bands}" IsVisible="{Binding HasBands}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:MonthBand">
+                    <Panel Height="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).BandHeight, FallbackValue=46}">
+                      <c:HatchFill />
+                      <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Classes="monthBand" Classes.selected="{Binding IsSelected}" Command="{Binding SelectCommand}"
+                              AutomationProperties.Name="{Binding AutomationName}" AutomationProperties.ItemStatus="{Binding ItemStatus}">
+                        <c:SelectableButton.ContextMenu>
+                          <ContextMenu>
+                            <MenuItem Header="{Binding NewEventText}" Command="{Binding NewEventCommand}" />
+                            <MenuItem Header="{Binding OpenDayText}" Command="{Binding OpenDayCommand}" />
+                            <MenuItem Header="{Binding DayDetailsText}" Command="{Binding DayDetailsCommand}" />
+                          </ContextMenu>
+                        </c:SelectableButton.ContextMenu>
+                        <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                          <Border Classes="codePlate" Classes.today="{Binding IsToday}">
+                            <TextBlock Text="{Binding Code}" />
+                          </Border>
+                          <StackPanel VerticalAlignment="Center">
+                            <TextBlock FontSize="13" FontWeight="SemiBold" Text="{Binding Name}" />
+                            <TextBlock Classes="monthGreg" HorizontalAlignment="Left" Text="{Binding GregorianText}" />
+                          </StackPanel>
+                        </StackPanel>
+                      </c:SelectableButton>
+                      <StackPanel Orientation="Horizontal" Spacing="6" Margin="260,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <ItemsControl Name="BandChips" ItemsSource="{Binding Chips}"
+                                      Height="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).LaneHeight, FallbackValue=20}">
+                          <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                              <StackPanel Orientation="Horizontal" Spacing="6" />
+                            </ItemsPanelTemplate>
+                          </ItemsControl.ItemsPanel>
+                          <ItemsControl.Styles>
+                            <Style Selector="Button.eventChip">
+                              <Setter Property="Width" Value="200" />
+                            </Style>
+                          </ItemsControl.Styles>
+                        </ItemsControl>
+                        <ContentControl Content="{Binding More}" IsVisible="{Binding HasMore}"
+                                        Height="{Binding $parent[cal:MonthModeView].((vm:MonthModeViewModel)DataContext).LaneHeight, FallbackValue=20}" />
+                      </StackPanel>
+                    </Panel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </ScrollViewer>
+        </Border>
+      </Grid>
+
+      <!-- The list of days at accessibility text sizes. -->
+      <ScrollViewer Name="ListScroller" HorizontalScrollBarVisibility="Disabled" IsVisible="{Binding UsesDayList}">
+        <c:PageColumn MaxContentWidth="960">
+          <ItemsControl Name="DayList" ItemsSource="{Binding DayList}" Margin="32,0,32,24"
+                        AutomationProperties.Name="{Binding GridName}" />
+        </c:PageColumn>
+      </ScrollViewer>
+    </Panel>
+  </DockPanel>
+</UserControl>

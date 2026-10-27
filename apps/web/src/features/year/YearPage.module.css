@@ -1,0 +1,384 @@
+.toolbar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--t-space-3) var(--t-space-5);
+  margin-bottom: var(--t-space-5);
+  padding-block: 0.6rem;
+  border-block: var(--t-hairline) solid var(--t-rule-strong);
+  background: color-mix(in srgb, var(--t-paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+@media (min-width: 48rem) {
+  .toolbar {
+    position: sticky;
+    top: 0;
+  }
+}
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--t-space-2) var(--t-space-5);
+}
+
+.facts {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-6);
+  align-items: start;
+}
+
+/* From tablet-landscape width the day panel sits beside the year; below, it is a bottom sheet. */
+@media (min-width: 64rem) {
+  .layoutWithPanel {
+    grid-template-columns: minmax(0, 1fr) clamp(20rem, 26vw, 24rem);
+  }
+}
+
+.columnsHost {
+  container-type: inline-size;
+  container-name: year-columns;
+  min-width: 0;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-7);
+  align-items: start;
+}
+
+@container year-columns (min-width: 70rem) {
+  .columnsTwo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--t-space-6);
+  }
+}
+
+.column {
+  display: grid;
+  gap: var(--t-space-4);
+  min-width: 0;
+}
+
+.columnHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--t-space-3);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--t-rule-strong);
+}
+
+.columnTitle {
+  font-size: var(--t-text-xl);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}
+
+.columnTitleFoil {
+  font-family: var(--t-font-text);
+  font-weight: var(--t-weight-text);
+  color: var(--t-foil);
+}
+
+.columnMeta {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+  text-align: right;
+}
+
+/* Gregorian months: the same container-driven reflow as the 13-month grid. */
+.twelve {
+  container-type: inline-size;
+}
+
+.twelveGrid {
+  --cell-num-sm: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.25rem, 0.8rem + 1.6vw, 2.25rem) clamp(1rem, 0.6rem + 1.4vw, 2rem);
+  align-items: start;
+}
+
+@container (min-width: 34rem) {
+  .twelveGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --cell-num-sm: 1.05rem;
+  }
+}
+
+@container (min-width: 54rem) {
+  .twelveGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 74rem) {
+  .twelveGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---- Legend card (fills the space after the 13th month) ------------- */
+
+.legend {
+  display: grid;
+  gap: var(--t-space-4);
+  height: 100%;
+  padding: var(--t-space-5);
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+  align-content: start;
+}
+
+.legendTitle {
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}
+
+.legendList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--t-space-3) var(--t-space-5);
+  list-style: none;
+}
+
+.legendItem {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  font-size: var(--t-text-sm);
+  line-height: 1.35;
+  color: var(--t-ink-2);
+}
+
+.swatch {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: var(--t-hairline) solid var(--t-rule);
+  background: var(--t-paper);
+  font-family: var(--t-font-display);
+  font-size: 1rem;
+  font-weight: var(--t-weight-medium);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--t-tracking-title);
+  color: var(--t-ink);
+}
+
+.swatchToday {
+  border-color: var(--t-accent);
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.swatchRest {
+  color: var(--t-accent-text);
+  font-weight: var(--t-mark-weight, var(--t-weight-medium));
+}
+
+.swatchTab::before {
+  content: 'NOV';
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.05rem 0.15rem;
+  background: var(--t-foil);
+  color: var(--t-on-foil);
+  font-family: var(--t-font-mono);
+  font-size: 0.45rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.swatchSlip {
+  border: var(--t-hairline) dashed var(--t-accent);
+  background: repeating-linear-gradient(-45deg, var(--t-accent-soft) 0 3px, transparent 3px 7px);
+  font-family: var(--t-font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--t-accent-text);
+}
+
+.legendFacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: var(--t-space-4) var(--t-space-6);
+  padding-top: var(--t-space-4);
+  border-top: var(--t-hairline) solid var(--t-rule);
+}
+
+/* ---- Day detail panel ---------------------------------------------- */
+
+.panel {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--t-space-4);
+  min-width: 0;
+  padding: var(--t-space-5);
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+  box-shadow: var(--t-shadow-2);
+}
+
+@media (min-width: 64rem) {
+  .panel {
+    position: sticky;
+    top: 4.5rem;
+    max-height: calc(100dvh - 5.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/*
+ * With the 12-month view alongside, a side panel would take the width the two
+ * calendars need and restack them, moving the day that was just picked far
+ * down the page. There the panel docks at the bottom instead, as it does on
+ * small screens, so selecting a day never reflows the grids: controls, plate
+ * and links on the left, the comparison on the right.
+ */
+@media (min-width: 64rem) {
+  .layoutDocked {
+    --dock-height: min(46dvh, 27rem);
+    grid-template-columns: minmax(0, 1fr);
+    /* Let the last months scroll clear of the docked panel. */
+    padding-bottom: var(--dock-height);
+  }
+
+  .layoutDocked > .panel {
+    position: fixed;
+    z-index: 30;
+    inset: auto 0 0;
+    width: min(100% - 2 * var(--t-gutter), var(--t-page-max) - 2 * var(--t-gutter));
+    max-height: var(--dock-height);
+    margin-inline: auto;
+    grid-template-columns: minmax(16rem, 19rem) minmax(0, 1fr);
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: var(--t-space-6);
+    padding: var(--t-space-4) var(--t-space-5) var(--t-space-5);
+    border-width: 2px 1px 0;
+    border-style: solid;
+    animation: sheet-in var(--t-dur-3) var(--t-ease-out) both;
+  }
+
+  .layoutDocked .panelTable {
+    grid-column: 2;
+    grid-row: 1 / -1;
+  }
+
+  .layoutDocked .panelLinks {
+    align-self: start;
+  }
+}
+
+@media (max-width: 63.99rem) {
+  /* Let the last months scroll clear of the sheet. */
+  .layoutWithPanel {
+    padding-bottom: min(62dvh, 36rem);
+  }
+
+  .panel {
+    position: fixed;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: min(62dvh, 36rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--t-space-4) var(--t-gutter) calc(var(--t-space-5) + env(safe-area-inset-bottom));
+    border-width: 2px 0 0;
+    border-style: solid;
+    animation: sheet-in var(--t-dur-3) var(--t-ease-out) both;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--t-space-3);
+}
+
+.panelHead > :first-child {
+  white-space: nowrap;
+}
+
+.panelNav {
+  display: flex;
+  flex: none;
+  gap: var(--t-space-2);
+}
+
+.panelLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--t-space-2) var(--t-space-4);
+  padding-top: var(--t-space-2);
+}
+
+.panelLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: 0;
+  color: var(--t-ink);
+  text-decoration: none;
+  border-bottom: var(--t-hairline) solid var(--t-accent);
+}
+
+.panelLink:hover {
+  color: var(--t-accent-text);
+}
+
+@media (pointer: coarse), (max-width: 40rem) {
+  .panelLinks {
+    row-gap: 0.25rem;
+  }
+
+  .panelLink {
+    min-height: 2.75rem;
+    align-items: flex-end;
+    padding-bottom: 0.3rem;
+  }
+}
+
+.status {
+  min-height: 1px;
+}

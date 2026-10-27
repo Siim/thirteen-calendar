@@ -1,0 +1,331 @@
+# Continuous integration for Thirteen (docs/EVENTS.md §6.6): every port of the engine, the apps'
+# unit tests, and the golden fixtures they all read in place from fixtures/ (none keeps a copy).
+# Every job runs on a standard GitHub-hosted runner, free for this public repository.
+#
+#   web               pnpm workspace (packages/core, packages/ui, apps/web) on ubuntu-latest, in order:
+#                     - fixtures are fresh: `pnpm fixtures` regenerates conversions.json, events.json,
+#                       mockup/mockup-events.json and ics/, and no file under fixtures/ may change;
+#                     - typecheck, then the unit tests of every package;
+#                     - the core timing targets (docs/EVENTS.md §6.1, task C5) in their own step, alone;
+#                     - the production build of the web app.
+#   web-e2e           the Playwright suite (apps/web/e2e, docs/EVENTS.md §6.5), one job per browser engine
+#                     (Chromium with its new-headless project, Firefox, WebKit) so they run side by side.
+#                     The specs start their own local feed servers.
+#   apple-kit         ThirteenKit (Swift): `swift test --package-path apple/ThirteenKit`, so Swift parity with
+#                     conversions.json and events.json is checked on every pull request. §6.6 makes it a
+#                     required check (a branch protection setting of main, not part of this file). The
+#                     simulator suites run locally and in the release scripts (apple/scripts/ui-tests.sh).
+#   android           Kotlin engine (:core:test, with the fixture parity tests), the app's JVM tests
+#                     (:app:testDebugUnitTest, Robolectric) and Android lint (:app:lintDebug, which is what
+#                     `./gradlew lint` runs).
+#   android-provider  optional (continue-on-error): the instrumented tests on Gradle Managed Devices,
+#                     one runner per API level (26, 30, 37) with KVM. Each level runs once
+#                     android/app/build.gradle.kts defines a managed device named api<level>
+#                     (task :app:api<level>DebugAndroidTest); until then it reports that it was skipped.
+#   windows           `dotnet test` for Thirteen.Core.Tests and Thirteen.Desktop.Tests on windows-latest,
+#                     where TimeZoneInfo reads the registry. The engine tests log at "detailed" so the
+#                     zone exclusions the parity tests apply are in the log; the .trx files are uploaded.
+#                     The Desktop tests use Avalonia's headless platform, so no desktop session is needed.
+#
+# Every parity suite asserts the per-section case counts of its fixture file (docs/EVENTS.md §5.5).
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  web:
+    name: Web (fixtures, typecheck, test, timing, build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      # Version comes from "packageManager" in package.json.
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # The generator writes a file only when its content changed (events.json also stays when only
+      # its tzVersion would change) and removes files under fixtures/ics it no longer writes, so any
+      # change here means a committed fixture is stale.
+      - name: Fixtures are fresh
+        shell: bash
+        run: |
+          pnpm fixtures
+          changes="$(git status --porcelain --untracked-files=all -- fixtures)"
+          if [ -n "$changes" ]; then
+            echo "::error title=Stale fixtures::pnpm fixtures changed files under fixtures/. Run pnpm fixtures and commit the result."
+            echo "$changes"
+            git diff --stat -- fixtures
+            exit 1
+          fi
+
+      - name: Typecheck
+        run: pnpm -r typecheck
+
+      # Every package's tests; @thirteen/core without its timing tests, which have the next step.
+      # THIRTEEN_PERF_SCALE also widens the one wall-clock check among them (apps/web, importing
+      # 20,000 events in linear time).
+      - name: Unit tests
+        env:
+          THIRTEEN_PERF_SCALE: '3'
+        run: |
+          pnpm -r --filter '!@thirteen/core' test
+          pnpm --filter @thirteen/core test:unit
+
+      # The targets in packages/core/test/events/layout-performance.test.ts are the spec's numbers for
+      # Node on an idle M-class laptop (2,000 occurrences laid out in 5 ms, 500 series expanded in
+      # 50 ms, the worst-case guard in 100 ms). A shared 4-vCPU ubuntu runner runs this single-threaded
+      # code at about half that speed with bursts of noise from its neighbours, so this step triples
+      # every target, as `pnpm test` does on a busy laptop. It still fails when the engine gets several
+      # times slower. The targets themselves never change here; run `pnpm test:timing` on an idle laptop
+      # for scale 1.
+      - name: Core timing targets (docs/EVENTS.md §6.1, C5)
+        env:
+          THIRTEEN_PERF_SCALE: '3'
+        run: pnpm --filter @thirteen/core test:timing --silent=false
+
+      - name: Build web app
+        run: pnpm --filter @thirteen/web build
+
+  web-e2e:
+    name: Web e2e (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # chromium-new-headless runs only the alerts spec, in Chromium's new headless mode, where a
+          # granted notification permission reads "granted" (apps/web/playwright.config.ts).
+          - browser: chromium
+            projects: chromium,chromium-new-headless
+          - browser: firefox
+            projects: firefox
+          - browser: webkit
+            projects: webkit
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # The browser build that matches @playwright/test in the lockfile, and its system libraries.
+      - name: Install Playwright ${{ matrix.browser }}
+        run: pnpm --filter @thirteen/web exec playwright install --with-deps ${{ matrix.browser }}
+
+      # CI=true (set by GitHub) gives one retry, the GitHub reporter and forbidOnly
+      # (apps/web/playwright.config.ts). The suite serves the app with the Vite dev server.
+      - name: End-to-end tests (${{ matrix.projects }})
+        env:
+          E2E_BROWSERS: ${{ matrix.projects }}
+        run: pnpm --filter @thirteen/web test:e2e
+
+      - name: Upload e2e results
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: web-e2e-${{ matrix.browser }}
+          path: |
+            apps/web/playwright-report/
+            apps/web/test-results/
+          if-no-files-found: ignore
+
+  apple-kit:
+    name: Apple (ThirteenKit, swift test)
+    # The Xcode 27 image (macOS 27, Xcode 27.x, a standard arm64 runner, free for public repositories;
+    # GitHub lists it as a public preview, so jobs may queue a little longer). It is the toolchain the
+    # apps are built and released with (apple/project.yml targets iOS and macOS 26 on the 27 SDKs), and
+    # the Foundation oracle in the tests (Calendar.RecurrenceRule) is the macOS 27 one. macos-26 and
+    # macos-latest carry only Xcode 26.x. When GitHub makes this image generally available under a
+    # macos-27 label, move to that label.
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Toolchain
+        run: |
+          sw_vers
+          xcodebuild -version
+          swift --version
+
+      - name: ThirteenKit tests (parity with conversions.json and events.json)
+        run: swift test --package-path apple/ThirteenKit
+
+  android:
+    name: Android (:core:test, :app:testDebugUnitTest, lint)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      # Gradle 9.8 and AGP 9.4 run on JDK 21; the modules compile for Java 17 (-Xjdk-release=17).
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # The runner image already has both packages; listing them keeps the job working if it drops
+      # them, and states what android/app/build.gradle.kts needs (compileSdk release(37)).
+      - uses: android-actions/setup-android@v4
+        with:
+          packages: platform-tools platforms;android-37.0 build-tools;37.0.0
+          log-accepted-android-sdk-licenses: false
+
+      # The MIT-licensed basic cache provider (actions/cache): the default "enhanced" provider of
+      # gradle/actions v6 is a proprietary component with its own terms of use.
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+
+      - name: Engine tests, app tests and lint
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew :core:test :app:testDebugUnitTest :app:lintDebug --stacktrace
+
+      - name: Upload test and lint reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: android-reports
+          path: |
+            android/core/build/reports/tests/
+            android/app/build/reports/
+          if-no-files-found: ignore
+
+  android-provider:
+    name: Android provider (managed device, API ${{ matrix.api }})
+    runs-on: ubuntu-latest
+    # Optional: records how the real calendar provider behaves (gate V12); a failure here does not
+    # fail the workflow.
+    continue-on-error: true
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [26, 30, 37]
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Detect the managed device
+        id: detect
+        shell: bash
+        run: |
+          if grep -q 'managedDevices' android/app/build.gradle.kts && grep -q '"api${{ matrix.api }}"' android/app/build.gradle.kts; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Android provider skipped::android/app/build.gradle.kts defines no managed device \"api${{ matrix.api }}\" yet, so the API ${{ matrix.api }} instrumented tests did not run."
+          fi
+
+      # The emulator needs hardware acceleration; GitHub's Linux runners have /dev/kvm.
+      - name: Enable KVM
+        if: steps.detect.outputs.present == 'true'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: actions/setup-java@v6
+        if: steps.detect.outputs.present == 'true'
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: android-actions/setup-android@v4
+        if: steps.detect.outputs.present == 'true'
+        with:
+          packages: platform-tools platforms;android-37.0 build-tools;37.0.0
+          log-accepted-android-sdk-licenses: false
+
+      - uses: gradle/actions/setup-gradle@v6
+        if: steps.detect.outputs.present == 'true'
+        with:
+          cache-provider: basic
+
+      - name: Instrumented tests on API ${{ matrix.api }}
+        if: steps.detect.outputs.present == 'true'
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:api${{ matrix.api }}DebugAndroidTest \
+            -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect --stacktrace
+
+      - name: Upload instrumented test reports
+        if: always() && steps.detect.outputs.present == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: android-provider-api${{ matrix.api }}
+          path: |
+            android/app/build/outputs/androidTest-results/
+            android/app/build/reports/androidTests/
+          if-no-files-found: ignore
+
+  windows:
+    name: Windows (dotnet test)
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: windows
+    steps:
+      # Git on the Windows runner converts LF to CRLF on checkout (core.autocrlf=true). Check out the
+      # committed bytes instead, as on the other runners and on the machines the suites were verified
+      # on: the tests read fixtures and repository files, some byte for byte, and multi-line C# raw
+      # string literals take the line ends of their source file. Runs before checkout, from the
+      # workspace root, because windows/ does not exist yet.
+      - name: Keep line endings as committed
+        working-directory: .
+        run: git config --global core.autocrlf false
+
+      - uses: actions/checkout@v7
+
+      # windows/global.json picks the SDK (10.0.100, rolling forward to the latest feature band).
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: windows/global.json
+
+      # Run from windows/ so the SDK honours windows/global.json.
+      - name: Engine tests (Thirteen.Core.Tests)
+        run: >-
+          dotnet test Thirteen.Core.Tests/Thirteen.Core.Tests.csproj --configuration Release
+          --logger "console;verbosity=detailed" --logger "trx;LogFileName=core.trx" --results-directory TestResults
+
+      - name: App tests (Thirteen.Desktop.Tests)
+        if: success() || failure()
+        run: >-
+          dotnet test Thirteen.Desktop.Tests/Thirteen.Desktop.Tests.csproj --configuration Release
+          --logger "console;verbosity=normal" --logger "trx;LogFileName=desktop.trx" --results-directory TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-test-results
+          path: windows/TestResults/
+          if-no-files-found: ignore

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Window theme only: Compose draws everything (ui/theme/Theme.kt). The background matches the
+        default theme's paper so there is no flash before the first frame.
+    -->
+    <style name="Theme.Thirteen" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/thirteen_window_background</item>
+    </style>
+</resources>

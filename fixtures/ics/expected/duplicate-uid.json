@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "case": "cases/duplicate-uid.ics",
+  "calendarId": "duplicate-uid",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Duplicates",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Duplicates"}
+    ],
+    "timeZones": [],
+    "others": [
+      {"name":"VEVENT","line":36}
+    ]
+  },
+  "warnings": [
+    {"line":21,"code":"duplicate-uid","detail":"A second override of UID dup@example.com for the same RECURRENCE-ID"},
+    {"line":29,"code":"duplicate-uid","detail":"A second master of UID dup@example.com"},
+    {"line":36,"code":"duplicate-uid","detail":"An exact copy of an earlier component of UID dup@example.com is kept as read but not shown"}
+  ],
+  "groups": [
+    {"uid":"dup@example.com","master":{"uid":"dup@example.com","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"First master","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-10-19T09:00"},"end":{"kind":"utc","value":"2026-10-19T10:00"},"duration":null,"rrules":["FREQ=DAILY;COUNT=5"],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":5},"overrides":[{"uid":"dup@example.com","uidDerived":false,"recurrenceId":{"kind":"utc","value":"2026-10-21T09:00"},"sequence":0,"summary":"Moved (first copy)","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-10-21T11:00"},"end":{"kind":"utc","value":"2026-10-21T12:00"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":13},{"uid":"dup@example.com","uidDerived":false,"recurrenceId":{"kind":"utc","value":"2026-10-21T09:00"},"sequence":0,"summary":"Moved (second copy, same RECURRENCE-ID)","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-10-21T13:00"},"end":{"kind":"utc","value":"2026-10-21T14:00"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-16T08:00"},"importedLastModified":null,"extra":[],"line":21}]},
+    {"uid":"dup@example.com","master":{"uid":"dup@example.com","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Second master","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-10-26T09:00"},"end":{"kind":"utc","value":"2026-10-26T10:00"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":29},"overrides":[]},
+    {"uid":"single@example.com","master":{"uid":"single@example.com","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Not a duplicate","location":"","description":"","url":"","start":{"kind":"date","date":"2026-10-27"},"end":null,"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":44},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"duplicate-uid/dup@example.com|2026-10-19T09:00","calendarId":"duplicate-uid","title":"First master","allDay":false,"start":"2026-10-19T12:00","end":"2026-10-19T13:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-20T09:00","calendarId":"duplicate-uid","title":"First master","allDay":false,"start":"2026-10-20T12:00","end":"2026-10-20T13:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-21T09:00","calendarId":"duplicate-uid","title":"Moved (first copy)","allDay":false,"start":"2026-10-21T14:00","end":"2026-10-21T15:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-21T09:00#2","calendarId":"duplicate-uid","title":"Moved (second copy, same RECURRENCE-ID)","allDay":false,"start":"2026-10-21T16:00","end":"2026-10-21T17:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-22T09:00","calendarId":"duplicate-uid","title":"First master","allDay":false,"start":"2026-10-22T12:00","end":"2026-10-22T13:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-23T09:00","calendarId":"duplicate-uid","title":"First master","allDay":false,"start":"2026-10-23T12:00","end":"2026-10-23T13:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-26T09:00#2","calendarId":"duplicate-uid","title":"Second master","allDay":false,"start":"2026-10-26T11:00","end":"2026-10-26T12:00"},
+        {"key":"duplicate-uid/single@example.com|2026-10-27","calendarId":"duplicate-uid","title":"Not a duplicate","allDay":true,"start":"2026-10-27T00:00","end":"2026-10-27T24:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"duplicate-uid/dup@example.com|2026-10-19T09:00","calendarId":"duplicate-uid","title":"First master","allDay":false,"start":"2026-10-19T05:00","end":"2026-10-19T06:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-20T09:00","calendarId":"duplicate-uid","title":"First master","allDay":false,"start":"2026-10-20T05:00","end":"2026-10-20T06:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-21T09:00","calendarId":"duplicate-uid","title":"Moved (first copy)","allDay":false,"start":"2026-10-21T07:00","end":"2026-10-21T08:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-21T09:00#2","calendarId":"duplicate-uid","title":"Moved (second copy, same RECURRENCE-ID)","allDay":false,"start":"2026-10-21T09:00","end":"2026-10-21T10:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-22T09:00","calendarId":"duplicate-uid","title":"First master","allDay":false,"start":"2026-10-22T05:00","end":"2026-10-22T06:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-23T09:00","calendarId":"duplicate-uid","title":"First master","allDay":false,"start":"2026-10-23T05:00","end":"2026-10-23T06:00"},
+        {"key":"duplicate-uid/dup@example.com|2026-10-26T09:00#2","calendarId":"duplicate-uid","title":"Second master","allDay":false,"start":"2026-10-26T05:00","end":"2026-10-26T06:00"},
+        {"key":"duplicate-uid/single@example.com|2026-10-27","calendarId":"duplicate-uid","title":"Not a duplicate","allDay":true,"start":"2026-10-27T00:00","end":"2026-10-27T24:00"}
+      ]
+    }
+  ]
+}

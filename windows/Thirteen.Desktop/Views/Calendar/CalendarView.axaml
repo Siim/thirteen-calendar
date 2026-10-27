@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:cal="using:Thirteen.Desktop.Views.CalendarSection"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.CalendarView"
+             x:DataType="vm:CalendarViewModel">
+  <!-- The Calendar section's page (docs/EVENTS.md §2.1): the mode on screen (each mode's view is built the first time
+       it is shown and kept), and the "Couldn't load events." toast with "Try again" (§2.4 "States"). The toolbar is in
+       the window header (Views/Calendar/CalendarToolbar.axaml), the Calendars pane in the navigation pane.
+       One file per mode, so the next tasks can work in parallel: Week and Day timelines (W6) in WeekModeView and
+       DayModeView, details and the editor (W7) behind CalendarViewModel.Actions. -->
+  <UserControl.DataTemplates>
+    <DataTemplate DataType="vm:YearViewModel">
+      <cal:YearModeView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:MonthModeViewModel">
+      <cal:MonthModeView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:WeekModeViewModel">
+      <cal:WeekModeView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:DayModeViewModel">
+      <cal:DayModeView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:ListModeViewModel">
+      <cal:ListModeView />
+    </DataTemplate>
+  </UserControl.DataTemplates>
+
+  <Panel>
+    <Panel Name="Modes">
+      <ContentControl Content="{Binding DayMode.Loaded}" IsVisible="{Binding DayMode.IsActive}" />
+      <ContentControl Content="{Binding WeekMode.Loaded}" IsVisible="{Binding WeekMode.IsActive}" />
+      <ContentControl Content="{Binding MonthMode.Loaded}" IsVisible="{Binding MonthMode.IsActive}" />
+      <ContentControl Content="{Binding YearMode.Loaded}" IsVisible="{Binding YearMode.IsActive}" />
+      <ContentControl Content="{Binding ListMode.Loaded}" IsVisible="{Binding ListMode.IsActive}" />
+    </Panel>
+
+    <Border Name="LoadFailedToast" Classes="calendarToast" IsVisible="{Binding ShowsLoadFailed}">
+      <StackPanel Orientation="Horizontal" Spacing="14">
+        <TextBlock VerticalAlignment="Center" Text="{Binding LoadFailedText}" AutomationProperties.LiveSetting="Assertive" />
+        <Button Classes="link" VerticalAlignment="Center" Content="{Binding TryAgainText}" Command="{Binding RetryLoadCommand}" />
+        <Button Classes="subtle" Padding="6" VerticalAlignment="Center" Command="{Binding CloseLoadFailedCommand}"
+                ToolTip.Tip="{Binding CloseText}" AutomationProperties.Name="{Binding CloseText}">
+          <TextBlock Classes="icon" FontSize="10" Foreground="{DynamicResource ThPaper}" Text="&#xE711;" />
+        </Button>
+      </StackPanel>
+    </Border>
+
+    <!-- The toast of a drag edit (§2.11, task W6) while the actions do not show their own: "Event moved to 14:00." with
+         Undo for a held move, and Close (it commits). The pointer over it pauses its timeout. -->
+    <Border Name="MoveToast" Classes="calendarToast" IsVisible="{Binding Mover.Toast.IsOpen}">
+      <StackPanel Orientation="Horizontal" Spacing="14">
+        <TextBlock VerticalAlignment="Center" Text="{Binding Mover.Toast.Message}" AutomationProperties.LiveSetting="Polite" />
+        <Button Classes="link" VerticalAlignment="Center" Content="{Binding Mover.Toast.UndoText}" Command="{Binding Mover.Toast.UndoCommand}"
+                IsVisible="{Binding Mover.Toast.HasChange}" />
+        <Button Classes="subtle" Width="32" Height="32" Padding="0" VerticalAlignment="Center" HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center" Command="{Binding Mover.Toast.CloseCommand}"
+                ToolTip.Tip="{Binding Mover.Toast.CloseText}" AutomationProperties.Name="{Binding Mover.Toast.CloseText}">
+          <TextBlock Classes="icon" FontSize="10" Foreground="{DynamicResource ThPaper}" Text="&#xE711;" />
+        </Button>
+      </StackPanel>
+    </Border>
+  </Panel>
+</UserControl>

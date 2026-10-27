@@ -1,0 +1,14 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Thirteen.Desktop.Views.Events.ConfirmDialog"
+        Classes="eventDialog"
+        Width="400">
+  <!-- A question before Unsubscribe or Delete calendar (§2.15, §2.17): the message, "Cancel" and the action. -->
+  <StackPanel Margin="24,22,24,20" Spacing="18">
+    <TextBlock Name="Message" FontSize="14" TextWrapping="Wrap" />
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button Name="CancelButton" MinWidth="96" HorizontalContentAlignment="Center" IsCancel="True" />
+      <Button Name="ActionButton" Classes="accent" MinWidth="96" HorizontalContentAlignment="Center" />
+    </StackPanel>
+  </StackPanel>
+</Window>

@@ -1,0 +1,97 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.YearModeView"
+             x:DataType="vm:YearViewModel">
+  <!-- Calendar's Year mode (SPEC 5.2, docs/EVENTS.md §2.3): 13 perfect 4 x 7 grids, the intercalary day(s) in place, an
+       optional Gregorian overlay, and up to three 4 px event dots under each day number. The year, "‹", "›" and "Today"
+       are in the Calendar toolbar; this row keeps the year's facts, the legend and the "Gregorian dates" toggle.
+       Arrow keys move between days across the whole year; Enter or a click opens the day details; a month's title opens
+       Month mode on that month. -->
+  <UserControl.Styles>
+    <!-- The current month's number: accent, and bold in Mono (ThMarkWeight). -->
+    <Style Selector="TextBlock.monthNumber.accent">
+      <Setter Property="FontWeight" Value="{DynamicResource ThMarkWeight}" />
+    </Style>
+    <Style Selector="Button.monthTitle">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    <Style Selector="Button.monthTitle:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.monthTitle:pointerover TextBlock">
+      <Setter Property="TextDecorations" Value="Underline" />
+    </Style>
+  </UserControl.Styles>
+  <ScrollViewer Name="Scroller" HorizontalScrollBarVisibility="Disabled">
+    <c:PageColumn MaxContentWidth="1320">
+      <StackPanel Margin="32,4,32,32" Spacing="16">
+        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+          <StackPanel Spacing="6" VerticalAlignment="Center">
+            <TextBlock Name="YearFacts" Classes="caption" TextWrapping="Wrap" Text="{Binding Content.Header.Caption}"
+                       AutomationProperties.Name="{Binding Content.Header.AutomationName}" />
+            <!-- A grid, not a horizontal stack, so the legend wraps beside the toggle at large text sizes. -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Border Width="3" Height="14" CornerRadius="1.5" Background="{DynamicResource ThFoil}" VerticalAlignment="Center" />
+              <TextBlock Grid.Column="1" Classes="caption" TextWrapping="Wrap" Text="{Binding Legend}" VerticalAlignment="Center" />
+            </Grid>
+          </StackPanel>
+          <ToggleButton Grid.Column="1" Name="OverlayToggle" Classes="chip" VerticalAlignment="Center" Margin="16,0,0,0"
+                        IsChecked="{Binding ShowsGregorianOverlay, Mode=TwoWay}"
+                        ToolTip.Tip="Show the Gregorian date in every cell" AutomationProperties.Name="{Binding OverlayText}">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Classes="icon check" FontSize="12" Text="&#xE73E;" VerticalAlignment="Center" />
+              <TextBlock Text="{Binding OverlayText}" VerticalAlignment="Center" />
+            </StackPanel>
+          </ToggleButton>
+        </Grid>
+
+        <ItemsControl Name="Months" ItemsSource="{Binding Content.Months}" c:DayNavigation.IsScope="True">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <c:CardGrid MinItemWidth="272" MaxColumns="4" Spacing="16" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:YearMonthCard">
+              <Border Classes="card" Classes.current="{Binding ContainsToday}" Padding="14,14,14,12">
+                <StackPanel Spacing="6">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <!-- The month's title opens Month mode on it (§2.3); outside the day scope's single tab stop. -->
+                    <Button Classes="monthTitle" Command="{Binding OpenMonthCommand}" KeyboardNavigation.IsTabStop="False"
+                            ToolTip.Tip="Open in Month" AutomationProperties.Name="{Binding Name}">
+                      <TextBlock Classes="title" FontSize="17" Text="{Binding Name}" />
+                    </Button>
+                    <TextBlock Grid.Column="1" Classes="mono ink3 monthNumber" Classes.accent="{Binding ContainsToday}" FontSize="13"
+                               FontWeight="Medium" VerticalAlignment="Center" Text="{Binding Number}"
+                               AutomationProperties.Name="{Binding NumberAutomationName}" />
+                  </Grid>
+                  <TextBlock Classes="caption foil" TextWrapping="Wrap" Text="{Binding Span}" Margin="0,0,0,4" />
+                  <p:MonthGridView Classes="compact" DataContext="{Binding Grid}" />
+                  <ItemsControl ItemsSource="{Binding Intercalary}" IsVisible="{Binding HasIntercalary}" Margin="2,4,2,0">
+                    <ItemsControl.ItemsPanel>
+                      <ItemsPanelTemplate>
+                        <StackPanel Spacing="6" />
+                      </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate x:DataType="vm:IntercalaryBadgeModel">
+                        <p:IntercalaryBadgeView />
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </c:PageColumn>
+  </ScrollViewer>
+</UserControl>

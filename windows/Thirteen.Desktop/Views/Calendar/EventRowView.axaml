@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.EventRowView"
+             x:DataType="vm:CalendarRow">
+  <!-- One event as a row (docs/EVENTS.md §2.7, the row design of Today's Up next §2.8): the time column (Geist Mono,
+       "All day", "Day 2 of 3"), the calendar's dot, the title (struck through when canceled) with its "Tentative" or
+       "Canceled" tag, and the location or "until 10:30" under it. Used by List, "+N more", the list of days and the
+       interim Week and Day views. A click selects; a double-click or Enter opens the details (task W7). -->
+  <UserControl.Styles>
+    <!-- The "Now" plate of a running event in List (board J2), as in Up next. -->
+    <Style Selector="Border.nowPlate">
+      <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="Padding" Value="5,1" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Border.nowPlate TextBlock">
+      <Setter Property="FontSize" Value="10" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="LetterSpacing" Value="0.6" />
+      <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+    </Style>
+  </UserControl.Styles>
+  <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Name="Row" Classes="eventRow" Classes.selected="{Binding IsSelected}" Command="{Binding SelectCommand}"
+          AutomationProperties.Name="{Binding AutomationName}" AutomationProperties.ItemStatus="{Binding ItemStatus}">
+    <Grid Name="Columns" ColumnDefinitions="72,Auto,*" ColumnSpacing="10">
+      <TextBlock Classes="rowTime" TextWrapping="Wrap" Text="{Binding TimeText}" Margin="0,1,0,0" />
+      <Ellipse Grid.Column="1" Classes="calendarDot" Fill="{Binding ColorBrush}" VerticalAlignment="Top" Margin="0,5,0,0" />
+      <StackPanel Grid.Column="2" Spacing="2">
+        <WrapPanel Orientation="Horizontal">
+          <TextBlock Classes="rowTitle" Classes.canceled="{Binding IsCanceled}" Text="{Binding Title}" Margin="0,0,8,0" />
+          <Border Name="NowPlate" Classes="nowPlate" Margin="0,0,8,0" IsVisible="{Binding IsNow}">
+            <TextBlock Text="{Binding NowText}" />
+          </Border>
+          <Border Classes="eventTag" IsVisible="{Binding HasTag}">
+            <TextBlock Text="{Binding Tag}" />
+          </Border>
+        </WrapPanel>
+        <Panel Name="SubLine">
+          <TextBlock Classes="rowSub" Text="{Binding SubText}" IsVisible="{Binding HasSubText}" />
+        </Panel>
+      </StackPanel>
+    </Grid>
+  </c:SelectableButton>
+</UserControl>

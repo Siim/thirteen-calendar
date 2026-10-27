@@ -1,0 +1,86 @@
+.button {
+  --button-ink: var(--t-ink);
+  --button-bg: transparent;
+  --button-border: var(--t-rule-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  min-height: 2.5rem;
+  padding: 0.4rem 1rem;
+  border: var(--t-hairline) solid var(--button-border);
+  border-radius: var(--t-radius-1);
+  background: var(--button-bg);
+  color: var(--button-ink);
+  font-family: var(--t-font-text);
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color var(--t-dur-1) var(--t-ease-out),
+    color var(--t-dur-1) var(--t-ease-out),
+    border-color var(--t-dur-1) var(--t-ease-out),
+    transform var(--t-dur-1) var(--t-ease-out);
+}
+
+.button:hover:not(:disabled) {
+  --button-bg: var(--t-accent-soft);
+  --button-border: var(--t-accent);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+
+.button:disabled {
+  opacity: 0.45;
+}
+
+.solid {
+  --button-bg: var(--t-ink);
+  --button-ink: var(--t-paper);
+  --button-border: var(--t-ink);
+}
+
+.solid:hover:not(:disabled) {
+  --button-bg: var(--t-accent);
+  --button-ink: var(--t-on-accent);
+  --button-border: var(--t-accent);
+}
+
+.ghost {
+  --button-border: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  --button-border: transparent;
+}
+
+.sm {
+  min-height: 2.125rem;
+  padding: 0.3rem 0.7rem;
+}
+
+.icon {
+  min-width: 2.5rem;
+  padding: 0.4rem;
+}
+
+.sm.icon {
+  min-width: 2.125rem;
+  padding: 0.3rem;
+}
+
+/* Touch: small buttons grow to 40px+ targets. */
+@media (pointer: coarse), (max-width: 40rem) {
+  .sm {
+    min-height: 2.625rem;
+  }
+
+  .sm.icon {
+    min-width: 2.625rem;
+  }
+}

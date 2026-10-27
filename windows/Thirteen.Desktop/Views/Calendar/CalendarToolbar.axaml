@@ -1,0 +1,81 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.CalendarToolbar"
+             x:DataType="vm:CalendarViewModel">
+  <!-- The Calendar toolbar at regular width (docs/EVENTS.md §2.1, board A2), exactly these controls in this order:
+       "‹", "›", "Today" (hidden while today is on screen), the title and subtitle, the "Subscriptions not updated"
+       status button while a visible subscription is stale, the loading indicator (after 300 ms), then the segmented
+       mode control and "New event". On a narrow window the mode control and "New event" wrap under the title
+       (Controls/ToolbarLayout). The window's system switch follows in the window header. -->
+  <c:ToolbarLayout Name="Layout" Spacing="12" LeadingMinWidth="340">
+    <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Center">
+      <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+        <Button Name="PreviousButton" Classes="tool" Command="{Binding PreviousCommand}" ToolTip.Tip="{Binding PreviousTip}"
+                AutomationProperties.Name="{Binding PreviousName}">
+          <TextBlock Classes="icon" FontSize="12" Text="&#xE76B;" />
+        </Button>
+        <Button Name="NextButton" Classes="tool" Command="{Binding NextCommand}" ToolTip.Tip="{Binding NextTip}"
+                AutomationProperties.Name="{Binding NextName}">
+          <TextBlock Classes="icon" FontSize="12" Text="&#xE76C;" />
+        </Button>
+        <Button Name="TodayButton" Classes="tool" Command="{Binding TodayCommand}" IsVisible="{Binding ShowsTodayButton}"
+                ToolTip.Tip="{Binding TodayTip}" AutomationProperties.Name="{Binding TodayText}">
+          <TextBlock Text="{Binding TodayText}" />
+        </Button>
+      </StackPanel>
+      <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="14,0,0,0">
+        <StackPanel Name="Titles" VerticalAlignment="Center" Margin="0,0,12,0">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Name="TitleText" Classes="calendarTitle" Text="{Binding PeriodTitle}" AutomationProperties.HeadingLevel="1" />
+            <!-- An intercalary day's Day title: "Year Day 2026" with the "No weekday" plate (§2.1). -->
+            <Border Name="NoWeekdayPlate" Classes="codePlate" VerticalAlignment="Center" IsVisible="{Binding ShowsNoWeekday}">
+              <TextBlock Text="{Binding NoWeekdayText}" />
+            </Border>
+          </StackPanel>
+          <TextBlock Name="SubtitleText" Classes="calendarSubtitle" Text="{Binding PeriodSubtitle}" IsVisible="{Binding HasPeriodSubtitle}" />
+        </StackPanel>
+        <Button Name="StaleButton" Classes="tool warning" VerticalAlignment="Center" Margin="0,0,12,0"
+                IsVisible="{Binding Shell.CalendarsPane.AnyStale, FallbackValue=False}" Command="{Binding ShowCalendarsCommand}"
+                ToolTip.Tip="{Binding StaleText}" AutomationProperties.Name="{Binding StaleText}">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <TextBlock Classes="icon" FontSize="13" VerticalAlignment="Center" Text="&#xE7BA;" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding StaleText}" />
+          </StackPanel>
+        </Button>
+        <TextBlock Name="Spinner" Classes="icon spinner" FontSize="14" VerticalAlignment="Center" Foreground="{DynamicResource ThInk3}"
+                   Text="&#xE895;" IsVisible="False" AutomationProperties.AccessibilityView="Raw" />
+        <!-- The polite live region for paging (§2.1: "the new title and subtitle are announced politely"). -->
+        <TextBlock Name="LiveRegion" Width="1" Height="1" Opacity="0" ClipToBounds="True" IsHitTestVisible="False"
+                   Text="{Binding Announcement}" AutomationProperties.Name="{Binding Announcement}"
+                   AutomationProperties.LiveSetting="Polite" />
+      </WrapPanel>
+    </Grid>
+
+    <Border Name="ModeControl" Classes="segmented" VerticalAlignment="Center" AutomationProperties.Name="{Binding ModesName}">
+      <!-- One tab stop, on the mode shown; Left and Right switch modes (a radio group, as WinUI's segmented control). -->
+      <ItemsControl Name="ModeList" ItemsSource="{Binding ModeOptions}" KeyboardNavigation.TabNavigation="Once">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" Spacing="2" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:CalendarModeOption">
+            <RadioButton Classes="segment" GroupName="CalendarMode" IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                         Content="{Binding Title}" ToolTip.Tip="{Binding ToolTip}" AutomationProperties.Name="{Binding Title}" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </Border>
+
+    <Button Name="NewEventButton" Classes="accentFill" VerticalAlignment="Center" Command="{Binding NewEventCommand}"
+            CommandParameter="{Binding $self}" ToolTip.Tip="{Binding NewEventTip}" AutomationProperties.Name="{Binding NewEventText}">
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Classes="icon" FontSize="12" VerticalAlignment="Center" Text="&#xE710;" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding NewEventText}" />
+      </StackPanel>
+    </Button>
+  </c:ToolbarLayout>
+</UserControl>

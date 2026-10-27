@@ -1,0 +1,588 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Surfaces and controls of the app, drawn with the theme's Th* brushes. Shapes follow Windows 11:
+       8 px corners for cards and panes, 4 px for controls and day cells. -->
+
+  <!-- ===== Surfaces ===== -->
+  <Style Selector="Border.card">
+    <Setter Property="Background" Value="{DynamicResource ThPaperRaised}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="Padding" Value="20" />
+  </Style>
+  <Style Selector="Border.card.current">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+    <Setter Property="BorderThickness" Value="1.5" />
+  </Style>
+  <Style Selector="Border.well">
+    <Setter Property="Background" Value="{DynamicResource ThWell}" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="14" />
+  </Style>
+  <Style Selector="Border.well.selected">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+    <Setter Property="BorderThickness" Value="1.5" />
+  </Style>
+  <Style Selector="Border.rule">
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Background" Value="{DynamicResource ThRule}" />
+  </Style>
+  <Style Selector="Border.pill">
+    <Setter Property="Width" Value="18" />
+    <Setter Property="Height" Value="4" />
+    <Setter Property="CornerRadius" Value="2" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+  </Style>
+  <Style Selector="Border.foilFill">
+    <Setter Property="Background" Value="{DynamicResource ThFoil}" />
+  </Style>
+  <Style Selector="Border.accentFill">
+    <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+  </Style>
+  <Style Selector="Border.inkFill">
+    <Setter Property="Background" Value="{DynamicResource ThInk2}" />
+  </Style>
+
+  <!-- ===== Keyboard focus ===== -->
+  <!-- Windows 11 focus visuals: a 2 px ring in the theme's focus colour with a 1 px paper line inside it,
+       3 px outside the control and following its corners (Fluent's default ring is square). The specific
+       shapes below come after the general one, so they win. -->
+  <Style Selector="Button, ToggleButton, RepeatButton, RadioButton, ToggleSwitch, ListBoxItem, ComboBox, CalendarDayButton, CalendarButton">
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border AdornerLayer.IsClipEnabled="False" Margin="-3" CornerRadius="7" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}">
+          <Border CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource SystemControlFocusVisualSecondaryBrush}" />
+        </Border>
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <!-- Navigation items: around the rounded highlight, inside the pane. -->
+  <Style Selector="RadioButton.nav">
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border AdornerLayer.IsClipEnabled="False" Margin="2,0" CornerRadius="6" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}">
+          <Border CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource SystemControlFocusVisualSecondaryBrush}" />
+        </Border>
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <!-- Day cells and segments sit 4 px apart: a tighter ring. -->
+  <Style Selector="Button.day, RadioButton.segment">
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border AdornerLayer.IsClipEnabled="False" Margin="-2" CornerRadius="6" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}">
+          <Border CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource SystemControlFocusVisualSecondaryBrush}" />
+        </Border>
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="Button.badge, Button.pick">
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border AdornerLayer.IsClipEnabled="False" Margin="-3" CornerRadius="9" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}">
+          <Border CornerRadius="7" BorderThickness="1" BorderBrush="{DynamicResource SystemControlFocusVisualSecondaryBrush}" />
+        </Border>
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="ListBox.swatches ListBoxItem">
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border AdornerLayer.IsClipEnabled="False" Margin="-3" CornerRadius="11" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}">
+          <Border CornerRadius="9" BorderThickness="1" BorderBrush="{DynamicResource SystemControlFocusVisualSecondaryBrush}" />
+        </Border>
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="Button.round">
+    <Setter Property="FocusAdorner">
+      <FocusAdornerTemplate>
+        <Border AdornerLayer.IsClipEnabled="False" Margin="-3" CornerRadius="23" BorderThickness="2" BorderBrush="{DynamicResource SystemControlFocusVisualPrimaryBrush}">
+          <Border CornerRadius="21" BorderThickness="1" BorderBrush="{DynamicResource SystemControlFocusVisualSecondaryBrush}" />
+        </Border>
+      </FocusAdornerTemplate>
+    </Setter>
+  </Style>
+
+  <!-- ===== Buttons ===== -->
+  <Style Selector="Button, ToggleButton, RepeatButton">
+    <Setter Property="CornerRadius" Value="4" />
+  </Style>
+
+  <!-- The app's bordered button: the accent wash with an ink label (the Apple apps' accentBordered style). -->
+  <Style Selector="Button.accentBordered">
+    <Setter Property="Background" Value="{DynamicResource ThAccentSoft}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="12,7" />
+    <Setter Property="FontWeight" Value="Medium" />
+  </Style>
+  <Style Selector="Button.accentBordered:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentTone1}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.accentBordered:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentTone2}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.accentBordered:disabled /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThWell}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+  </Style>
+
+  <Style Selector="Button.subtle">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.subtle:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.subtle:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThPressed}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.subtle:disabled /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+  </Style>
+
+  <!-- Round previous / next year buttons. -->
+  <Style Selector="Button.round">
+    <Setter Property="Width" Value="40" />
+    <Setter Property="Height" Value="40" />
+    <Setter Property="CornerRadius" Value="20" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+
+  <!-- Text-like link button ("Go to Gregorian Oct 12, 2026"). -->
+  <Style Selector="Button.link">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0,2" />
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="Button.link:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+  <Style Selector="Button.link:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.link:pointerover TextBlock">
+    <Setter Property="TextDecorations" Value="Underline" />
+  </Style>
+
+  <!-- Notable-day quick picks. -->
+  <Style Selector="Button.pick">
+    <Setter Property="Background" Value="{DynamicResource ThWell}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1.5" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="12,10" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+  </Style>
+  <Style Selector="Button.pick:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThCellHover}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+  <Style Selector="Button.pick.selected">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+  </Style>
+  <Style Selector="Button.pick.selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+  </Style>
+
+  <!-- Calendar (Convert): Windows 11 calendar flyout proportions. -->
+  <!-- Fluent paints the 1px gaps between day cells with the calendar's BorderBrush (a grid of lines), so
+       the calendar has none and Convert frames it with Border.calendarFrame instead. -->
+  <Style Selector="Border.calendarFrame > Calendar">
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="Border.calendarFrame">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Background" Value="{DynamicResource ThPaperRaised}" />
+    <Setter Property="ClipToBounds" Value="True" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+  </Style>
+  <!-- The typed-date box sits under the full calendar, so its drop-down button (whose glyph is drawn
+       with 0.5px lines that vanish at 100% scaling) is not needed. -->
+  <Style Selector="CalendarDatePicker.typed /template/ Button#PART_Button">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+  <Style Selector="CalendarDayButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+  </Style>
+  <Style Selector="CalendarButton">
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+  <!-- Fluent's spinner arrows (the Convert year box) are icons; give screen readers words, as NumberBox does. -->
+  <Style Selector="ButtonSpinner /template/ RepeatButton#PART_IncreaseButton">
+    <Setter Property="AutomationProperties.Name" Value="Increase" />
+  </Style>
+  <Style Selector="ButtonSpinner /template/ RepeatButton#PART_DecreaseButton">
+    <Setter Property="AutomationProperties.Name" Value="Decrease" />
+  </Style>
+
+  <!-- ===== Day cells ===== -->
+  <Style Selector="Button.day">
+    <Setter Property="Background" Value="{DynamicResource ThCell}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Padding" Value="0,4" />
+    <Setter Property="MinHeight" Value="44" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.12" />
+      </Transitions>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Border Name="PART_Background" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" />
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+          <Border Name="PART_Outline" CornerRadius="{TemplateBinding CornerRadius}"
+                  BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="Button.day:pointerover">
+    <Setter Property="Background" Value="{DynamicResource ThCellHover}" />
+  </Style>
+  <Style Selector="Button.day:pressed">
+    <Setter Property="RenderTransform" Value="scale(0.94)" />
+  </Style>
+  <Style Selector="Button.day.today">
+    <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+  </Style>
+  <!-- AccentText, not Accent, as in the Apple grids: the ring must reach 3:1 against the cell (Almanac and
+       Forest light: Accent is 2.9:1 there). -->
+  <Style Selector="Button.day.selected">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="Button.day.today.selected">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="Button.day TextBlock.dayNumber">
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+  </Style>
+  <Style Selector="Button.day TextBlock.daySub">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="Foreground" Value="{DynamicResource ThFoil}" />
+  </Style>
+  <Style Selector="Button.day TextBlock.daySub.strong">
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+  <Style Selector="Button.day Border.monthBar">
+    <Setter Property="Width" Value="3" />
+    <Setter Property="CornerRadius" Value="1.5" />
+    <Setter Property="Margin" Value="1,6" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="Background" Value="{DynamicResource ThFoil}" />
+  </Style>
+  <Style Selector="Button.day Rectangle.dash">
+    <Setter Property="Stroke" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="StrokeThickness" Value="1.25" />
+    <Setter Property="StrokeDashArray" Value="4,3" />
+    <Setter Property="RadiusX" Value="4" />
+    <Setter Property="RadiusY" Value="4" />
+    <Setter Property="Margin" Value="0,-4" />
+  </Style>
+  <Style Selector="Button.day.greg TextBlock.daySub">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+  <Style Selector="Button.day.greg Border.monthBar">
+    <Setter Property="Background" Value="{DynamicResource ThAccentText}" />
+  </Style>
+  <!-- Red-letter Sundays; ThMarkWeight is bold in Mono, where the colour alone says nothing. -->
+  <Style Selector="Button.day.sunday TextBlock.dayNumber">
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    <Setter Property="FontWeight" Value="{DynamicResource ThMarkWeight}" />
+  </Style>
+  <Style Selector="Button.day.today TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <Style Selector="Button.day.today TextBlock.dayNumber">
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+  <Style Selector="Button.day.today Border.monthBar">
+    <Setter Property="Background" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <Style Selector="Button.day.today Rectangle.dash">
+    <Setter Property="Stroke" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <!-- The Year screen's smaller cells. -->
+  <Style Selector=":is(Control).compact Button.day">
+    <Setter Property="MinHeight" Value="34" />
+    <Setter Property="Padding" Value="0,2" />
+  </Style>
+  <Style Selector=":is(Control).compact Button.day TextBlock.dayNumber">
+    <Setter Property="FontSize" Value="13" />
+  </Style>
+  <Style Selector=":is(Control).compact Button.day TextBlock.daySub">
+    <Setter Property="FontSize" Value="10" />
+  </Style>
+  <Style Selector=":is(Control).compact Button.day Border.monthBar">
+    <Setter Property="Width" Value="2" />
+    <Setter Property="Margin" Value="1,4" />
+  </Style>
+
+  <Style Selector="TextBlock.gridHeader">
+    <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LetterSpacing" Value="0.6" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    <Setter Property="Margin" Value="0,0,0,4" />
+  </Style>
+
+  <!-- ===== Intercalary day "ticket" ===== -->
+  <Style Selector="Button.badge">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWashSoft}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="12" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Border Name="PART_Background" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" />
+          <Rectangle Name="PART_Dash" RadiusX="6" RadiusY="6" Stroke="{DynamicResource ThAccentFaint}"
+                     StrokeThickness="1.25" StrokeDashArray="5,4" />
+          <Border Name="PART_Solid" CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{DynamicResource ThAccentText}"
+                  BorderThickness="2" IsVisible="False" />
+          <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="Button.badge.compact">
+    <Setter Property="Padding" Value="10,6" />
+  </Style>
+  <Style Selector="Button.badge:pointerover">
+    <Setter Property="Background" Value="{DynamicResource ThAccentWash}" />
+  </Style>
+  <Style Selector="Button.badge.selected /template/ Rectangle#PART_Dash">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+  <Style Selector="Button.badge.selected /template/ Border#PART_Solid">
+    <Setter Property="IsVisible" Value="True" />
+  </Style>
+  <Style Selector="Button.badge.today">
+    <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+  </Style>
+  <Style Selector="Button.badge.today TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+  <Style Selector="Button.badge Ellipse.seal">
+    <Setter Property="Width" Value="16" />
+    <Setter Property="Height" Value="16" />
+    <Setter Property="Stroke" Value="{DynamicResource ThAccent}" />
+    <Setter Property="StrokeThickness" Value="2" />
+    <Setter Property="StrokeDashArray" Value="1.6,1.4" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.badge.compact Ellipse.seal">
+    <Setter Property="Width" Value="11" />
+    <Setter Property="Height" Value="11" />
+    <Setter Property="StrokeThickness" Value="1.5" />
+  </Style>
+  <Style Selector="Button.badge.today Ellipse.seal">
+    <Setter Property="Stroke" Value="{DynamicResource ThOnAccent}" />
+  </Style>
+
+  <!-- ===== Navigation pane ===== -->
+  <Style Selector="RadioButton.nav">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Bg" Background="{TemplateBinding Background}" CornerRadius="4" Height="40" Margin="4,2">
+          <Panel>
+            <Border Name="PART_Indicator" Width="3" Height="16" CornerRadius="1.5" HorizontalAlignment="Left"
+                    VerticalAlignment="Center" Background="{DynamicResource ThAccent}" IsVisible="False" />
+            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="Center" />
+          </Panel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="RadioButton.nav:pointerover /template/ Border#PART_Bg">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+  </Style>
+  <Style Selector="RadioButton.nav:pressed /template/ Border#PART_Bg">
+    <Setter Property="Background" Value="{DynamicResource ThPressed}" />
+  </Style>
+  <Style Selector="RadioButton.nav:checked /template/ Border#PART_Bg">
+    <Setter Property="Background" Value="{DynamicResource ThSelectedNav}" />
+  </Style>
+  <Style Selector="RadioButton.nav:checked /template/ Border#PART_Indicator">
+    <Setter Property="IsVisible" Value="True" />
+  </Style>
+  <Style Selector="RadioButton.nav:checked TextBlock.navLabel">
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <!-- ===== Segmented control (calendar system, convert direction) ===== -->
+  <Style Selector="Border.segmented">
+    <Setter Property="Background" Value="{DynamicResource ThPaperSunk}" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="3" />
+  </Style>
+  <Style Selector="RadioButton.segment">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    <Setter Property="Padding" Value="14,5" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Bg" Background="{TemplateBinding Background}" CornerRadius="4" BorderThickness="1" BorderBrush="Transparent"
+                Padding="{TemplateBinding Padding}">
+          <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="RadioButton.segment:pointerover /template/ Border#PART_Bg">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+  </Style>
+  <Style Selector="RadioButton.segment:checked">
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="RadioButton.segment:checked /template/ Border#PART_Bg">
+    <Setter Property="Background" Value="{DynamicResource ThPaperRaised}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+  </Style>
+
+  <!-- ===== Toggle chip ("Gregorian dates") ===== -->
+  <Style Selector="ToggleButton.chip">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+    <Setter Property="Padding" Value="10,6" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="ToggleButton.chip:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThInk3}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="ToggleButton.chip:checked /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentSoft}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThAccentFaint}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="ToggleButton.chip:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentTone1}" />
+  </Style>
+  <Style Selector="ToggleButton.chip TextBlock.check">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+  <Style Selector="ToggleButton.chip:checked TextBlock.check">
+    <Setter Property="IsVisible" Value="True" />
+    <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+  </Style>
+
+  <!-- ===== Theme swatches ===== -->
+  <Style Selector="ListBox.swatches">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="ListBox.swatches ListBoxItem">
+    <Setter Property="Padding" Value="6" />
+    <Setter Property="Margin" Value="0,0,8,8" />
+    <Setter Property="Width" Value="132" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="ListBox.swatches ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThHover}" />
+  </Style>
+  <Style Selector="ListBox.swatches ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentSoft}" />
+  </Style>
+  <Style Selector="ListBox.swatches ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThAccentTone1}" />
+  </Style>
+  <Style Selector="ListBox.swatches ListBoxItem:selected TextBlock.swatchName">
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="ListBox.swatches ListBoxItem TextBlock.check">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+  <Style Selector="ListBox.swatches ListBoxItem:selected TextBlock.check">
+    <Setter Property="IsVisible" Value="True" />
+  </Style>
+
+  <!-- ===== Settings cards (Windows Settings style rows) ===== -->
+  <Style Selector="Border.settingsRow">
+    <Setter Property="Background" Value="{DynamicResource ThPaperRaised}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="Padding" Value="18,14" />
+  </Style>
+
+  <!-- Radio buttons and toggle switches use the theme's ink. -->
+  <Style Selector="RadioButton:not(.nav):not(.segment)">
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="ToggleSwitch">
+    <Setter Property="Foreground" Value="{DynamicResource ThInk}" />
+  </Style>
+  <Style Selector="ScrollViewer">
+    <Setter Property="AllowAutoHide" Value="True" />
+  </Style>
+</Styles>

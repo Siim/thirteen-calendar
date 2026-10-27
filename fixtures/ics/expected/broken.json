@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "case": "cases/broken.ics",
+  "calendarId": "broken",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Broken",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Broken"}
+    ],
+    "timeZones": [],
+    "others": [
+      {"name":"VEVENT","line":12},
+      {"name":"VEVENT","line":18},
+      {"name":"VEVENT","line":43}
+    ]
+  },
+  "warnings": [
+    {"line":16,"code":"bad-date","detail":"Unreadable DTSTART \"2026-10-20 09:00\""},
+    {"line":18,"code":"missing-dtstart","detail":"VEVENT without DTSTART"},
+    {"line":28,"code":"bad-date","detail":"Unreadable DTEND \"sometime\""},
+    {"line":29,"code":"bad-rrule","detail":"Invalid RRULE \"FREQ=FORTNIGHTLY\": unknown FREQ \"FORTNIGHTLY\""},
+    {"line":30,"code":"bad-date","detail":"Unreadable EXDATE \"yesterday\""},
+    {"line":31,"code":"bad-line","detail":"Not a content line: \"This line has no colon\""},
+    {"line":32,"code":"skipped-component","detail":"VALARM without a readable TRIGGER"},
+    {"line":37,"code":"missing-uid","detail":"VEVENT without UID; derived missing-f7865f328a9123fcfcf4e61c301d9ef7"},
+    {"line":43,"code":"unclosed-component","detail":"BEGIN:VEVENT has no END:VEVENT"}
+  ],
+  "groups": [
+    {"uid":"70c6a089-6bc6-4371-8ae1-fabd9350e4a0","master":{"uid":"70c6a089-6bc6-4371-8ae1-fabd9350e4a0","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"A good event","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-10-19T09:00"},"end":{"kind":"utc","value":"2026-10-19T10:00"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":5},"overrides":[]},
+    {"uid":"5d198b90-853e-44f9-b84d-e4f259119d0f","master":{"uid":"5d198b90-853e-44f9-b84d-e4f259119d0f","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Readable start, broken parts","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-10-21T09:00"},"end":null,"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[{"name":"DTEND","params":[],"value":"sometime"},{"name":"RRULE","params":[],"value":"FREQ=FORTNIGHTLY"},{"name":"EXDATE","params":[],"value":"yesterday"}],"line":23},"overrides":[]},
+    {"uid":"missing-f7865f328a9123fcfcf4e61c301d9ef7","master":{"uid":"missing-f7865f328a9123fcfcf4e61c301d9ef7","uidDerived":true,"recurrenceId":null,"sequence":0,"summary":"No UID","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-10-22T09:00"},"end":{"kind":"utc","value":"2026-10-22T09:30"},"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":37},"overrides":[]},
+    {"uid":"cf051822-dc35-452a-80af-64c8cf024785","master":{"uid":"cf051822-dc35-452a-80af-64c8cf024785","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"After the unclosed one","location":"","description":"","url":"","start":{"kind":"date","date":"2026-10-24"},"end":null,"duration":null,"rrules":[],"exrules":[],"rdates":[],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":48},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"broken/70c6a089-6bc6-4371-8ae1-fabd9350e4a0|2026-10-19T09:00","calendarId":"broken","title":"A good event","allDay":false,"start":"2026-10-19T12:00","end":"2026-10-19T13:00"},
+        {"key":"broken/5d198b90-853e-44f9-b84d-e4f259119d0f|2026-10-21T09:00","calendarId":"broken","title":"Readable start, broken parts","allDay":false,"start":"2026-10-21T12:00","end":"2026-10-21T12:00"},
+        {"key":"broken/missing-f7865f328a9123fcfcf4e61c301d9ef7|2026-10-22T09:00","calendarId":"broken","title":"No UID","allDay":false,"start":"2026-10-22T12:00","end":"2026-10-22T12:30"},
+        {"key":"broken/cf051822-dc35-452a-80af-64c8cf024785|2026-10-24","calendarId":"broken","title":"After the unclosed one","allDay":true,"start":"2026-10-24T00:00","end":"2026-10-24T24:00"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"broken/70c6a089-6bc6-4371-8ae1-fabd9350e4a0|2026-10-19T09:00","calendarId":"broken","title":"A good event","allDay":false,"start":"2026-10-19T05:00","end":"2026-10-19T06:00"},
+        {"key":"broken/5d198b90-853e-44f9-b84d-e4f259119d0f|2026-10-21T09:00","calendarId":"broken","title":"Readable start, broken parts","allDay":false,"start":"2026-10-21T05:00","end":"2026-10-21T05:00"},
+        {"key":"broken/missing-f7865f328a9123fcfcf4e61c301d9ef7|2026-10-22T09:00","calendarId":"broken","title":"No UID","allDay":false,"start":"2026-10-22T05:00","end":"2026-10-22T05:30"},
+        {"key":"broken/cf051822-dc35-452a-80af-64c8cf024785|2026-10-24","calendarId":"broken","title":"After the unclosed one","allDay":true,"start":"2026-10-24T00:00","end":"2026-10-24T24:00"}
+      ]
+    }
+  ]
+}

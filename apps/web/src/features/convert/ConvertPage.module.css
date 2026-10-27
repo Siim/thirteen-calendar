@@ -1,0 +1,401 @@
+.page {
+  display: grid;
+  gap: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+/* ---- The instrument: input pane, swap, result pane ------------------ */
+
+.converter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+  box-shadow: var(--t-shadow-2);
+}
+
+@media (min-width: 60rem) {
+  .converter {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.1fr);
+  }
+}
+
+.pane {
+  display: grid;
+  align-content: start;
+  gap: var(--t-space-4);
+  min-width: 0;
+  padding: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+}
+
+.paneOutput {
+  background:
+    linear-gradient(var(--t-paper-raised), var(--t-paper-raised)) padding-box,
+    var(--t-paper-raised);
+}
+
+.paneTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-xl);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}
+
+.paneTitle span {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-style: normal;
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-accent-text);
+}
+
+.swapColumn {
+  display: grid;
+  place-items: center;
+  padding: 0 var(--t-space-4);
+  border-block: var(--t-hairline) dashed var(--t-rule);
+}
+
+@media (min-width: 60rem) {
+  .swapColumn {
+    padding: var(--t-space-4) 0;
+    border-block: 0;
+    border-inline: var(--t-hairline) dashed var(--t-rule);
+    width: 4.5rem;
+  }
+}
+
+.swapInner {
+  display: flex;
+  align-items: center;
+  gap: var(--t-space-3);
+  padding-block: var(--t-space-3);
+}
+
+@media (min-width: 60rem) {
+  .swapInner {
+    flex-direction: column;
+  }
+}
+
+.swapHint {
+  font-family: var(--t-font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-3);
+}
+
+@media (min-width: 60rem) {
+  .swapHint {
+    writing-mode: vertical-rl;
+  }
+}
+
+.resultCode {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  padding-top: var(--t-space-3);
+  border-top: var(--t-hairline) solid var(--t-rule);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  letter-spacing: var(--t-tracking-mono);
+  color: var(--t-ink-2);
+}
+
+.resultCode b {
+  color: var(--t-ink);
+  font-weight: 600;
+}
+
+/* ---- Form fields ---------------------------------------------------- */
+
+.fields {
+  display: grid;
+  gap: var(--t-space-4);
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--t-space-3);
+}
+
+/* Phones: month and day on their own rows so long names ("Festival of All the Dead") fit. */
+@media (max-width: 30rem) {
+  .fieldRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  color: var(--t-ink-2);
+  font-family: var(--t-font-mono);
+  text-transform: uppercase;
+}
+
+.input,
+.select {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.45rem 0.7rem;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: var(--t-radius-1);
+  background: var(--t-paper);
+  color: var(--t-ink);
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-medium);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--t-tracking-text);
+}
+
+.select {
+  appearance: none;
+  padding-right: 2rem;
+  font-size: var(--t-text-md);
+  text-overflow: ellipsis;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--t-ink-2) 50%),
+    linear-gradient(135deg, var(--t-ink-2) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.1rem) 52%,
+    calc(100% - 0.75rem) 52%;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+
+.select:disabled {
+  opacity: 0.5;
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 1px;
+}
+
+.mono {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-md);
+  letter-spacing: var(--t-tracking-mono);
+}
+
+.inputInvalid {
+  border-color: var(--t-accent);
+  box-shadow: inset 0 0 0 1px var(--t-accent);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--t-space-2);
+}
+
+.help {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.help code {
+  font-family: var(--t-font-mono);
+  font-size: 0.92em;
+}
+
+.error {
+  padding: var(--t-space-3) var(--t-space-4);
+  border-left: 3px solid var(--t-accent);
+  background: var(--t-accent-wash);
+  color: var(--t-ink);
+  font-size: var(--t-text-sm);
+}
+
+.notice {
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  color: var(--t-accent-text);
+}
+
+/* ---- Label lookups -------------------------------------------------- */
+
+.section {
+  display: grid;
+  gap: var(--t-space-5);
+}
+
+.lookup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-4);
+}
+
+@media (min-width: 52rem) {
+  .lookup {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.label-quote {
+  font-family: var(--t-font-display);
+}
+
+.quote {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-2xl);
+  font-weight: var(--t-weight-title);
+  line-height: 1.08;
+  letter-spacing: var(--t-tracking-display);
+}
+
+.quote q {
+  quotes: '“' '”';
+}
+
+.card {
+  display: grid;
+  align-content: start;
+  gap: var(--t-space-3);
+  padding: var(--t-space-5);
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+}
+
+.cardFoil {
+  background: var(--t-paper);
+  border-style: solid;
+  border-color: var(--t-foil);
+}
+
+.cardKicker {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.cardMain {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-xl);
+  font-weight: var(--t-weight-title);
+  line-height: 1.15;
+  letter-spacing: var(--t-tracking-title);
+}
+
+.cardFoil .cardMain {
+  font-family: var(--t-font-text);
+  font-weight: var(--t-weight-text);
+  color: var(--t-foil);
+}
+
+.cardArrow {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.cardArrow strong {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: 600;
+  color: var(--t-ink);
+}
+
+.cardNote {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.cardAction {
+  justify-self: start;
+}
+
+/* ---- Breakdown ------------------------------------------------------ */
+
+.breakdown {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-6);
+  align-items: start;
+}
+
+@media (min-width: 64rem) {
+  .breakdown {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr);
+  }
+}
+
+/* ---- Notable dates -------------------------------------------------- */
+
+.picks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: var(--t-space-3);
+  list-style: none;
+}
+
+.pick {
+  display: grid;
+  gap: 0.3rem;
+  width: 100%;
+  height: 100%;
+  padding: var(--t-space-4);
+  border: var(--t-hairline) solid var(--t-rule);
+  border-radius: var(--t-radius-1);
+  background: var(--t-paper-raised);
+  text-align: left;
+  transition:
+    border-color var(--t-dur-1) var(--t-ease-out),
+    background-color var(--t-dur-1) var(--t-ease-out);
+}
+
+.pick:hover {
+  border-color: var(--t-accent);
+  background: var(--t-accent-soft);
+}
+
+.pick[aria-pressed='true'] {
+  border-color: var(--t-ink);
+  box-shadow: inset 0 0 0 1px var(--t-ink);
+}
+
+.pickName {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-title);
+  line-height: 1.15;
+  letter-spacing: var(--t-tracking-title);
+}
+
+.pickLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  color: var(--t-foil);
+}
+
+.pickLine b {
+  font-weight: 600;
+  color: var(--t-accent-text);
+}
+
+.pickSub {
+  font-size: var(--t-text-xs);
+  color: var(--t-ink-2);
+}

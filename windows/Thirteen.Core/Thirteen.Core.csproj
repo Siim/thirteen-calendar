@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Thirteen.Core: C# port of @thirteen/core (packages/core), the engine for perennial 13 x 28
+    calendars (International Fixed Calendar, Positivist). Rules: docs/SPEC.md. No dependencies
+    beyond the BCL. Parity with the TypeScript engine is enforced by Thirteen.Core.Tests against
+    fixtures/conversions.json, fixtures/events.json (Events/) and fixtures/ics (Ics/, the .ics module),
+    read in place from the repository.
+  -->
+  <PropertyGroup>
+    <RootNamespace>Thirteen.Core</RootNamespace>
+    <AssemblyName>Thirteen.Core</AssemblyName>
+    <Description>Calendar engine for Thirteen: International Fixed Calendar and Positivist calendar, compared with Gregorian.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsTrimmable>false</IsTrimmable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Thirteen.Core.Tests" />
+  </ItemGroup>
+</Project>

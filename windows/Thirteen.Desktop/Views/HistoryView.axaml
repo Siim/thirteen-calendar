@@ -1,0 +1,104 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             x:Class="Thirteen.Desktop.Views.HistoryView"
+             x:DataType="vm:HistoryViewModel">
+  <!-- History: one merged timeline of the three calendars and each calendar's summary. -->
+  <UserControl.Styles>
+    <Style Selector="Ellipse.dot">
+      <Setter Property="Width" Value="11" />
+      <Setter Property="Height" Value="11" />
+      <Setter Property="Stroke" Value="{DynamicResource ThPaperRaised}" />
+      <Setter Property="StrokeThickness" Value="2" />
+      <Setter Property="Fill" Value="{DynamicResource ThInk2}" />
+    </Style>
+    <Style Selector="Ellipse.dot.foil">
+      <Setter Property="Fill" Value="{DynamicResource ThFoil}" />
+    </Style>
+    <Style Selector="Ellipse.dot.accent">
+      <Setter Property="Fill" Value="{DynamicResource ThAccent}" />
+    </Style>
+    <Style Selector="TextBlock.calendar">
+      <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    </Style>
+    <Style Selector="TextBlock.calendar.foil">
+      <Setter Property="Foreground" Value="{DynamicResource ThFoil}" />
+    </Style>
+    <Style Selector="TextBlock.calendar.accent">
+      <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    </Style>
+    <Style Selector="Border.story">
+      <Setter Property="Background" Value="{DynamicResource ThPaperRaised}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Padding" Value="20" />
+    </Style>
+    <Style Selector="Border.story.selected">
+      <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+      <Setter Property="BorderThickness" Value="1.5" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer Name="Scroller" HorizontalScrollBarVisibility="Disabled">
+    <c:PageColumn MaxContentWidth="{Binding ContentMaxWidth}">
+      <StackPanel Margin="32,4,32,32" Spacing="16">
+        <TextBlock Classes="lede" Text="{Binding Intro}" Margin="0,0,0,4" />
+
+        <Border Classes="card">
+          <StackPanel Spacing="16">
+            <TextBlock Classes="title" Text="Timeline" />
+            <ItemsControl ItemsSource="{Binding Events}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:TimelineEvent">
+                  <Grid ColumnDefinitions="64,24,*" AutomationProperties.Name="{Binding AutomationName}">
+                    <TextBlock Classes="numeral" FontSize="18" FontWeight="SemiBold" LetterSpacing="-0.4" HorizontalAlignment="Right"
+                               VerticalAlignment="Top" Text="{Binding Year}" Margin="0,0,4,0" />
+                    <Grid Grid.Column="1" RowDefinitions="Auto,*">
+                      <Ellipse Classes="dot" Classes.foil="{Binding IsFoil}" Classes.accent="{Binding IsAccent}"
+                               HorizontalAlignment="Center" Margin="0,6,0,0" />
+                      <Border Grid.Row="1" Width="1.5" Background="{DynamicResource ThRule}" HorizontalAlignment="Center"
+                              IsVisible="{Binding HasRule}" />
+                    </Grid>
+                    <StackPanel Grid.Column="2" Spacing="3" Margin="8,0,0,18">
+                      <TextBlock Classes="eyebrow calendar" Classes.foil="{Binding IsFoil}" Classes.accent="{Binding IsAccent}"
+                                 Text="{Binding Calendar}" />
+                      <TextBlock Classes="body" Text="{Binding Text}" />
+                    </StackPanel>
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+
+        <TextBlock Classes="sectionTitle" Text="The calendars" Margin="0,8,0,0" />
+        <ItemsControl ItemsSource="{Binding Stories}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <c:CardGrid MinItemWidth="260" MaxColumns="3" Spacing="16" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:CalendarStory">
+              <Border Classes="story" Classes.selected="{Binding IsSelected}" AutomationProperties.Name="{Binding AutomationName}">
+                <StackPanel Spacing="8">
+                  <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Border Classes="pill foilFill" IsVisible="{Binding IsFoil}" VerticalAlignment="Center" />
+                    <Border Classes="pill accentFill" IsVisible="{Binding IsAccent}" VerticalAlignment="Center" />
+                    <Border Classes="pill inkFill" IsVisible="{Binding IsInk}" VerticalAlignment="Center" />
+                    <TextBlock Classes="eyebrow accent" Text="SELECTED" IsVisible="{Binding IsSelected}" />
+                  </StackPanel>
+                  <TextBlock Classes="title" Text="{Binding Name}" />
+                  <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding Origin}" />
+                  <TextBlock Classes="body" FontSize="13.5" Text="{Binding Summary}" />
+                </StackPanel>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </c:PageColumn>
+  </ScrollViewer>
+</UserControl>

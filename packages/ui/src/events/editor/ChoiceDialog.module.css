@@ -1,0 +1,76 @@
+/* Questions of the editor and details (§2.11): stacked choices, Cancel last. */
+
+.dialog {
+  --dialog-width: 380px;
+}
+
+.lines {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 14px;
+  color: var(--t-ink-2);
+  font-size: var(--t-text-sm);
+  line-height: var(--t-leading-snug);
+}
+
+.lines p {
+  margin: 0;
+}
+
+.choices {
+  display: grid;
+  gap: 8px;
+}
+
+.choice {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: 10px;
+  background: var(--t-paper);
+  color: var(--t-ink);
+  font: inherit;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  text-align: center;
+  cursor: pointer;
+}
+
+.choice:hover {
+  border-color: var(--t-accent);
+  background: var(--t-accent-soft);
+}
+
+.primary {
+  border-color: var(--t-accent);
+  background: var(--t-accent);
+  color: var(--t-on-accent);
+}
+
+.primary:hover {
+  background: var(--t-accent);
+  filter: brightness(0.95);
+}
+
+/* No danger token: destructive actions are accent text, heavier (as the Menu primitive). */
+.destructive {
+  color: var(--t-accent-text);
+  font-weight: var(--t-weight-title);
+}
+
+.cancel {
+  margin-top: 4px;
+  border-color: transparent;
+  background: transparent;
+}
+
+@media (forced-colors: active) {
+  .choice {
+    border-color: ButtonText;
+  }
+
+  .primary {
+    background: ButtonText;
+    color: ButtonFace;
+  }
+}

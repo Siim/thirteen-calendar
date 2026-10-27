@@ -1,0 +1,30 @@
+{
+  "name": "thirteen",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Thirteen: a 13-month (13 x 28 days) calendar for the web, iPhone, iPad, Mac, Android and Windows.",
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @thirteen/web dev",
+    "build": "pnpm -r build",
+    "preview": "pnpm --filter @thirteen/web preview",
+    "test": "pnpm -r test",
+    "test:timing": "pnpm --filter @thirteen/core test:timing",
+    "typecheck": "pnpm -r typecheck",
+    "fixtures": "pnpm --filter @thirteen/core fixtures",
+    "apple:test": "cd apple/ThirteenKit && swift test",
+    "apple:gen": "cd apple && xcodegen generate",
+    "tokens": "node scripts/design/gen-tokens.mjs --targets web,apple,android,windows",
+    "tokens:check": "node scripts/design/check-contrast.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

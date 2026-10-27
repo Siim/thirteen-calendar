@@ -1,0 +1,205 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: var(--t-hairline) solid var(--t-rule-strong);
+}
+
+.caption {
+  caption-side: top;
+  padding-bottom: 0.5rem;
+  text-align: left;
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-lg);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-title);
+}
+
+.row {
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+}
+
+.term {
+  width: 9.5rem;
+  padding: 0.8rem 1rem 0.7rem 0;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  line-height: 1.45;
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  text-align: left;
+  vertical-align: top;
+  color: var(--t-ink-2);
+}
+
+.value {
+  padding: 0.6rem 0;
+  vertical-align: top;
+}
+
+.main {
+  display: block;
+  font-size: var(--t-text-md);
+  font-weight: var(--t-weight-medium);
+  line-height: 1.4;
+}
+
+.code {
+  display: inline-block;
+  margin-top: 0.15rem;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-xs);
+  letter-spacing: var(--t-tracking-mono);
+  color: var(--t-ink-2);
+}
+
+.note {
+  display: block;
+  margin-top: 0.25rem;
+  max-width: var(--t-measure);
+  font-size: var(--t-text-sm);
+  line-height: 1.45;
+  color: var(--t-ink-2);
+}
+
+.accent {
+  color: var(--t-accent-text);
+}
+
+.foil {
+  color: var(--t-foil);
+}
+
+.figure {
+  font-family: var(--t-font-display);
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--t-tracking-title);
+}
+
+.compact .term {
+  width: 7.5rem;
+  padding-block: 0.5rem;
+}
+
+.compact .value {
+  padding-block: 0.45rem;
+}
+
+@media (max-width: 30rem) {
+  .row {
+    display: grid;
+  }
+
+  .term,
+  .compact .term {
+    width: auto;
+    padding: 0.6rem 0 0;
+  }
+
+  .value {
+    padding-top: 0.1rem;
+  }
+}
+
+/* In a narrow container (the Year page's side panel) the compact table stacks too. */
+@container (max-width: 20rem) {
+  .compact .row {
+    display: grid;
+  }
+
+  .compact .term {
+    width: auto;
+    padding: 0.55rem 0 0;
+  }
+
+  .compact .value {
+    padding-top: 0.1rem;
+  }
+}
+
+/* Card: the equation "13-month date = Gregorian date" with two key figures. */
+.card {
+  display: grid;
+  gap: var(--t-space-4);
+  padding: var(--t-space-5);
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  background: var(--t-paper-raised);
+  box-shadow: var(--t-shadow-1);
+}
+
+.equation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  gap: var(--t-space-3);
+}
+
+.side {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.sideLabel {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.sideDate {
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-xl);
+  font-weight: var(--t-weight-title);
+  line-height: 1.1;
+  letter-spacing: var(--t-tracking-title);
+  overflow-wrap: anywhere;
+}
+
+.sideGregorian .sideDate {
+  font-family: var(--t-font-text);
+  font-weight: var(--t-weight-text);
+  color: var(--t-foil);
+}
+
+.sideWeekday {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-accent-text);
+}
+
+.sideGregorian .sideWeekday {
+  color: var(--t-foil);
+}
+
+.equals {
+  padding-bottom: 0.25rem;
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-2xl);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--t-ink-3);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--t-space-3);
+  padding-top: var(--t-space-3);
+  border-top: var(--t-hairline) solid var(--t-rule);
+}
+
+@media (max-width: 26rem) {
+  .equation {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .equals {
+    display: none;
+  }
+}

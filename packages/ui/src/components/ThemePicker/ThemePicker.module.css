@@ -1,0 +1,206 @@
+/*
+ * Theme swatches, each a miniature "Page 13" sheet in the theme's own colours,
+ * in one group per scheme (adaptive, always dark). The column counts come from
+ * the data: --group-cols is a group's size, --picker-cols the largest group's.
+ */
+
+.picker {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: var(--t-space-3);
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-medium);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+.groups {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--t-space-5) var(--t-space-6);
+}
+
+/* A hairline after each group heading; the legend sits on it, as fieldsets draw it. */
+.group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: var(--t-hairline) solid var(--t-rule);
+}
+
+.groupLegend {
+  padding: 0 0.6rem 0 0;
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--t-ink-2);
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(var(--group-cols, 5), minmax(3.5rem, 5.25rem));
+  gap: var(--t-space-3);
+  margin-top: var(--t-space-3);
+}
+
+.option {
+  position: relative;
+  display: grid;
+  gap: 0.45rem;
+  justify-items: start;
+  min-width: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sheet {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--t-radius-2);
+  background: var(--sw-paper);
+  box-shadow: inset 0 0 0 var(--t-hairline) var(--sw-rule);
+  transition:
+    transform var(--t-dur-2) var(--t-ease-out),
+    box-shadow var(--t-dur-1) var(--t-ease-out);
+}
+
+.band {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30%;
+  padding-inline: 22%;
+  background: var(--sw-accent);
+}
+
+.hole {
+  height: 32%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--sw-hole);
+}
+
+.numeral {
+  position: absolute;
+  left: 12%;
+  bottom: 17%;
+  font-family: var(--t-font-display);
+  font-size: clamp(1.15rem, 0.9rem + 1vw, 1.6rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.8;
+  letter-spacing: var(--t-tracking-numeral);
+  color: var(--sw-ink);
+}
+
+/* The bottom edge in the theme's Gregorian ("foil") colour. */
+.foilRule {
+  position: absolute;
+  inset: auto 0 0;
+  height: 7%;
+  background: var(--sw-foil);
+}
+
+.name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  max-width: 100%;
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
+  line-height: 1.2;
+  color: var(--t-ink-2);
+  white-space: nowrap;
+}
+
+.check {
+  flex: none;
+  color: var(--t-ink);
+}
+
+@media (hover: hover) {
+  .option:hover .sheet {
+    transform: translateY(-2px);
+  }
+
+  .option:hover .name {
+    color: var(--t-ink);
+  }
+}
+
+.option:active .sheet {
+  transform: scale(0.98);
+}
+
+.checked .sheet {
+  box-shadow:
+    inset 0 0 0 var(--t-hairline) var(--sw-rule),
+    0 0 0 2px var(--t-paper),
+    0 0 0 4px var(--t-ink);
+}
+
+.checked .name {
+  color: var(--t-ink);
+  font-weight: var(--t-weight-title);
+}
+
+.option:has(.input:focus-visible) .sheet {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 6px;
+}
+
+/* Phones: the groups stack, and share the widest group's columns so the swatches line up. */
+@media (max-width: 30rem) {
+  .groups {
+    display: grid;
+    gap: var(--t-space-4);
+  }
+
+  .options {
+    grid-template-columns: repeat(var(--picker-cols, 5), minmax(0, 1fr));
+    gap: var(--t-space-2);
+    margin-top: var(--t-space-2);
+  }
+
+  .name {
+    font-size: 0.6875rem;
+  }
+
+  .check {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .checked .sheet {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+}

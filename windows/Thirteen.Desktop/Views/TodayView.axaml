@@ -1,0 +1,106 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.TodayView"
+             x:DataType="vm:TodayViewModel">
+  <!-- Today (SPEC 5.1). Wide: hero, countdown and the Gregorian comparison on the left, the two month grids
+       on the right. Narrow: one column in the same order. -->
+  <ScrollViewer Name="Scroller" HorizontalScrollBarVisibility="Disabled">
+    <c:PageColumn MaxContentWidth="{Binding ContentMaxWidth}">
+      <c:SplitColumns Threshold="920" Ratios="1,1" Spacing="16" Margin="32,4,32,32">
+
+        <!-- Hero: the date plate over a faint 4 x 7 grid, and the year in 13 equal months. -->
+        <Border c:SplitColumns.Column="0" CornerRadius="8" ClipToBounds="True" BorderBrush="{DynamicResource ThRule}" BorderThickness="1">
+          <Panel>
+            <c:HeroBackdrop SurfaceColor="{DynamicResource ThPaperRaisedColor}" RuleColor="{DynamicResource ThRuleColor}"
+                            AccentColor="{DynamicResource ThAccentColor}" />
+            <StackPanel Margin="28,26,28,24" Spacing="22">
+              <p:DatePlateView Classes="hero" DataContext="{Binding Content.Hero}" />
+              <StackPanel Spacing="8">
+                <c:YearProgressBar Comparison="{Binding Content.Comparison}"
+                                   AccentColor="{DynamicResource ThAccentColor}" TrackColor="{DynamicResource ThPaperSunkColor}"
+                                   LabelColor="{DynamicResource ThInk3Color}" CurrentLabelColor="{DynamicResource ThAccentTextColor}"
+                                   AutomationProperties.Name="{Binding Content.ProgressAutomationName}" />
+                <Grid ColumnDefinitions="*,Auto" AutomationProperties.AccessibilityView="Raw">
+                  <TextBlock Classes="caption" Text="{Binding Content.DayOfYearText}" />
+                  <TextBlock Grid.Column="1" Classes="caption" Text="{Binding Content.ProgressText}" />
+                </Grid>
+              </StackPanel>
+            </StackPanel>
+          </Panel>
+        </Border>
+
+        <!-- Up next (docs/EVENTS.md §2.8, board B1): the next 7 days' events from now, at most 6 rows. Shown once a local
+             calendar holds an event or a subscription exists. -->
+        <p:UpNextCard c:SplitColumns.Column="0" DataContext="{Binding UpNext}" />
+
+        <!-- Countdown to Year Day. -->
+        <Border c:SplitColumns.Column="0" Classes="card">
+          <Grid ColumnDefinitions="Auto,*" ColumnSpacing="20" AutomationProperties.Name="{Binding Content.CountdownText}">
+            <TextBlock Classes="numeral accent" FontSize="52" LetterSpacing="-2" Margin="0,-6,0,-10" VerticalAlignment="Center"
+                       Text="{Binding Content.CountdownNumber}" />
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+              <TextBlock FontSize="17" FontWeight="SemiBold" LetterSpacing="-0.3" TextWrapping="Wrap" Text="{Binding Content.CountdownText}" />
+              <TextBlock Classes="explanation" FontSize="13" Text="{Binding Content.CountdownDescription}" />
+            </StackPanel>
+          </Grid>
+        </Border>
+
+        <!-- Against the Gregorian calendar: weekday shift and label drift. -->
+        <Border c:SplitColumns.Column="0" Classes="card">
+          <StackPanel Spacing="16">
+            <TextBlock Classes="title" Text="Against the Gregorian calendar" />
+            <p:WeekdayStripsView DataContext="{Binding Content.Weekday}" />
+            <Border Classes="rule" />
+            <StackPanel Spacing="6">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Classes="eyebrow" Text="LABEL DRIFT" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Classes="factValue" FontSize="16" Text="{Binding Content.DriftAmount}" />
+              </Grid>
+              <TextBlock Classes="explanation" Text="{Binding Content.DriftSentence}" />
+            </StackPanel>
+            <Button Classes="accentBordered" Command="{Binding FullComparisonCommand}" HorizontalAlignment="Left"
+                    AutomationProperties.Name="Full comparison"
+                    ToolTip.Tip="Open the day details for today">
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Classes="icon" FontSize="14" Text="&#xE8A5;" VerticalAlignment="Center" />
+                <TextBlock Text="Full comparison" VerticalAlignment="Center" />
+              </StackPanel>
+            </Button>
+          </StackPanel>
+        </Border>
+
+        <!-- This month in the 13-month calendar (or today's intercalary day). -->
+        <Border c:SplitColumns.Column="1" Classes="card">
+          <StackPanel Spacing="14">
+            <StackPanel Spacing="2">
+              <TextBlock Classes="title" Text="{Binding Content.MonthTitle}" />
+              <TextBlock Classes="subtitle" Text="{Binding Content.MonthSubtitle}" />
+            </StackPanel>
+            <Panel IsVisible="{Binding Content.IsMonthDay}">
+              <p:MonthGridView DataContext="{Binding Content.MonthGrid}" c:DayNavigation.IsScope="True" />
+            </Panel>
+            <Panel IsVisible="{Binding Content.IsIntercalaryDay}">
+              <p:IntercalaryBadgeView DataContext="{Binding Content.Intercalary}" />
+            </Panel>
+            <TextBlock Classes="footnote" Text="{Binding Content.MonthFootnote}" IsVisible="{Binding Content.IsMonthDay}" />
+          </StackPanel>
+        </Border>
+
+        <!-- The current Gregorian month with its 13-month dates. -->
+        <Border c:SplitColumns.Column="1" Classes="card">
+          <StackPanel Spacing="14">
+            <StackPanel Spacing="2">
+              <TextBlock Classes="title" Text="{Binding Content.GregorianTitle}" />
+              <TextBlock Classes="subtitle" Text="{Binding Content.GregorianSubtitle}" />
+            </StackPanel>
+            <p:MonthGridView DataContext="{Binding Content.GregorianGrid}" c:DayNavigation.IsScope="True" />
+            <TextBlock Classes="footnote" Text="{Binding Content.GregorianFootnote}" />
+          </StackPanel>
+        </Border>
+      </c:SplitColumns>
+    </c:PageColumn>
+  </ScrollViewer>
+</UserControl>

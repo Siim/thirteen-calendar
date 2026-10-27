@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The V18 fallback (docs/EVENTS.md §2.14, §2.15, §2.18, §6.3): gate V18 is not run, so Thirteen
+    shows the alerts of its own "Thirteen" device calendar itself (ProviderGates.THIRTEEN_CALENDAR_ALERTS).
+    §2.19 verbatim, catalogue ids with dots as underscores. Copy rule: no em or en dash characters.
+-->
+<resources>
+    <!-- alert.android.blocked, alert.android.openSettings -->
+    <string name="alert_android_blocked">Notifications for Thirteen are off, so this alert won’t appear.</string>
+    <string name="alert_android_openSettings">Open settings</string>
+    <!-- notification.body: {time range}, {location}; all-day: All day, {location}; without a location only the first part. -->
+    <string name="notification_body">%1$s, %2$s</string>
+    <!-- The notification channel (§6.3: channel "Event alerts"; the catalogue has no id for it). -->
+    <string name="notification_channel_alerts">Event alerts</string>
+    <!-- calendars.createDevice.message.alerts (when the V18 fallback ships) -->
+    <string name="calendars_createDevice_message_alerts">Events in this calendar stay on this phone. They aren’t synced or backed up. Thirteen shows their alerts.</string>
+    <!-- settings.alerts.android, settings.alerts.android.footer -->
+    <string name="settings_alerts_android">Show alerts for the Thirteen calendar</string>
+    <string name="settings_alerts_android_footer">Turn this off if your calendar app already shows these alerts.</string>
+</resources>

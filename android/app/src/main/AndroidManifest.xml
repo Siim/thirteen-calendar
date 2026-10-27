@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Calendar permissions read and write the device's calendars through the Calendar Provider; the OS
+    sync adapters do all networking. Thirteen still makes no network calls (there is deliberately no
+    INTERNET permission). The DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION that AndroidX Core merges in
+    is a signature permission of this app, used by ContextCompat.registerReceiver.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <!--
+        The V18 fallback (docs/EVENTS.md §2.14, §6.3): Thirteen shows the alerts of its own "Thirteen"
+        device calendar itself. Asked only when the first alert is set in that calendar (Android 13+).
+    -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!--
+        Package visibility (API 30+): whether a calendar app can add an event ("Add in your calendar
+        app"), open a place (the Location tap) and open an event ("Open in calendar app"). Every
+        startActivity for them is still wrapped in try/catch ActivityNotFoundException.
+    -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.INSERT" />
+            <data android:mimeType="vnd.android.cursor.dir/event" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="geo" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="vnd.android.cursor.item/event" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Thirteen"
+        tools:targetApi="33">
+
+        <!--
+            The only Activity. It must be exported for the launcher and for thirteen:// links from
+            other apps. It reads nothing but the VIEW intent's data URI, which DeepLink parses as
+            untrusted input (bounded length, strict values, unknown parts ignored), and never
+            forwards an intent. Calendar apps' HANDLE_CUSTOM_EVENT is read as strictly.
+            singleTop delivers links to the running instance via onNewIntent.
+        -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- thirteen://today, thirteen://year/2026, thirteen://month/2026/11, thirteen://day/2026-10-19 ... -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="thirteen" />
+            </intent-filter>
+
+            <!--
+                Calendar apps send this for events whose CUSTOM_APP_PACKAGE is Thirteen; it opens the
+                event's day (docs/EVENTS.md §6.3). Only the data URI's event id and
+                EXTRA_CUSTOM_APP_URI are read (navigation/CustomEventLink.kt).
+            -->
+            <intent-filter>
+                <action android:name="android.provider.calendar.action.HANDLE_CUSTOM_EVENT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/event" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            The V18 fallback (docs/EVENTS.md §6.3): the Calendar Provider's EVENT_REMINDER broadcast
+            (on Android's list of implicit broadcasts manifest receivers still get). It must be
+            exported to receive it from the provider. The intent is untrusted: nothing is read from it;
+            the receiver queries the due CalendarAlerts rows of Thirteen's own LOCAL calendar, never
+            changes them, and posts its own notifications (ReminderReceiver.kt).
+        -->
+        <receiver
+            android:name=".data.calendar.ReminderReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.EVENT_REMINDER" />
+                <data
+                    android:host="com.android.calendar"
+                    android:scheme="content" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

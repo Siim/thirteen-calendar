@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             x:Class="Thirteen.Desktop.Views.Parts.DayEventsView"
+             x:DataType="vm:DayEventsViewModel"
+             IsVisible="{Binding IsVisible}">
+  <!-- The day details' Events section (docs/EVENTS.md §2.9): the day's items as Up next draws them (the Now plate on
+       today's running event), "New event" and "Open in Calendar" (Day mode); "No events." on an empty day. -->
+  <StackPanel Name="DayEvents" Spacing="6">
+    <TextBlock Classes="eyebrow" Text="{Binding Heading}" />
+    <ItemsControl ItemsSource="{Binding Rows}" Margin="-10,0,-10,0">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="vm:EventListRow">
+          <p:EventListRowView TimeWidth="{Binding $parent[p:DayEventsView].((vm:DayEventsViewModel)DataContext).TimeColumnWidth, FallbackValue=72}" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <TextBlock Classes="explanation" Text="{Binding EmptyText}" IsVisible="{Binding ShowsEmpty}" />
+    <StackPanel Orientation="Horizontal" Spacing="12" IsVisible="{Binding ShowsAllHidden}">
+      <TextBlock Classes="explanation" VerticalAlignment="Center" Text="{Binding AllHiddenText}" />
+      <Button Classes="link" VerticalAlignment="Center" Content="{Binding ShowCalendarsText}" Command="{Binding ShowCalendarsCommand}"
+              AutomationProperties.Name="{Binding ShowCalendarsText}" />
+    </StackPanel>
+    <WrapPanel Orientation="Horizontal">
+      <Button Name="DayNewEvent" Classes="accentBordered" Margin="0,0,8,0" Command="{Binding NewEventCommand}" CommandParameter="{Binding $self}"
+              AutomationProperties.Name="{Binding NewEventText}">
+        <StackPanel Orientation="Horizontal" Spacing="6">
+          <TextBlock Classes="icon" FontSize="12" Text="&#xE710;" VerticalAlignment="Center" />
+          <TextBlock Text="{Binding NewEventText}" VerticalAlignment="Center" />
+        </StackPanel>
+      </Button>
+      <Button Name="DayOpenInCalendar" Classes="subtle" Command="{Binding OpenInCalendarCommand}" IsVisible="{Binding HasRows}"
+              AutomationProperties.Name="{Binding OpenInCalendarText}">
+        <StackPanel Orientation="Horizontal" Spacing="6">
+          <TextBlock Text="{Binding OpenInCalendarText}" VerticalAlignment="Center" />
+          <TextBlock Classes="icon" FontSize="12" Text="&#xE72A;" VerticalAlignment="Center" />
+        </StackPanel>
+      </Button>
+    </WrapPanel>
+    <Border Classes="rule" Margin="0,6,0,0" />
+  </StackPanel>
+</UserControl>

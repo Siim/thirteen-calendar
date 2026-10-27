@@ -1,0 +1,48 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--t-space-4);
+  padding-block: clamp(1.75rem, 1rem + 3vw, 3.5rem) clamp(1.25rem, 0.8rem + 1.5vw, 2rem);
+}
+
+@media (min-width: 60rem) {
+  .head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: var(--t-space-7);
+  }
+}
+
+.text {
+  display: grid;
+  gap: var(--t-space-3);
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--t-text-3xl);
+  font-weight: var(--t-weight-numeral);
+  line-height: 1;
+  letter-spacing: var(--t-tracking-display);
+}
+
+/* The figure or key word in a title: same face and weight, in the accent. */
+.title em {
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  color: var(--t-accent-text);
+}
+
+.lede {
+  max-width: 62ch;
+  font-size: var(--t-text-lg);
+  line-height: 1.55;
+  color: var(--t-ink-2);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--t-space-3) var(--t-space-5);
+}

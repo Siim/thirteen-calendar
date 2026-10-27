@@ -1,0 +1,69 @@
+.page {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 40rem;
+  padding-block: 1.5rem 3rem;
+}
+
+.title {
+  font-size: var(--t-text-2xl);
+  font-weight: var(--t-weight-numeral);
+  letter-spacing: var(--t-tracking-display);
+}
+
+.group {
+  display: grid;
+  border-top: var(--t-hairline) solid var(--t-rule-strong);
+}
+
+.groupTitle {
+  padding: 0.85rem 0 0.4rem;
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  font-weight: var(--t-weight-title);
+  letter-spacing: var(--t-tracking-caps);
+  text-transform: uppercase;
+  color: var(--t-ink-2);
+}
+
+/* Rows are shared with the row modules of other tasks (AlertsRow, DataRows): import this file's classes. */
+.row {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.9rem 0;
+  border-bottom: var(--t-hairline) solid var(--t-rule);
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.label {
+  font-weight: var(--t-weight-medium);
+}
+
+.select {
+  min-height: 2.5rem;
+  min-width: 12rem;
+  padding: 0.35rem 0.6rem;
+  border: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: var(--t-radius-1);
+  background: var(--t-paper-raised);
+  color: var(--t-ink);
+  font: inherit;
+}
+
+.footer {
+  font-size: var(--t-text-sm);
+  color: var(--t-ink-2);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

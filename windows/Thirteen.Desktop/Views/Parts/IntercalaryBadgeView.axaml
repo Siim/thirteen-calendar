@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             x:Class="Thirteen.Desktop.Views.Parts.IntercalaryBadgeView"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             x:DataType="vm:IntercalaryBadgeModel">
+  <!-- An intercalary day as a dashed ticket outside the 4 x 7 grids. -->
+  <Button Classes="badge" Classes.compact="{Binding IsCompact}" Classes.today="{Binding IsToday}"
+          Classes.selected="{Binding IsSelected}" Command="{Binding Command}"
+          AutomationProperties.Name="{Binding AutomationName}" AutomationProperties.ItemStatus="{Binding EventStatus}">
+    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+      <Ellipse Classes="seal" />
+      <StackPanel Grid.Column="1" Spacing="1">
+        <TextBlock Classes="strong" Text="{Binding Name}" TextWrapping="Wrap" />
+        <TextBlock Classes="caption ink3" Text="{Binding AfterText}" />
+        <TextBlock Classes="caption foil" Text="{Binding GregorianText}" IsVisible="{Binding ShowsGregorian}" />
+        <!-- Year mode's event dots (docs/EVENTS.md §2.3: "Intercalary badges get the same dots"). -->
+        <c:EventDots DotColors="{Binding EventColors}" DotSize="4" Margin="0,3,0,0" HorizontalAlignment="Left"
+                     IsVisible="{Binding ShowsEventRow}" />
+      </StackPanel>
+    </Grid>
+  </Button>
+</UserControl>

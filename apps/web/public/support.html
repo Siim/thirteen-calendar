@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f4efe4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1014" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Help for Thirteen, the 13-month calendar: how the International Fixed Calendar and the Positivist calendar work, how events and calendars work in Thirteen, and how to report a bug.">
+<link rel="canonical" href="https://thirteen.haugas.dev/support.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thirteen">
+<meta property="og:title" content="Support · Thirteen">
+<meta property="og:url" content="https://thirteen.haugas.dev/support.html">
+<meta property="og:image" content="https://thirteen.haugas.dev/og-image.png">
+<title>Support · Thirteen</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --paper: #f4efe4;
+    --raised: #faf7f0;
+    --ink: #1b1813;
+    --ink-2: #4a4339;
+    --ink-3: #6b6152;
+    --rule: #d5cab6;
+    --accent: #ea580c;
+    --accent-text: #b03e07;
+    --wash: #f8dcc6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0e1014;
+      --raised: #151820;
+      --ink: #ece5d7;
+      --ink-2: #c0b7a7;
+      --ink-3: #948b7c;
+      --rule: #2b303a;
+      --accent-text: #fb8b4b;
+      --wash: #3a1e10;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 17px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  main { max-width: 42rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+  header a { display: flex; align-items: center; gap: 0.75rem; color: inherit; text-decoration: none; font-weight: 650; font-size: 1.1rem; }
+  header svg { width: 40px; height: 40px; flex: none; }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.75rem; letter-spacing: -0.01em; }
+  h2 { font-size: 1.35rem; line-height: 1.3; margin: 2.5rem 0 0.75rem; }
+  p, ul, ol { margin: 0 0 1rem; }
+  ul, ol { padding-left: 1.25rem; }
+  li { margin-bottom: 0.35rem; }
+  .lede { font-size: 1.1rem; color: var(--ink-2); }
+  a { color: var(--accent-text); text-underline-offset: 0.15em; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .example {
+    background: var(--raised);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 0 0 1.25rem;
+  }
+  .example p:last-child { margin-bottom: 0; }
+  details { border-top: 1px solid var(--rule); padding: 0.85rem 0; }
+  details:last-of-type { border-bottom: 1px solid var(--rule); }
+  summary { cursor: pointer; font-weight: 600; list-style-position: outside; margin-left: 1.1rem; }
+  summary::marker { color: var(--accent); }
+  details > div { padding: 0.6rem 0 0 1.1rem; color: var(--ink-2); }
+  details > div p:last-child { margin-bottom: 0; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; background: var(--wash); padding: 0.1em 0.3em; border-radius: 4px; }
+  .steps { background: var(--raised); border: 1px solid var(--rule); border-radius: 10px; padding: 1rem 1.25rem 0.25rem; margin: 0 0 1.25rem; }
+  :target { scroll-margin-top: 1rem; }
+  .button {
+    display: inline-block;
+    background: var(--accent);
+    color: #1b1813;
+    font-weight: 650;
+    text-decoration: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+  }
+  footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); color: var(--ink-3); font-size: 0.95rem; }
+  footer a { margin-right: 1rem; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <a href="./" aria-label="Thirteen, open the calendar">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#ea580c"/><g fill="#f4efe4"><rect x="8" y="17" width="5" height="5"/><rect x="15" y="17" width="5" height="5"/><rect x="22" y="17" width="5" height="5"/><rect x="29" y="17" width="5" height="5"/><rect x="36" y="17" width="5" height="5"/><rect x="43" y="17" width="5" height="5"/><rect x="50" y="17" width="5" height="5"/><rect x="8" y="24" width="5" height="5"/><rect x="15" y="24" width="5" height="5"/><rect x="22" y="24" width="5" height="5"/><rect x="29" y="24" width="5" height="5"/><rect x="36" y="24" width="5" height="5"/><rect x="43" y="24" width="5" height="5"/><rect x="50" y="24" width="5" height="5"/><rect x="8" y="31" width="5" height="5"/><rect x="15" y="31" width="5" height="5"/><rect x="22" y="31" width="5" height="5"/><rect x="29" y="31" width="5" height="5"/><rect x="43" y="31" width="5" height="5"/><rect x="50" y="31" width="5" height="5"/><rect x="8" y="38" width="5" height="5"/><rect x="15" y="38" width="5" height="5"/><rect x="22" y="38" width="5" height="5"/><rect x="29" y="38" width="5" height="5"/><rect x="36" y="38" width="5" height="5"/><rect x="43" y="38" width="5" height="5"/><rect x="50" y="38" width="5" height="5"/></g><rect x="36" y="31" width="5" height="5" fill="#1b1813"/><rect x="8" y="47" width="47" height="1.5" fill="#f4efe4" opacity=".7"/></svg>
+      Thirteen
+    </a>
+  </header>
+
+  <h1>Thirteen support</h1>
+  <p class="lede">Thirteen is a 13-month calendar. It shows any day in the International Fixed Calendar, or in Auguste Comte's Positivist calendar, next to the ordinary Gregorian calendar, converts dates in both directions and shows where the two systems disagree.</p>
+  <p>It runs in the browser at <a href="https://thirteen.haugas.dev/">thirteen.haugas.dev</a> and as an app for iPhone, iPad, Mac and Android, all built on the same calendar engine. A Windows app is coming in a later release. Every version has the same five sections: Today, Calendar, Convert, Compare and History. Calendar shows your events by year, month, week, day or as a list, in the 13-month calendar next to the Gregorian one. It is free, with no ads, no accounts and no in-app purchases.</p>
+
+  <div class="example">
+    <p>For example, Monday 19 October 2026 in the Gregorian calendar is <strong>Thursday, October 12, 2026</strong> in the International Fixed Calendar and <strong>Friday, Descartes 12, 238</strong> in the Positivist calendar.</p>
+  </div>
+
+  <h2>Questions about the calendars</h2>
+
+  <details>
+    <summary>What is a 13-month calendar?</summary>
+    <div>
+      <p>A calendar with 13 months of exactly 28 days. That is 4 weeks per month and 364 days in total. The 365th day, and the 366th in leap years, belongs to no month and no week. Because every month has the same shape, a date falls on the same weekday every month and every year.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What is the International Fixed Calendar?</summary>
+    <div>
+      <p>It was designed by Moses B. Cotsworth and presented in 1902. The League of Nations looked at it in its calendar reform inquiries, and Eastman Kodak used it internally from 1928 to 1989. It is the default calendar in Thirteen.</p>
+      <p>Its months are January to June, then <strong>Sol</strong>, then July to December. Every month starts on a Sunday and ends on a Saturday, so the 13th of every month is a Friday.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Where do Year Day and Leap Day go?</summary>
+    <div>
+      <p><strong>Year Day</strong> comes after December 28 and is always 31 December in the Gregorian calendar. In leap years, <strong>Leap Day</strong> comes after June 28 and is always 17 June. Neither day has a weekday, which is what keeps every month on the same weekdays.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What is the Positivist calendar?</summary>
+    <div>
+      <p>The philosopher Auguste Comte proposed it in 1849. Its 13 months are named after people he admired, from Moses to Bichat, and every month starts on a Monday. The Festival of All the Dead follows the last day of Bichat, and in leap years the Festival of Holy Women follows that. Year 1 is 1789, so 2026 is year 238.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Why does the weekday differ from my phone's calendar?</summary>
+    <div>
+      <p>In a 13-month calendar each date has a fixed weekday, while the real week keeps running through Year Day and Leap Day. Thirteen shows both: the fixed weekday of the 13-month date and the actual weekday of that day. The gap between them is the <em>weekday shift</em>.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What does "label drift" mean?</summary>
+    <div>
+      <p>Many International Fixed Calendar months share names with Gregorian months, but they start on different days. Label drift is how far apart two days with the same label are. On 19 October 2026 the 13-month date is October 12, and Gregorian October 12 was 7 days earlier, so the 13-month label runs 7 days behind. Sol and the Positivist months have no Gregorian namesake, so they have no label drift.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How do I switch between the two 13-month calendars?</summary>
+    <div>
+      <p>Use the calendar switcher. On the web it is at the top of the page. On iPhone and iPad it is in the toolbar menu. On the Mac it is in the toolbar, in the Calendar menu and in Settings. On Android it is in Settings and in the menu at the top of Calendar. On Windows it is at the top of the window and in Settings. Thirteen remembers your choice.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Which years can I look up?</summary>
+    <div>
+      <p>Any Gregorian year from 1 to 9999. Years before 1582 use the Gregorian rules extended backwards, which is the usual convention for date calculations.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Does it work offline?</summary>
+    <div>
+      <p>The apps do. Thirteen for iPhone, iPad, Mac and Android never connects to the internet; your device's accounts sync your calendars whenever it is online. The Windows app and the website connect only to download calendars you subscribe to. The website is not saved for offline use, so it needs a connection to open. Nothing is collected; see the <a href="privacy.html">privacy policy</a>.</p>
+    </div>
+  </details>
+
+  <h2 id="events">Questions about events and calendars</h2>
+
+  <details id="stored">
+    <summary>Where are my events stored?</summary>
+    <div>
+      <p><strong>iPhone, iPad and Mac:</strong> in the calendars on your device, through Apple's calendar system. They sync with your iCloud, Google, Exchange or other accounts as they do for Apple's Calendar app.</p>
+      <p><strong>Android:</strong> in your phone's calendars, through Android's calendar storage. Your accounts (for example Google) sync them. If you let Thirteen create its own calendar named Thirteen, that calendar stays on the phone and is not synced or backed up.</p>
+      <p><strong>Windows:</strong> on your computer, in the folder <code>%LOCALAPPDATA%\Thirteen\Calendars</code>, one calendar file per calendar.</p>
+      <p><strong>Website:</strong> in your browser's storage for thirteen.haugas.dev, on that device only.</p>
+      <p>Thirteen never sends your events anywhere. The Windows app and the website don't sync with other devices: use Export and Import to move calendars between them, or subscribe to a calendar by its link.</p>
+    </div>
+  </details>
+
+  <details id="disappeared">
+    <summary>Why did my events disappear from the website?</summary>
+    <div>
+      <p>The website keeps your events in your browser's storage for this site, and browsers may delete that storage on their own. Most browsers do it only when your device runs low on space; Thirteen offers a Keep my data button where the browser lets a site ask to be kept. Safari deletes a site's data when you haven't opened it for about a week, unless you <a href="#install">added it to your Dock or Home Screen</a>. Clearing your browsing data deletes it too.</p>
+      <p>Export your calendars now and then to keep a copy: in Calendar, choose Export, or Export all in Settings. Importing that file, or the .zip of all your calendars, brings them back.</p>
+    </div>
+  </details>
+
+  <details id="access">
+    <summary>Why does Thirteen ask for access to my calendars?</summary>
+    <div>
+      <p>On iPhone, iPad, Mac and Android, Thirteen shows the events from the calendars on your device and saves the events you add or change there, so it needs your permission to read and change them. It asks only when you choose to see your events or add one, never at launch. Without access, everything else in Thirteen still works, and the Calendar shows the 13-month calendar without events. You can change your answer in your device's settings at any time.</p>
+    </div>
+  </details>
+
+  <details id="subscribe-how">
+    <summary>How do I subscribe to a calendar?</summary>
+    <div>
+      <p><strong>Website:</strong> in Calendar, open the Calendars list, choose Subscribe to calendar and paste the calendar's link (it starts with <code>webcal://</code> or <code>https://</code>). A subscribed calendar is read only. Thirteen downloads it again on the schedule you pick, from every hour to every week, or when you choose Update now. Some servers, among them Google and iCloud, don't let web pages read their links; see <a href="#subscribe">the question below</a>.</p>
+      <p><strong>iPhone, iPad, Mac and Android:</strong> add the subscription to your device's calendars, for example in Apple's Calendar app or in Google Calendar on the web. Thirteen then shows it with your other calendars.</p>
+    </div>
+  </details>
+
+  <details id="google-android">
+    <summary>Why can't I see my Google calendars on Android?</summary>
+    <div>
+      <p>Thirteen for Android shows the calendars your phone shares with other apps. In the Google Calendar app, open Settings &gt; General and turn on Share Google Calendar data with other apps. Your Google calendars then appear in Thirteen's Calendars list.</p>
+    </div>
+  </details>
+
+  <details id="subscribe">
+    <summary>Why can't the website subscribe to my Google or iCloud calendar?</summary>
+    <div>
+      <p>Google and iCloud don't let web pages read their calendar links. Download the .ics file and import it, or use a Thirteen app instead.</p>
+      <p>Thirteen for iPhone, iPad, Mac and Android shows your Google and iCloud calendars directly, once they are in your device's calendars. Thirteen for Windows, when it is released, can subscribe to their links itself.</p>
+    </div>
+  </details>
+
+  <details id="repeats">
+    <summary>Will my 13-month repeats show in other calendar apps?</summary>
+    <div>
+      <p>Repeats that follow the Gregorian calendar, such as every week or every year on a date, show the same in every calendar app. 13-month repeats, such as every 13-month month on the 13th or every Year Day, have no standard form, so Thirteen saves them in forms other apps can read, with these limits:</p>
+      <ul>
+        <li>Thirteen for iPhone, iPad and Mac, and calendar files exported from Thirteen for Windows or the website, save them as a yearly repeat on fixed days of the year. Apple's Calendar and Google Calendar on the web show them on the right days. Google Calendar for Android and Outlook don't understand that kind of repeat and may show other days. Thirteen for Android shows the right days.</li>
+        <li>Thirteen for Android saves them as a list of dates. Google Calendar shows them on the right days. Calendar on iPhone and Mac may show only the first date of a repeat set in Thirteen for Android.</li>
+        <li>Google Calendar on the web shows the dates, but its editor calls such a repeat "Unsupported recurrence" or "Does not repeat". Editing the title there keeps the repeat.</li>
+        <li>Exchange and Outlook calendars keep only repeats that follow the Gregorian calendar. In them Thirteen offers only the 13-month repeats that are also ordinary yearly repeats, such as every Year Day or every Leap Day.</li>
+        <li>In this version, Thirteen for iPhone, iPad and Mac treats iCloud and Google calendars the same way until these repeats have been checked on more devices: every Year Day and every Leap Day work there, and repeats such as every 13-month month on the 12th need a calendar on the device or another CalDAV account. The repeat picker says which of your calendars can keep them.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details id="default-alerts">
+    <summary>Do new events get my account's default alerts?</summary>
+    <div>
+      <p>Thirteen saves new events with no alerts unless you choose one. Some accounts add their own default alert on top. So far we have seen this with iCloud: an all-day event saved with no alerts gets the account's default alert for all-day events, and a timed event gets none. You can change or remove an alert in the event's details.</p>
+    </div>
+  </details>
+
+  <h2 id="install">Add Thirteen to your Dock or Home Screen</h2>
+  <p>Added to your Dock or Home Screen, the website opens in its own window, and Safari keeps its data even when you don't open it for a while. On iPhone and iPad, it is also the only way the website can show event alerts.</p>
+  <div class="steps">
+    <ul>
+      <li><strong>Safari on Mac:</strong> open <a href="https://thirteen.haugas.dev/">thirteen.haugas.dev</a>, then choose File &gt; Add to Dock.</li>
+      <li><strong>iPhone and iPad:</strong> open <a href="https://thirteen.haugas.dev/">thirteen.haugas.dev</a> in Safari, tap Share, then Add to Home Screen.</li>
+    </ul>
+  </div>
+
+  <h2>Report a bug or ask a question</h2>
+  <p>Thirteen is open source, and its issue tracker is on GitHub. A free GitHub account is enough to open an issue.</p>
+  <p><a class="button" href="https://github.com/Siim/thirteen-calendar/issues/new">Open an issue on GitHub</a></p>
+  <p>To help us fix it quickly, please include:</p>
+  <ol>
+    <li>Where you use Thirteen: web (and which browser), iPhone, iPad, Mac, Android or Windows, plus the system version.</li>
+    <li>The app version, if you know it. On the Mac it is under Thirteen, About Thirteen; on Android, in Settings.</li>
+    <li>The date you were looking at and the calendar you had selected.</li>
+    <li>What you expected to see and what you saw instead. A screenshot helps.</li>
+  </ol>
+  <p>You can also browse <a href="https://github.com/Siim/thirteen-calendar/issues?q=is%3Aissue">existing issues</a> to see if someone has already reported the same problem.</p>
+
+  <footer>
+    <a href="./">Open Thirteen</a>
+    <a href="privacy.html">Privacy policy</a>
+    <a href="https://github.com/Siim/thirteen-calendar">Source code</a>
+  </footer>
+</main>
+</body>
+</html>

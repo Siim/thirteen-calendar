@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "case": "cases/period-rdate.ics",
+  "calendarId": "period-rdate",
+  "system": "ifc",
+  "roundTrip": "as-read",
+  "calendar": {
+    "name": "Periods",
+    "color": null,
+    "refreshInterval": null,
+    "extra": [
+      {"name":"VERSION","params":[],"value":"2.0"},
+      {"name":"PRODID","params":[],"value":"-//Example Corp//Calendar Export 4.2//EN"},
+      {"name":"X-WR-CALNAME","params":[],"value":"Periods"}
+    ],
+    "timeZones": [
+      {"tzid":"Europe/Tallinn","observances":2,"generated":null,"line":5}
+    ],
+    "others": []
+  },
+  "warnings": [],
+  "groups": [
+    {"uid":"de40af0a-d1e7-4621-98fd-ae5f8fdb375b","master":{"uid":"de40af0a-d1e7-4621-98fd-ae5f8fdb375b","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Office hours","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-11-02T10:00","tzid":"Europe/Tallinn"},"end":{"kind":"zoned","value":"2026-11-02T11:00","tzid":"Europe/Tallinn"},"duration":null,"rrules":["FREQ=WEEKLY;COUNT=4"],"exrules":[],"rdates":[{"value":{"kind":"zoned","value":"2026-11-05T15:00","tzid":"Europe/Tallinn"},"period":"PT2H"},{"value":{"kind":"zoned","value":"2026-11-12T15:00","tzid":"Europe/Tallinn"},"period":"20261112T180000"},{"value":{"kind":"utc","value":"2026-11-20T08:00"},"period":"PT4H"}],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":23},"overrides":[]},
+    {"uid":"5386866e-d39c-4723-92a2-7b67d9761a7c","master":{"uid":"5386866e-d39c-4723-92a2-7b67d9761a7c","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Exam sittings","location":"","description":"","url":"","start":{"kind":"utc","value":"2026-12-01T08:00"},"end":{"kind":"utc","value":"2026-12-01T09:00"},"duration":null,"rrules":[],"exrules":[],"rdates":[{"value":{"kind":"utc","value":"2026-12-03T08:00"},"period":"PT3H30M"},{"value":{"kind":"utc","value":"2026-12-08T12:00"},"period":"PT30M"}],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":33},"overrides":[]},
+    {"uid":"ef3c6ea9-07ee-41da-ad17-606598aa1f40","master":{"uid":"ef3c6ea9-07ee-41da-ad17-606598aa1f40","uidDerived":false,"recurrenceId":null,"sequence":0,"summary":"Weekend pass","location":"","description":"","url":"","start":{"kind":"zoned","value":"2026-03-21T12:00","tzid":"Europe/Tallinn"},"end":{"kind":"zoned","value":"2026-03-21T13:00","tzid":"Europe/Tallinn"},"duration":null,"rrules":[],"exrules":[],"rdates":[{"value":{"kind":"zoned","value":"2026-03-28T12:00","tzid":"Europe/Tallinn"},"period":"P1D"}],"exdates":[],"status":null,"transp":null,"thirteenRule":null,"alarms":[],"created":null,"lastModified":null,"dtstamp":{"kind":"utc","value":"2026-10-15T08:00"},"importedLastModified":null,"extra":[],"line":41},"overrides":[]}
+  ],
+  "expansions": [
+    {
+      "deviceZone": "Europe/Tallinn",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"period-rdate/ef3c6ea9-07ee-41da-ad17-606598aa1f40|2026-03-21T12:00","calendarId":"period-rdate","title":"Weekend pass","allDay":false,"start":"2026-03-21T12:00","end":"2026-03-21T13:00"},
+        {"key":"period-rdate/ef3c6ea9-07ee-41da-ad17-606598aa1f40|2026-03-28T12:00","calendarId":"period-rdate","title":"Weekend pass","allDay":false,"start":"2026-03-28T12:00","end":"2026-03-29T12:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-02T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-02T10:00","end":"2026-11-02T11:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-05T15:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-05T15:00","end":"2026-11-05T17:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-09T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-09T10:00","end":"2026-11-09T11:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-12T15:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-12T15:00","end":"2026-11-12T18:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-16T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-16T10:00","end":"2026-11-16T11:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-20T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-20T10:00","end":"2026-11-20T14:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-23T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-23T10:00","end":"2026-11-23T11:00"},
+        {"key":"period-rdate/5386866e-d39c-4723-92a2-7b67d9761a7c|2026-12-01T08:00","calendarId":"period-rdate","title":"Exam sittings","allDay":false,"start":"2026-12-01T10:00","end":"2026-12-01T11:00"},
+        {"key":"period-rdate/5386866e-d39c-4723-92a2-7b67d9761a7c|2026-12-03T08:00","calendarId":"period-rdate","title":"Exam sittings","allDay":false,"start":"2026-12-03T10:00","end":"2026-12-03T13:30"},
+        {"key":"period-rdate/5386866e-d39c-4723-92a2-7b67d9761a7c|2026-12-08T12:00","calendarId":"period-rdate","title":"Exam sittings","allDay":false,"start":"2026-12-08T14:00","end":"2026-12-08T14:30"}
+      ]
+    },
+    {
+      "deviceZone": "America/New_York",
+      "window": {"from":"2026-01-01T00:00","to":"2027-12-31T24:00"},
+      "warnings": [],
+      "occurrences": [
+        {"key":"period-rdate/ef3c6ea9-07ee-41da-ad17-606598aa1f40|2026-03-21T12:00","calendarId":"period-rdate","title":"Weekend pass","allDay":false,"start":"2026-03-21T06:00","end":"2026-03-21T07:00"},
+        {"key":"period-rdate/ef3c6ea9-07ee-41da-ad17-606598aa1f40|2026-03-28T12:00","calendarId":"period-rdate","title":"Weekend pass","allDay":false,"start":"2026-03-28T06:00","end":"2026-03-29T05:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-02T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-02T03:00","end":"2026-11-02T04:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-05T15:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-05T08:00","end":"2026-11-05T10:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-09T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-09T03:00","end":"2026-11-09T04:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-12T15:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-12T08:00","end":"2026-11-12T11:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-16T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-16T03:00","end":"2026-11-16T04:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-20T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-20T03:00","end":"2026-11-20T07:00"},
+        {"key":"period-rdate/de40af0a-d1e7-4621-98fd-ae5f8fdb375b|2026-11-23T10:00","calendarId":"period-rdate","title":"Office hours","allDay":false,"start":"2026-11-23T03:00","end":"2026-11-23T04:00"},
+        {"key":"period-rdate/5386866e-d39c-4723-92a2-7b67d9761a7c|2026-12-01T08:00","calendarId":"period-rdate","title":"Exam sittings","allDay":false,"start":"2026-12-01T03:00","end":"2026-12-01T04:00"},
+        {"key":"period-rdate/5386866e-d39c-4723-92a2-7b67d9761a7c|2026-12-03T08:00","calendarId":"period-rdate","title":"Exam sittings","allDay":false,"start":"2026-12-03T03:00","end":"2026-12-03T06:30"},
+        {"key":"period-rdate/5386866e-d39c-4723-92a2-7b67d9761a7c|2026-12-08T12:00","calendarId":"period-rdate","title":"Exam sittings","allDay":false,"start":"2026-12-08T07:00","end":"2026-12-08T07:30"}
+      ]
+    }
+  ]
+}

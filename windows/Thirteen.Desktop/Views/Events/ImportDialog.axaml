@@ -1,0 +1,76 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Thirteen.Desktop.ViewModels"
+        x:Class="Thirteen.Desktop.Views.Events.ImportDialog"
+        x:DataType="vm:ImportDialogViewModel"
+        Classes="eventDialog"
+        AutomationProperties.Name="{Binding Title}"
+        Width="480">
+  <!-- "Import events" (§2.17 step 2, board I2): "{n} events in {file}" and "Add to" for each document, the errors of
+       the files that cannot be read; "Restore calendars" for Thirteen's own exports: "{n} calendars in {file}" and the
+       calendars as a checked list (name, "local" or "subscription", event count). -->
+  <Window.DataTemplates>
+    <DataTemplate DataType="vm:ImportFileNameRow">
+      <TextBlock Classes="strong" FontSize="13" Margin="0,6,0,0" TextWrapping="Wrap" Text="{Binding Name}" />
+    </DataTemplate>
+    <DataTemplate DataType="vm:ImportErrorRow">
+      <Grid ColumnDefinitions="Auto,*">
+        <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xE7BA;" />
+        <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding Text}" />
+      </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="vm:ImportSourceRow">
+      <StackPanel Spacing="10">
+        <TextBlock FontSize="14" TextWrapping="Wrap" Text="{Binding Summary}" />
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+          <TextBlock Classes="fieldLabel" VerticalAlignment="Center" Text="{Binding IntoLabel}" />
+          <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding Targets}"
+                    SelectedItem="{Binding SelectedTarget, Mode=TwoWay}"
+                    AutomationProperties.Name="{Binding IntoAutomationName}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate x:DataType="vm:ImportTargetOption">
+                <TextBlock Text="{Binding Label}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </Grid>
+      </StackPanel>
+    </DataTemplate>
+    <DataTemplate DataType="vm:RestoreSummaryRow">
+      <TextBlock FontSize="14" TextWrapping="Wrap" Text="{Binding Text}" />
+    </DataTemplate>
+    <DataTemplate DataType="vm:RestoreCalendarRow">
+      <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" AutomationProperties.Name="{Binding AutomationName}">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+          <Ellipse Width="10" Height="10" Fill="{Binding Brush}" VerticalAlignment="Center" />
+          <TextBlock Grid.Column="1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding Name}" />
+          <TextBlock Grid.Column="2" Classes="status" VerticalAlignment="Center" Margin="12,0,0,0" Text="{Binding Detail}" />
+        </Grid>
+      </CheckBox>
+    </DataTemplate>
+  </Window.DataTemplates>
+
+  <StackPanel Margin="24,20,24,20" Spacing="14">
+    <TextBlock Classes="dialogTitle" Text="{Binding Title}" />
+    <ScrollViewer MaxHeight="420" HorizontalScrollBarVisibility="Disabled">
+      <ItemsControl Name="RowsList" ItemsSource="{Binding Rows}" IsEnabled="{Binding !IsBusy}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Spacing="10" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+    </ScrollViewer>
+    <Grid Name="ErrorLine" ColumnDefinitions="Auto,*" IsVisible="{Binding HasError}">
+      <TextBlock Classes="icon statusIcon" FontSize="13" Text="&#xEA39;" />
+      <TextBlock Grid.Column="1" Classes="fieldError" Text="{Binding Error}" AutomationProperties.LiveSetting="Assertive" />
+    </Grid>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,6,0,0">
+      <Button Name="CancelButton" MinWidth="96" HorizontalContentAlignment="Center" Content="{Binding CancelText}"
+              Command="{Binding CancelCommand}" IsCancel="True" AutomationProperties.Name="{Binding CancelText}" />
+      <Button Name="SubmitButton" Classes="accent" MinWidth="96" HorizontalContentAlignment="Center" Content="{Binding SubmitText}"
+              Command="{Binding ImportCommand}" IsDefault="True" IsVisible="{Binding HasSources}"
+              AutomationProperties.Name="{Binding SubmitText}" />
+    </StackPanel>
+  </StackPanel>
+</Window>

@@ -1,0 +1,143 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Thirteen.Desktop.ViewModels"
+             xmlns:c="using:Thirteen.Desktop.Controls"
+             xmlns:p="using:Thirteen.Desktop.Views.Parts"
+             xmlns:cal="using:Thirteen.Desktop.Views.CalendarSection"
+             xmlns:ev="using:Thirteen.Desktop.Views.Events"
+             x:Class="Thirteen.Desktop.Views.CalendarSection.DayModeView"
+             x:DataType="vm:DayModeViewModel">
+  <!-- Calendar's Day mode at regular width (docs/EVENTS.md §2.6): the header strip (the day's 13-month week as small day
+       buttons, plus intercalary days, the shown day filled; one tab stop, arrows between days, Enter or F2 on the shown
+       day goes into its events), the all-day row and the timeline of Week with one column (Views/Calendar/TimelineView),
+       and the details panel: the selected event, or the day's comparison when nothing is selected ("No events." when the
+       day is empty). Paging, the title and the toolbar are done by CalendarViewModel. -->
+  <UserControl.Styles>
+    <Style Selector="Button.dayStrip">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Padding" Value="8,4" />
+      <Setter Property="MinWidth" Value="52" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.dayStrip:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ThHover}" />
+    </Style>
+    <Style Selector="Button.dayStrip.selected /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ThAccent}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource ThAccent}" />
+    </Style>
+    <Style Selector="TextBlock.stripWeekday">
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontSize" Value="9.5" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="LetterSpacing" Value="0.5" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk2}" />
+    </Style>
+    <Style Selector="TextBlock.stripDay">
+      <Setter Property="FontSize" Value="16" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="TextElement.FontFeatures" Value="{StaticResource TabularFigures}" />
+    </Style>
+    <Style Selector="TextBlock.stripGreg">
+      <Setter Property="FontFamily" Value="{StaticResource ThirteenMonoFont}" />
+      <Setter Property="FontSize" Value="9.5" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="Foreground" Value="{DynamicResource ThInk3}" />
+    </Style>
+    <!-- After the text styles, so they win: today in the accent text, the shown day on the accent fill. -->
+    <Style Selector="Button.dayStrip.today TextBlock.stripDay">
+      <Setter Property="Foreground" Value="{DynamicResource ThAccentText}" />
+    </Style>
+    <Style Selector="Button.dayStrip.selected TextBlock.stripWeekday, Button.dayStrip.selected TextBlock.stripDay, Button.dayStrip.selected TextBlock.stripGreg">
+      <Setter Property="Foreground" Value="{DynamicResource ThOnAccent}" />
+    </Style>
+    <Style Selector="Border.dayPanel">
+      <Setter Property="BorderBrush" Value="{DynamicResource ThRule}" />
+      <Setter Property="BorderThickness" Value="1,0,0,0" />
+    </Style>
+  </UserControl.Styles>
+
+  <DockPanel>
+    <Border DockPanel.Dock="Top" Classes="banner" Margin="32,0,32,10" IsVisible="{Binding ShowsAllHidden}">
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding AllHiddenText}" />
+        <Button Classes="link" VerticalAlignment="Center" Content="{Binding ShowCalendarsText}"
+                Command="{Binding Calendar.ShowHiddenCalendarsCommand}" />
+      </StackPanel>
+    </Border>
+
+    <Grid ColumnDefinitions="*,Auto" Margin="24,0,32,16">
+      <DockPanel>
+        <!-- The header strip. -->
+        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10">
+          <Border DockPanel.Dock="Left" Width="{Binding LabelWidth}" />
+          <ItemsControl Name="Strip" ItemsSource="{Binding Strip}" c:DayNavigation.IsScope="True" AutomationProperties.Name="{Binding GridName}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" Spacing="4" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:DayStripItem">
+                <c:SelectableButton IsSelectedItem="{Binding IsSelected}" Classes="dayStrip" Classes.selected="{Binding IsSelected}" Classes.today="{Binding IsToday}" Command="{Binding SelectCommand}"
+                        AutomationProperties.Name="{Binding AutomationName}" AutomationProperties.ItemStatus="{Binding ItemStatus}">
+                  <StackPanel>
+                    <TextBlock Classes="stripWeekday" Text="{Binding WeekdayText}" />
+                    <TextBlock Classes="stripDay" Text="{Binding DayText}" IsVisible="{Binding !IsIntercalary}" />
+                    <TextBlock Classes="stripGreg" Text="{Binding GregorianText}" />
+                  </StackPanel>
+                </c:SelectableButton>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </DockPanel>
+        <cal:TimelineView Name="Timeline" ShowsHeaders="False" />
+      </DockPanel>
+
+      <!-- The details panel. -->
+      <Border Grid.Column="1" Name="Panel" Classes="dayPanel" Width="300" Margin="16,0,0,0">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Margin="16,4,4,16" Spacing="12">
+            <!-- The selected event. -->
+            <!-- The selected event's details (§2.6, §2.10), with Edit, Delete event and More. -->
+            <Panel IsVisible="{Binding HasSelectedDetails}">
+              <ev:EventDetailsView Name="SelectedDetailsView" Width="NaN" DataContext="{Binding SelectedDetails}" />
+            </Panel>
+            <!-- A short summary until the window's event actions are attached. -->
+            <StackPanel Name="SelectedEventPanel" Spacing="6" IsVisible="{Binding ShowsSummary}"
+                        AutomationProperties.Name="{Binding SelectedEvent.AutomationName, FallbackValue=''}">
+              <Button Classes="link" HorizontalAlignment="Left" Padding="0" Command="{Binding SelectedEvent.OpenCommand}"
+                      CommandParameter="{Binding $self}" AutomationProperties.Name="{Binding SelectedEvent.Title, FallbackValue=''}">
+                <TextBlock Classes="dayHeading" Text="{Binding SelectedEvent.Title, FallbackValue=''}" />
+              </Button>
+              <TextBlock Classes="dayCaption" Text="{Binding SelectedEvent.TimeText, FallbackValue=''}" />
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <Ellipse Classes="calendarDot" Fill="{Binding SelectedEvent.ColorBrush, FallbackValue={x:Null}}" />
+                <TextBlock Classes="rowSub" Text="{Binding SelectedEvent.CalendarName, FallbackValue=''}" />
+              </StackPanel>
+              <TextBlock Classes="rowSub" Text="{Binding SelectedEvent.Location, FallbackValue=''}" IsVisible="{Binding SelectedEvent.HasLocation, FallbackValue=False}" />
+              <Button Classes="accentBordered" HorizontalAlignment="Left" Margin="0,6,0,0" Content="{Binding SelectedEvent.EditText, FallbackValue=''}"
+                      Command="{Binding SelectedEvent.EditCommand}" CommandParameter="{Binding $self}"
+                      IsVisible="{Binding SelectedEvent.CanEdit, FallbackValue=False}" />
+            </StackPanel>
+            <!-- The day's comparison. -->
+            <StackPanel Spacing="12" IsVisible="{Binding !HasSelectedEvent}">
+              <StackPanel>
+                <TextBlock Classes="dayHeading" Text="{Binding Heading}" />
+                <TextBlock Classes="dayCaption" Text="{Binding Caption}" />
+              </StackPanel>
+              <TextBlock Name="EmptyLine" FontSize="14" Text="{Binding EmptyText}" IsVisible="{Binding IsEmpty}" />
+              <p:DatePlateView DataContext="{Binding Comparison.Plate}" />
+              <p:ComparisonDetailView DataContext="{Binding Comparison.Detail}" />
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+    </Grid>
+  </DockPanel>
+</UserControl>

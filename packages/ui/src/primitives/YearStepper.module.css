@@ -1,0 +1,57 @@
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--t-space-2);
+}
+
+.field {
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.input {
+  width: 5.5ch;
+  padding: 0.05em 0.1em;
+  border: 0;
+  border-bottom: var(--t-hairline) solid var(--t-rule-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--t-ink);
+  font-family: var(--t-font-display);
+  font-size: var(--t-text-xl);
+  font-weight: var(--t-weight-numeral);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  letter-spacing: var(--t-tracking-title);
+  text-align: center;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--t-accent);
+  box-shadow: 0 2px 0 var(--t-accent);
+}
+
+.caption {
+  font-family: var(--t-font-mono);
+  font-size: var(--t-text-2xs);
+  letter-spacing: var(--t-tracking-mono);
+  color: var(--t-ink-2);
+  white-space: nowrap;
+}
+
+@media (pointer: coarse), (max-width: 40rem) {
+  .input {
+    min-height: 2.625rem;
+  }
+}

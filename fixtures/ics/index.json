@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "complete": true,
+  "generatedBy": "@thirteen/core",
+  "spec": "docs/EVENTS.md",
+  "zoneOffsets": "fixtures/events.json",
+  "now": "2026-10-19T06:41",
+  "system": "ifc",
+  "deviceZones": [
+    "Europe/Tallinn",
+    "America/New_York"
+  ],
+  "defaultWindow": {
+    "from": "2026-01-01T00:00",
+    "to": "2027-12-31T24:00"
+  },
+  "counts": {
+    "cases": 31,
+    "edits": 5,
+    "imports": 5,
+    "restore": 1,
+    "inputs": 14
+  },
+  "cases": [
+    {"file":"cases/broken.ics","expected":"expected/broken.json","roundtrip":"roundtrip/broken.ics","roundTrip":"as-read"},
+    {"file":"cases/bom.ics","expected":"expected/bom.json","roundtrip":"roundtrip/bom.ics","roundTrip":"as-read"},
+    {"file":"cases/components.ics","expected":"expected/components.json","roundtrip":"roundtrip/components.ics","roundTrip":"as-read"},
+    {"file":"cases/duplicate-uid.ics","expected":"expected/duplicate-uid.json","roundtrip":"roundtrip/duplicate-uid.ics","roundTrip":"as-read"},
+    {"file":"cases/duration.ics","expected":"expected/duration.json","roundtrip":"roundtrip/duration.ics","roundTrip":"as-read"},
+    {"file":"cases/escapes.ics","expected":"expected/escapes.json","roundtrip":"roundtrip/escapes.ics","roundTrip":"as-read"},
+    {"file":"cases/exrule.ics","expected":"expected/exrule.json","roundtrip":"roundtrip/exrule.ics","roundTrip":"as-read"},
+    {"file":"cases/far-future.ics","expected":"expected/far-future.json","roundtrip":"roundtrip/far-future.ics","roundTrip":"zones-added"},
+    {"file":"cases/fastmail.ics","expected":"expected/fastmail.json","roundtrip":"roundtrip/fastmail.ics","roundTrip":"as-read"},
+    {"file":"cases/floating.ics","expected":"expected/floating.json","roundtrip":"roundtrip/floating.ics","roundTrip":"as-read"},
+    {"file":"cases/folding.ics","expected":"expected/folding.json","roundtrip":"roundtrip/folding.ics","roundTrip":"as-read"},
+    {"file":"cases/google-holidays.ics","expected":"expected/google-holidays.json","roundtrip":"roundtrip/google-holidays.ics","roundTrip":"as-read"},
+    {"file":"cases/google-secret.ics","expected":"expected/google-secret.json","roundtrip":"roundtrip/google-secret.ics","roundTrip":"as-read"},
+    {"file":"cases/icloud-export.ics","expected":"expected/icloud-export.json","roundtrip":"roundtrip/icloud-export.ics","roundTrip":"as-read"},
+    {"file":"cases/jerusalem.ics","expected":"expected/jerusalem.json","roundtrip":"roundtrip/jerusalem.ics","roundTrip":"as-read"},
+    {"file":"cases/line-endings.ics","expected":"expected/line-endings.json","roundtrip":"roundtrip/line-endings.ics","roundTrip":"as-read"},
+    {"file":"cases/marker-mismatch.ics","expected":"expected/marker-mismatch.json","roundtrip":"roundtrip/marker-mismatch.ics","roundTrip":"as-read"},
+    {"file":"cases/missing-uid.ics","expected":"expected/missing-uid.json","roundtrip":"roundtrip/missing-uid.ics","roundTrip":"as-read"},
+    {"file":"cases/ny-2005-2026.ics","expected":"expected/ny-2005-2026.json","roundtrip":"roundtrip/ny-2005-2026.ics","roundTrip":"as-read"},
+    {"file":"cases/ny-open-ended.ics","expected":"expected/ny-open-ended.json","roundtrip":"roundtrip/ny-open-ended.ics","roundTrip":"as-read"},
+    {"file":"cases/outlook-publish.ics","expected":"expected/outlook-publish.json","roundtrip":"roundtrip/outlook-publish.ics","roundTrip":"as-read"},
+    {"file":"cases/override-only.ics","expected":"expected/override-only.json","roundtrip":"roundtrip/override-only.ics","roundTrip":"as-read"},
+    {"file":"cases/period-rdate.ics","expected":"expected/period-rdate.json","roundtrip":"roundtrip/period-rdate.ics","roundTrip":"as-read"},
+    {"file":"cases/rrule-rdate.ics","expected":"expected/rrule-rdate.json","roundtrip":"roundtrip/rrule-rdate.ics","roundTrip":"as-read"},
+    {"file":"cases/rscale.ics","expected":"expected/rscale.json","roundtrip":"roundtrip/rscale.ics","roundTrip":"as-read"},
+    {"file":"cases/thirteen-roundtrip.ics","expected":"expected/thirteen-roundtrip.json","roundtrip":"roundtrip/thirteen-roundtrip.ics","roundTrip":"as-read"},
+    {"file":"cases/thunderbird.ics","expected":"expected/thunderbird.json","roundtrip":"roundtrip/thunderbird.ics","roundTrip":"as-read"},
+    {"file":"cases/two-rrules.ics","expected":"expected/two-rrules.json","roundtrip":"roundtrip/two-rrules.ics","roundTrip":"as-read"},
+    {"file":"cases/unknown-tzid.ics","expected":"expected/unknown-tzid.json","roundtrip":"roundtrip/unknown-tzid.ics","roundTrip":"zones-added"},
+    {"file":"cases/until-instant.ics","expected":"expected/until-instant.json","roundtrip":"roundtrip/until-instant.ics","roundTrip":"as-read"},
+    {"file":"cases/window-edges.ics","expected":"expected/window-edges.json","roundtrip":"roundtrip/window-edges.ics","roundTrip":"zones-added"}
+  ],
+  "edits": [
+    "edits/generated-tz-grow.json",
+    "edits/outlook-edit-one.json",
+    "edits/own-time-rdate.json",
+    "edits/retime-until.json",
+    "edits/year-9999.json"
+  ],
+  "imports": [
+    "imports/baseline.json",
+    "imports/customized-tz.json",
+    "imports/known-tz.json",
+    "imports/missing-uid.json",
+    "imports/override-only.json"
+  ],
+  "restore": [
+    "restore/restore.json"
+  ],
+  "inputs": [
+    "imports/baseline-google-newer.ics",
+    "imports/baseline-google-older.ics",
+    "imports/baseline-google-roundtrip.ics",
+    "imports/baseline-thirteen.ics",
+    "imports/customized-tz-a.ics",
+    "imports/customized-tz-b.ics",
+    "imports/customized-tz-c.ics",
+    "imports/known-tz-target.ics",
+    "imports/override-only-newer.ics",
+    "imports/override-only-older.ics",
+    "restore/Personal.ics",
+    "restore/Work.ics",
+    "restore/Holidays in Estonia.ics",
+    "restore/older.ics"
+  ]
+}
