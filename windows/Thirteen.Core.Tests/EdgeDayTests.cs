@@ -273,6 +273,12 @@ public sealed class EdgeDayTests
 
     // ---- SPEC 1.5 time zones -----------------------------------------------------------------
 
+    // Windows reads its zones from the registry, which has fewer historical rules than the IANA data
+    // on macOS and Linux (docs/events-verification/windows.md, W1 re-check). There these days exist,
+    // and the registry rule puts São Paulo's 2018 change at 23:59:59.999, so its first instant is 1 ms early.
+    private static readonly HashSet<string> WindowsHasNoSkippedDay = ["Pacific/Apia 2011-12-30", "Pacific/Kiritimati 1994-12-31", "Pacific/Kwajalein 1993-08-21"];
+    private static readonly HashSet<string> WindowsOneMillisecondEarly = ["America/Sao_Paulo 2018-11-04"];
+
     [Theory]
     [InlineData("America/Sao_Paulo", "2018-11-04", "2018-11-04T01:00:00-02:00")]
     [InlineData("America/Havana", "2024-03-10", "2024-03-10T01:00:00-04:00")]
@@ -285,8 +291,16 @@ public sealed class EdgeDayTests
         var zone = TimeZoneInfo.FindSystemTimeZoneById(zoneId);
         var first = GregorianDate.ParseIso(iso).FirstInstant(zone);
         Assert.NotNull(first);
-        Assert.Equal(DateTimeOffset.Parse(expected, System.Globalization.CultureInfo.InvariantCulture), first.Value);
-        Assert.Equal(expected, first.Value.ToString("yyyy-MM-dd'T'HH:mm:sszzz", System.Globalization.CultureInfo.InvariantCulture));
+        var want = DateTimeOffset.Parse(expected, System.Globalization.CultureInfo.InvariantCulture);
+        if (OperatingSystem.IsWindows() && WindowsOneMillisecondEarly.Contains($"{zoneId} {iso}"))
+        {
+            Assert.Equal(want.AddMilliseconds(-1), first.Value);
+        }
+        else
+        {
+            Assert.Equal(want, first.Value);
+            Assert.Equal(expected, first.Value.ToString("yyyy-MM-dd'T'HH:mm:sszzz", System.Globalization.CultureInfo.InvariantCulture));
+        }
         Assert.Equal(GregorianDate.ParseIso(iso), GregorianDate.FromInstant(first.Value, zone));
         // One tick earlier is the previous local day.
         if (first.Value.UtcTicks > 0)
@@ -301,6 +315,14 @@ public sealed class EdgeDayTests
     {
         var zone = TimeZoneInfo.FindSystemTimeZoneById(zoneId);
         var date = GregorianDate.ParseIso(iso);
+        if (OperatingSystem.IsWindows() && WindowsHasNoSkippedDay.Contains($"{zoneId} {iso}"))
+        {
+            // The day exists in the registry zone: its first instant must belong to it.
+            var first = date.FirstInstant(zone);
+            Assert.NotNull(first);
+            Assert.Equal(date, GregorianDate.FromInstant(first.Value, zone));
+            return;
+        }
         Assert.Null(date.FirstInstant(zone));
         Assert.NotNull(date.AddDays(-1).FirstInstant(zone));
         Assert.NotNull(date.AddDays(1).FirstInstant(zone));

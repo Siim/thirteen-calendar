@@ -98,7 +98,10 @@ async function chooseFiles(page: Page, files: string | readonly { name: string; 
 
 async function downloaded(download: Download): Promise<{ name: string; bytes: Buffer }> {
   const path = await download.path();
-  return { name: download.suggestedFilename(), bytes: readFileSync(path) };
+  // WebKit on Linux turns the spaces of a suggested file name into underscores; the names used here have none.
+  const linuxWebKit = process.platform === 'linux' && download.page().context().browser()?.browserType().name() === 'webkit';
+  const name = download.suggestedFilename();
+  return { name: linuxWebKit ? name.replaceAll('_', ' ') : name, bytes: readFileSync(path) };
 }
 
 async function exportCalendars(page: Page, uncheck: readonly string[] = []): Promise<{ name: string; bytes: Buffer }> {

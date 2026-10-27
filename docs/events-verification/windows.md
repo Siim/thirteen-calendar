@@ -942,3 +942,10 @@ Not a gate: the automated checks of task W7 (docs/EVENTS.md §2.10 to §2.14, §
 Not run: the app on the VM (Narrator, the real toast timing settings, a real Calendar control and time
 picker); the headless renders on macOS have no Segoe Fluent Icons, so no `docs/screenshots/windows-*.png`
 were replaced.
+
+## First CI run on GitHub (2026-10-27)
+
+`windows-latest` (Windows Server 2025) gave the 4 known calendar-engine failures in `EdgeDayTests.FirstInstant_*`
+(registry zone data, W1 re-check). The tests now hold Windows to what its registry zones say: the three
+skipped days (Pacific/Apia 2011-12-30, Pacific/Kiritimati 1994-12-31, Pacific/Kwajalein 1993-08-21) exist
+there, and São Paulo's first instant on 2018-11-04 is 1 ms early. macOS and Linux still check the IANA answers.
